@@ -1856,6 +1856,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _stores_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stores/index.js */ "./resources/js/components/Character/stores/index.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1877,10 +1885,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: _stores_index_js__WEBPACK_IMPORTED_MODULE_0__.default,
   mounted: function mounted() {
     console.log('Component "character" mounted.');
-  }
+    console.log(this);
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)('listData', ['parentPage', 'activePage']))
 });
 
 /***/ }),
@@ -1959,13 +1973,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -1993,13 +2000,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component "header-nav" mounted.');
-    console.log(this);
-  },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)(['activePage'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['getActivePage']))
+  }
 });
 
 /***/ }),
@@ -2016,6 +2020,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _SideMenu_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SideMenu.vue */ "./resources/js/components/_base/SideMenu.vue");
+//
+//
 //
 //
 //
@@ -2047,6 +2053,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _stores_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stores/index.js */ "./resources/js/components/_base/stores/index.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2056,11 +2070,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: _stores_index_js__WEBPACK_IMPORTED_MODULE_0__.default,
+  data: function data() {
+    return this.$store.state.sideMenuData;
+  },
   mounted: function mounted() {
     console.log('Component "side-menu" mounted.');
-  }
+    this.componentName = this.$route.name;
+    this.initPage();
+  },
+  computed: {},
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('sideMenuData', ['initPage']))
 });
 
 /***/ }),
@@ -2112,9 +2135,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _stores_main_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stores/main.js */ "./resources/js/stores/main.js");
-/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router.js */ "./resources/js/router.js");
-/* harmony import */ var _components_app_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/app.vue */ "./resources/js/components/app.vue");
+/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router.js */ "./resources/js/router.js");
+/* harmony import */ var _components_app_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/app.vue */ "./resources/js/components/app.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -2125,10 +2147,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default; //support vuex
 
 
-Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__.default); //匯入各頁面store資料
-
-
-var store = _stores_main_js__WEBPACK_IMPORTED_MODULE_1__.default; //引用設定好的vue router
+Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__.default); //引用設定好的vue router
 
 
 
@@ -2151,10 +2170,9 @@ var store = _stores_main_js__WEBPACK_IMPORTED_MODULE_1__.default; //引用設定
 
 var app = new Vue({
   el: '#app',
-  router: _router_js__WEBPACK_IMPORTED_MODULE_2__.default,
-  store: store,
+  router: _router_js__WEBPACK_IMPORTED_MODULE_1__.default,
   render: function render(h) {
-    return h(_components_app_vue__WEBPACK_IMPORTED_MODULE_3__.default);
+    return h(_components_app_vue__WEBPACK_IMPORTED_MODULE_2__.default);
   }
 });
 
@@ -2204,6 +2222,218 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/Character/stores/index.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/Character/stores/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _modules_list_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/list.js */ "./resources/js/components/Character/stores/modules/list.js");
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.default);
+var storeData = new vuex__WEBPACK_IMPORTED_MODULE_2__.default.Store({
+  modules: {
+    listData: _modules_list_js__WEBPACK_IMPORTED_MODULE_0__.default
+  }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (storeData);
+
+/***/ }),
+
+/***/ "./resources/js/components/Character/stores/modules/list.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Character/stores/modules/list.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var state = {
+  parentPage: 'Character',
+  activePage: 'list'
+};
+var getters = {};
+var mutations = {};
+var actions = {};
+var module = {
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (module);
+
+/***/ }),
+
+/***/ "./resources/js/components/_base/stores/index.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/_base/stores/index.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _modules_HeaderNav_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/HeaderNav.js */ "./resources/js/components/_base/stores/modules/HeaderNav.js");
+/* harmony import */ var _modules_SideMenu_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/SideMenu.js */ "./resources/js/components/_base/stores/modules/SideMenu.js");
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
+var storeData = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
+  modules: {
+    headerNavData: _modules_HeaderNav_js__WEBPACK_IMPORTED_MODULE_0__.default,
+    sideMenuData: _modules_SideMenu_js__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (storeData);
+
+/***/ }),
+
+/***/ "./resources/js/components/_base/stores/modules/HeaderNav.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/_base/stores/modules/HeaderNav.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var state = {};
+var getters = {};
+var mutations = {};
+var actions = {};
+var module = {
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (module);
+
+/***/ }),
+
+/***/ "./resources/js/components/_base/stores/modules/SideMenu.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/_base/stores/modules/SideMenu.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var state = {
+  componentName: '',
+  linkList: {}
+};
+var getters = {
+  currentLinkList: function currentLinkList(state) {}
+};
+var mutations = {};
+var actions = {
+  getLinkList: function () {
+    var _getLinkList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              context.state.linkList = [{
+                href: '/character/list',
+                text: '列表'
+              }, {
+                href: '/character/job',
+                text: '職業'
+              }];
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function getLinkList(_x) {
+      return _getLinkList.apply(this, arguments);
+    }
+
+    return getLinkList;
+  }(),
+  initPage: function () {
+    var _initPage = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return context.dispatch('getLinkList');
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function initPage(_x2) {
+      return _initPage.apply(this, arguments);
+    }
+
+    return initPage;
+  }()
+};
+var module = {
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (module);
+
+/***/ }),
+
 /***/ "./resources/js/router.js":
 /*!********************************!*\
   !*** ./resources/js/router.js ***!
@@ -2229,11 +2459,14 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_3__.default); // Route 設定
 
 var routes = [{
-  path: '/Example',
+  path: '/example',
   component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_0__.default,
   name: 'Example'
 }, {
-  path: '/Character',
+  path: '/character',
+  redirect: '/character/list'
+}, {
+  path: '/character/list',
   component: _components_Character_list_vue__WEBPACK_IMPORTED_MODULE_1__.default,
   name: 'Character'
 } // { path: '*', redirect: '/' },
@@ -2244,131 +2477,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__.default({
   routes: routes
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
-
-/***/ }),
-
-/***/ "./resources/js/stores/Character/list.js":
-/*!***********************************************!*\
-  !*** ./resources/js/stores/Character/list.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-var state = {
-  TextValue: ''
-};
-var getters = {};
-var mutations = {
-  FUNCTION_NAME: function FUNCTION_NAME(state, payload) {
-    state.VarA = payload;
-  }
-};
-var actions = {
-  FUNCTION_NAME: function FUNCTION_NAME(_ref) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref.commit;
-              //do something
-              commit('FUNCTION_NAME', payload); //紀錄一下加了async是因為用非同步的axios去API拿資料
-
-            case 2:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
-  }
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  //用namespace 叫資料比較方便
-  state: state,
-  mutations: mutations,
-  actions: actions
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/_base/HeaderNav.js":
-/*!************************************************!*\
-  !*** ./resources/js/stores/_base/HeaderNav.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-var _state = {
-  activePage: ''
-};
-var getters = {};
-var mutations = {};
-var actions = {};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  //用namespace 叫資料比較方便
-  state: function state() {
-    return _state;
-  },
-  getters: getters,
-  mutations: mutations,
-  actions: actions
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/main.js":
-/*!*************************************!*\
-  !*** ./resources/js/stores/main.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _base_HeaderNav_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_base/HeaderNav.js */ "./resources/js/stores/_base/HeaderNav.js");
-/* harmony import */ var _Character_list_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Character/list.js */ "./resources/js/stores/Character/list.js");
-
-
-
-
-vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
-var storeData = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
-  modules: {
-    headerNavData: _base_HeaderNav_js__WEBPACK_IMPORTED_MODULE_0__.default,
-    CharacterListData: _Character_list_js__WEBPACK_IMPORTED_MODULE_1__.default
-  }
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (storeData);
 
 /***/ }),
 
@@ -39049,17 +39157,26 @@ var staticRenderFns = [
             _c(
               "li",
               {
-                staticClass: "breadcrumb-item active",
+                staticClass: "breadcrumb-item",
                 attrs: { "aria-current": "page" }
               },
               [_vm._v("角色")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "breadcrumb-item active",
+                attrs: { "aria-current": "page" }
+              },
+              [_vm._v("清單")]
             )
           ])
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "col-12" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Example Component")
@@ -39182,7 +39299,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", [
+  return _c("nav", { staticClass: "bg-info" }, [
     _c(
       "div",
       { staticClass: "navbar navbar-expand-lg navbar-light shadow h-100" },
@@ -39207,11 +39324,7 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    {
-                      staticClass: "nav-link",
-                      class: { active: _vm.activePage == "Example" },
-                      attrs: { to: "/Example" }
-                    },
+                    { staticClass: "nav-link", attrs: { to: "/example" } },
                     [
                       _vm._v(
                         "\r\n                        範例\r\n                    "
@@ -39228,11 +39341,7 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    {
-                      staticClass: "nav-link",
-                      class: { active: _vm.activePage == "Character" },
-                      attrs: { to: "/Character" }
-                    },
+                    { staticClass: "nav-link", attrs: { to: "/character" } },
                     [
                       _vm._v(
                         "\r\n                        角色\r\n                    "
@@ -39290,15 +39399,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "main",
-    [
-      _c("side-menu"),
-      _vm._v(" "),
-      _c("div", { staticClass: "container-fluid" }, [_c("router-view")], 1)
-    ],
-    1
-  )
+  return _c("main", { staticClass: "d-flex" }, [
+    _c("div", { staticClass: "row col-2" }, [_c("side-menu")], 1),
+    _vm._v(" "),
+    _c("div", { staticClass: "row col-10" }, [_c("router-view")], 1)
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39323,25 +39428,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("aside", { attrs: { id: "main-aside" } }, [
+    _c(
+      "div",
+      { staticClass: "list-group list-group-flush w-100" },
+      _vm._l(_vm.linkList, function(link, index) {
+        return _c(
+          "router-link",
+          {
+            key: index,
+            staticClass: "list-group-item list-group-item-action",
+            attrs: { to: link.href }
+          },
+          [_vm._v("\r\n            " + _vm._s(link.text) + "\r\n        ")]
+        )
+      }),
+      1
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("aside", [
-      _c("div", { staticClass: "ci-bg-gray-t row col-12 h-100 p-0 m-0" }, [
-        _c("div", {
-          staticClass:
-            "list-group list-group-flush col-7 col-md-4 col-lg-12 h-100 ci-bg-dark p-0"
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-5 col-md-8 d-lg-none h-100 p-0" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

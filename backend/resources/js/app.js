@@ -12,10 +12,6 @@ window.Vue = require('vue').default;
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-//匯入各頁面store資料
-import storeData from "./stores/main.js"
-const store = storeData;
-
 //引用設定好的vue router
 import router from './router.js';
 import App from './components/app.vue';
@@ -42,6 +38,5 @@ import App from './components/app.vue';
 const app = new Vue({
     el: '#app',
     router,
-    store,
     render: h => h(App)
 });

@@ -7,3 +7,13 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+#nav-header{
+    .router-link-active{
+        font-weight: bold;
+        border-bottom: 3px solid $green;
+    }
+}
+#main-aside{
+    width: 100%;
+}

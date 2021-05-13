@@ -1,7 +1,7 @@
 import axios from "axios";
  
 const state = {
-    activePage: ''
+
 }
 
 const getters = {
@@ -9,17 +9,19 @@ const getters = {
 }
  
 const mutations = {
-    
+
 }
- 
+
 const actions = {
-    
+
 }
  
-export default {
-    namespaced: true,//用namespace 叫資料比較方便
-    state: () => (state),
+const module = {
+    namespaced: true,
+    state: state,
     getters: getters,
     mutations: mutations,
     actions: actions
 }
+ 
+export default module

@@ -1,5 +1,5 @@
 <template>
-<nav>
+<nav class="bg-info">
     <div class="navbar navbar-expand-lg navbar-light shadow h-100">
         <a href="#" class="navbar-brand">
             Tailor
@@ -11,12 +11,12 @@
         <div class="collapse navbar-collapse" id="nav-header">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <router-link to="/Example" class="nav-link" v-bind:class="{'active':activePage == 'Example'}">
+                    <router-link to="/example" class="nav-link">
                         範例
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/Character" class="nav-link" v-bind:class="{'active':activePage == 'Character'}">
+                    <router-link to="/character" class="nav-link">
                         角色
                     </router-link>
                 </li>
@@ -26,19 +26,9 @@
 </nav>
 </template>
 <script>
-    import { mapState, mapGetters } from 'vuex'
     export default {
         mounted() {
 			console.log('Component "header-nav" mounted.')
-            console.log(this)
-		},
-        computed: {
-            ...mapState([
-                'activePage'
-            ]),
-            ...mapGetters([
-                'getActivePage'
-            ])
-        }
+		}
 	}
 </script>

@@ -10,8 +10,9 @@ Vue.use(Router);
 
 // Route 設定
 export const routes = [
-	{ path: '/Example', component: Example, name:'Example'},
-	{ path: '/Character', component: Character, name:'Character'},
+	{ path: '/example', component: Example, name:'Example'},
+	{ path: '/character', redirect: '/character/list' },
+	{ path: '/character/list', component: Character, name:'Character'},
 	// { path: '*', redirect: '/' },
 ];
 
