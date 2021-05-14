@@ -19,9 +19,16 @@
                                 <input type="text" class="form-control" id="name">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">性別</label>
+                            <div class="col-sm-10 d-flex">
+                                <b-form-radio v-model="gender" name="gender" class="col-1" value="0">女</b-form-radio>
+                                <b-form-radio v-model="gender" name="gender" class="col-1" value="1">男</b-form-radio>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        
+                        <b-button variant="success">送出</b-button>
                     </div>
                 </div>
             </div>

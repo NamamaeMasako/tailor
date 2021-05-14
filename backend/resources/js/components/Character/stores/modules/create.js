@@ -1,6 +1,8 @@
 const state = {
     dataList: {
-        formList: {}
+        formList: {
+            gender: ''
+        }
     },
     api: {
         active: null,
