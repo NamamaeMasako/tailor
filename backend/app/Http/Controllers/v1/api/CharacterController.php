@@ -7,7 +7,6 @@ use App\Models\Character;
 
 class CharacterController extends Controller
 {
-    // 取得狀態相關下拉選單資料
     public function index(Request $request) {
         $result = [
             'status' => false,
@@ -16,7 +15,7 @@ class CharacterController extends Controller
         ];
         try{
             $tb = Character::all();
-            
+
             $result['status'] = true;
             $result['result'] = $tb;
         }catch(Exception $e){

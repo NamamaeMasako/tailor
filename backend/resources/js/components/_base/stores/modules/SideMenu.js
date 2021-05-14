@@ -6,9 +6,7 @@ const state = {
 }
 
 const getters = {
-    currentLinkList: (state) => {
 
-    }
 }
  
 const mutations = {
