@@ -2,7 +2,7 @@ import axios from "axios";
  
 const state = {
     componentName: '',
-    linkList: {}
+    linkList: []
 }
 
 const getters = {

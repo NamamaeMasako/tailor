@@ -11,4 +11,7 @@
         <div id="app"></div>
     </body>
     <script src="{{asset('js/app.js')}}"></script>
+    <script>
+        localStorage.setItem('HOST', "{{env('APP_URL')}}");
+    </script>
 </html>

@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('v1')->group(function () {
+    // 經由middleware 驗證
+    Route::namespace('api')->group(function () {
+        Route::get('character', 'CharacterController@index');
+    });
 });

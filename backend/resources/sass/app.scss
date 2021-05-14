@@ -7,11 +7,12 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 
 #nav-header{
     .router-link-active{
         font-weight: bold;
-        border-bottom: 3px solid $green;
+        background-color: white;
     }
 }
 #main-aside{
