@@ -18,5 +18,6 @@ Route::namespace('v1')->group(function () {
     // 經由middleware 驗證
     Route::namespace('api')->group(function () {
         Route::get('character', 'CharacterController@index');
+        Route::post('character', 'CharacterController@create');
     });
 });

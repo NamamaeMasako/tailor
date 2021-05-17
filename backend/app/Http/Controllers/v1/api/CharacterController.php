@@ -23,4 +23,8 @@ class CharacterController extends Controller
         }
         return $result;
     }
+
+    public function create(Request $request) {
+        
+    }
 }

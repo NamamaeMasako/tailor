@@ -6,6 +6,10 @@
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>
+        <b-alert variant="danger" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">
+            <p>錯誤</p>
+            <b-progress variant="danger" :max="alert.dismissSecs-1" :value="alert.dismissCountDown-1" height="4px"></b-progress>
+        </b-alert>
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card">
@@ -16,19 +20,19 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">名字</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="name" v-model="dataList.formList.name">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">性別</label>
                             <div class="col-sm-10 d-flex">
-                                <b-form-radio v-model="gender" name="gender" class="col-1" value="0">女</b-form-radio>
-                                <b-form-radio v-model="gender" name="gender" class="col-1" value="1">男</b-form-radio>
+                                <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="0">女</b-form-radio>
+                                <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="1">男</b-form-radio>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <b-button variant="success">送出</b-button>
+                        <b-button variant="success" v-on:click="submit">送出</b-button>
                     </div>
                 </div>
             </div>
@@ -54,7 +58,9 @@
         },
         methods: {
             ...mapActions('createData',[
-                'initPage'
+                'initPage',
+                'submit',
+                'countDownChanged'
             ])   
         }
     }
