@@ -32,9 +32,6 @@ const getters = {
 }
  
 const mutations = {
-    countDownChanged(context, dismissCountDown) {
-        context.state.alert.dismissCountDown = dismissCountDown
-    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -48,14 +45,17 @@ const mutations = {
             })
         }
     },
-    showAlert(context, payload) {
-        context.state.alert.dismissCountDown = context.state.alert.dismissSecs
+    showAlert(state, payload) {
+        state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
 
 const actions = {
+    countDownChanged(context, dismissCountDown) {
+        context.state.alert.dismissCountDown = dismissCountDown
+    },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:''})
+        context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
             return new Promise((resolve, reject) => {
                 axios(context.state.api.active).then((response) => {
@@ -65,18 +65,18 @@ const actions = {
                     }
                     resolve()
                 }).catch((error) => { 
-                    context.commit('showAlert')
-                    let errorMsg = ''
+                    // context.commit('showAlert')
+                    context.state.alert.message = ''
                     Object.keys(error).map((key) => {
-                        errorMsg += key+' : '+error[key]+'\n'
+                        context.state.alert.message += key+' : '+error[key]+'\n'
                     })
-                    alert(errorMsg)
+                    context.commit('showAlert')
                     reject()
                 })
             })
         }else{
-            let alertSetting = context.state.alert
-            context.commit('showAlert',alertSetting)
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
         }
     },
     initPage: async (context) => {

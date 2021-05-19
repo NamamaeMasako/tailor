@@ -25,6 +25,21 @@ class CharacterController extends Controller
     }
 
     public function create(Request $request) {
-        
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        // try{
+        //     $tb = Character::all();
+
+        //     $result['status'] = true;
+        //     $result['result'] = $tb;
+        // }catch(Exception $e){
+        //     $result['message']['character'] = 'create => '.$e->getMessage();
+        // }
+            $result['message']['character'] = 'create => test';
+
+        return $result;
     }
 }

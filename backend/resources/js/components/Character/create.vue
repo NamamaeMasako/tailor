@@ -7,7 +7,7 @@
             </ol>
         </nav>
         <b-alert variant="danger" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">
-            <p>錯誤</p>
+            <p>{{alert.message}}</p>
             <b-progress variant="danger" :max="alert.dismissSecs-1" :value="alert.dismissCountDown-1" height="4px"></b-progress>
         </b-alert>
         <div class="row justify-content-center">
