@@ -20,14 +20,22 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">名字</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" v-model="dataList.formList.name">
+                                <input type="text" class="form-control" :class="{'is-invalid': validateMsg.name != ''}" id="name" v-model="dataList.formList.name">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.name" :key="index">{{msg}}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">性別</label>
-                            <div class="col-sm-10 d-flex">
-                                <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="0">女</b-form-radio>
-                                <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="1">男</b-form-radio>
+                            <div class="col-sm-10">
+                                <div class="d-flex py-1" :class="{'is-invalid': validateMsg.gender != ''}">
+                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="0">女</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="1">男</b-form-radio>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.gender" :key="index">{{msg}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

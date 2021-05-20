@@ -24,6 +24,10 @@ const state = {
         dismissSecs: 5,
         dismissCountDown: 0,
         showDismissibleAlert: false
+    },
+    validateMsg: {
+        gender: '',
+        name: ''
     }
 }
 
@@ -61,15 +65,16 @@ const actions = {
                 axios(context.state.api.active).then((response) => {
                     console.log(response.data)
                     if(response.data.status != true){
-                        throw response.data.message 
+                        throw response.data 
                     }
                     resolve()
                 }).catch((error) => { 
                     // context.commit('showAlert')
-                    context.state.alert.message = ''
-                    Object.keys(error).map((key) => {
-                        context.state.alert.message += key+' : '+error[key]+'\n'
-                    })
+                    context.state.alert.message = error['result']
+                    context.state.validateMsg = error['message']
+                    // Object.keys(error).map((key) => {
+                    //     context.state.alert.message += key+' : '+error[key]+'\n'
+                    // })
                     context.commit('showAlert')
                     reject()
                 })
