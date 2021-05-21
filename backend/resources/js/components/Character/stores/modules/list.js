@@ -3,8 +3,8 @@ const state = {
         fields: [
             { key: 'character_no', label: '角色編號', sortable: false },
             { key: 'name', label: '名字', sortable: false },
-            { key: 'enable', label: '情報開放狀態', sortable: false },
-            { key: 'shelf', label: '販賣狀態', sortable: false },
+            { key: 'enable_text', label: '情報開放狀態', sortable: false },
+            { key: 'shelf_text', label: '販賣狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '編輯', sortable: false },
         ],
@@ -24,7 +24,14 @@ const state = {
                 timeout: 5000,
             }
         }
-    }
+    },
+    alert: {
+        variant: 'danger',
+        message: '',
+        dismissSecs: 5,
+        dismissCountDown: 0,
+        showDismissibleAlert: false
+    },
 }
 
 const getters = {
@@ -46,34 +53,39 @@ const mutations = {
                 state.api.active.url += '/'+el
             })
         }
-    }
+    },
+    showAlert(state, payload) {
+        state.alert.dismissCountDown = state.alert.dismissSecs
+    },
 }
 
 const actions = {
     getItems: async (context) => {
         context.commit('getApiSetting',{which:'getItems'})
         if(context.state.api.active != undefined || context.state.api.active != null){
-            return new Promise((resolve, reject) => {
-                axios(context.state.api.active).then(response => {
-                    console.log(response.data)
-                    if(response.data.status != true){
-                        throw response.data.message 
-                    }
-                    context.state.dataList.items = response.data.result
-                    if(context.state.dataList.items.lenngth > 1){
-                        context.state.dataList.items.forEach((data,index) => {
-                            data.detailLink = '/character/'+data.character_no
-                            resolve()
-                        })
-                    }
-                }).catch((error) => { 
-                    let errorMsg = ''
-                    Object.keys(error).map((key) => {
-                        errorMsg += key+' : '+error[key]+'\n'
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.dataList.items = response.data.result
+                if(context.state.dataList.items.length > 0){
+                    context.state.dataList.items.forEach((data,index) => {
+                        data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
+                        data.detailLink = '/character/'+data.character_no
                     })
-                    alert(errorMsg)
-                    reject()
-                })
+                }
+            }).catch((error) => { 
+                alert(error)
+                // context.state.alert.message = error['result']
+                // Object.keys(context.state.validateMsg).map((key) => {
+                //     if(error['message'][key] != undefined){
+                //         context.state.validateMsg[key] = error['message'][key]
+                //     }else{
+                //         context.state.validateMsg[key] = ''
+                //     }
+                // })
+                // context.commit('showAlert')
             })
         }else{
             return []

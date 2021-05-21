@@ -12,6 +12,9 @@ window.Vue = require('vue').default;
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+//moment.js 時間套件
+window.moment = require('moment')
+
 //引用設定好的vue router
 import router from './router.js';
 

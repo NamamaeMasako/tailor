@@ -41,6 +41,9 @@ const mutations = {
         if(typeof payload.which == 'string'){
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = state.api.list[payload.which]
+                if(state.api.active.method == 'post'){
+                    state.api.active.data = state.dataList.formList
+                }
             }
         }
         if(Array.isArray(payload.paraArr)){
@@ -61,23 +64,21 @@ const actions = {
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
-            return new Promise((resolve, reject) => {
-                axios(context.state.api.active).then((response) => {
-                    console.log(response.data)
-                    if(response.data.status != true){
-                        throw response.data 
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+            }).catch((error) => { 
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
                     }
-                    resolve()
-                }).catch((error) => { 
-                    // context.commit('showAlert')
-                    context.state.alert.message = error['result']
-                    context.state.validateMsg = error['message']
-                    // Object.keys(error).map((key) => {
-                    //     context.state.alert.message += key+' : '+error[key]+'\n'
-                    // })
-                    context.commit('showAlert')
-                    reject()
                 })
+                context.commit('showAlert')
             })
         }else{
             context.state.alert.message = '錯誤的API'
