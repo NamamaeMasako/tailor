@@ -6,7 +6,7 @@ const state = {
             { key: 'enable_text', label: '情報開放狀態', sortable: false },
             { key: 'shelf_text', label: '販賣狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
-            { key: 'detailLink', label: '編輯', sortable: false },
+            { key: 'detailLink', label: '詳細資料', sortable: false },
         ],
         items: [],
         perPage: 10,
