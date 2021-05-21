@@ -41,10 +41,13 @@ class CharacterController extends Controller
                 $error = json_encode($validator->errors());
                 throw new Exception($error);
             }
+            $res = Character::create($request->all());
+            // dd($res);
             $result['status'] = true;
             $result['message']['character'] = 'store => JJJ';
             // DB::commit();
         }catch(Exception $e){
+            dd($e->getMessage());
             $errmsg = json_decode($e->getMessage());
             $result['result'] = '新增失敗';
             $result['message'] = $errmsg;

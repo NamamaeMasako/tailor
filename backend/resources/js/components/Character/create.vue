@@ -30,8 +30,9 @@
                             <label class="col-sm-2 col-form-label">性別</label>
                             <div class="col-sm-10">
                                 <div class="d-flex py-1" :class="{'is-invalid': validateMsg.gender != ''}">
-                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="0">女</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="col-1" value="1">男</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="mr-4" value="0">女</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="mr-4" value="1">男</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.gender" name="gender" class="mr-4" value="2">無所屬</b-form-radio>
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.gender" :key="index">{{msg}}</span>
