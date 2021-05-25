@@ -2,7 +2,11 @@ const state = {
     dataList: {
         formList: {
             gender: '',
-            name: ''
+            name: '',
+            job_no: []
+        },
+        selectList: {
+            job: []
         }
     },
     api: {
@@ -13,6 +17,13 @@ const state = {
                 baseURL: null,
                 url: '/api/character',
                 method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getJobList: {
+                baseURL: null,
+                url: '/api/character/job',
+                method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
@@ -46,6 +57,8 @@ const mutations = {
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
                     state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -61,6 +74,33 @@ const mutations = {
 }
 
 const actions = {
+    getJobList: async (context) => {
+        context.commit('getApiSetting',{which:'getJobList',params:{'enable': '1'}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.dataList.selectList.job = response.data.result
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = '職業列表取得失敗'
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -91,7 +131,7 @@ const actions = {
         }
     },
     initPage: async (context) => {
-        
+        await context.dispatch('getJobList')
     }
 }
  

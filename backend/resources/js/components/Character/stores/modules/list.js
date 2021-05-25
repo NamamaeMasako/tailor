@@ -50,6 +50,11 @@ const mutations = {
         if(typeof payload.which == 'string'){
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = state.api.list[payload.which]
+                if(state.api.active.method == 'post'){
+                    state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    state.api.active.params = payload.params
+                }
             }
         }
         if(Array.isArray(payload.paraArr)){

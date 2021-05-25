@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->string('job_no')->comment('編號');
             $table->string('title')->comment('職稱');
+            $table->string('enable')->comment('開放狀態');
             $table->timestamps();
         });
     }

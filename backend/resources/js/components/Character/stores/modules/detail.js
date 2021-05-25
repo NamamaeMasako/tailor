@@ -55,8 +55,7 @@ const mutations = {
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
                     state.api.active.data = state.dataList.formList
-                }
-                if(state.api.active.method == 'get'){
+                }else if(state.api.active.method == 'get'){
                     state.api.active.params = payload.params
                 }
             }

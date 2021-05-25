@@ -3,6 +3,7 @@ const state = {
         fields: [
             { key: 'job_no', label: '職業編號', sortable: false },
             { key: 'title', label: '名稱', sortable: false },
+            { key: 'enable_text', label: '開放狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '詳細資料', sortable: false },
         ],

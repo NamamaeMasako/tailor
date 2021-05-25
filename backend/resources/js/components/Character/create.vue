@@ -39,6 +39,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">可選職業</label>
+                            <div class="col-10">
+                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
                         <b-button variant="success" v-on:click="submit">送出</b-button>

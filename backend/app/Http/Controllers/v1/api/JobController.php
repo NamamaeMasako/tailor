@@ -25,11 +25,9 @@ class JobController extends Controller
                 }
             }
             if(count($tb) > 0){
-                // foreach($tb as $row){
-                //     $row->gender_text = Lang::get('status.character.gender')[$row->gender];
-                //     $row->enable_text = Lang::get('status.character.enable')[$row->enable];
-                //     $row->shelf_text = Lang::get('status.character.shelf')[$row->shelf];
-                // }
+                foreach($tb as $row){
+                    $row->enable_text = Lang::get('status.job.enable')[$row->enable];
+                }
             }else{
                 $result['message'] = ['無對應資料'];
                 throw new Exception('查詢失敗');

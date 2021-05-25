@@ -18,6 +18,7 @@ class Job extends Model
         static::creating(function($model)
         {
             $model->job_no = 'J_'.Carbon::now()->timestamp;
+            $model->enable = 1;
         });
         static::updating(function($model)
         {
