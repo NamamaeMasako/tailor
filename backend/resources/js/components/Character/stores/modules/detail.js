@@ -1,5 +1,7 @@
 const state = {
+    editMode: false,
     dataList: {
+        characterNo: null,
         formList: {
             gender: '',
             name: ''
@@ -11,8 +13,15 @@ const state = {
         list: {
             submit: {
                 baseURL: null,
-                url: '/api/character',
+                url: '/api/character/edit',
                 method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getData: {
+                baseURL: null,
+                url: '/api/character',
+                method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
@@ -36,6 +45,9 @@ const getters = {
 }
  
 const mutations = {
+    countDownChanged: (state, payload) => {
+        state.alert.dismissCountDown = payload
+    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -43,6 +55,9 @@ const mutations = {
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
                     state.api.active.data = state.dataList.formList
+                }
+                if(state.api.active.method == 'get'){
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -52,23 +67,50 @@ const mutations = {
             })
         }
     },
-    showAlert(state, payload) {
+    showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
 
 const actions = {
-    countDownChanged(context, dismissCountDown) {
-        context.state.alert.dismissCountDown = dismissCountDown
-    },
-    submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit'})
+    getData: async (context) => {
+        context.commit('getApiSetting',{which:'getData',params:{'character_no': context.state.dataList.characterNo}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
                 if(response.data.status != true){
                     throw response.data
                 }
+                context.state.dataList.formList = response.data.result[0]
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
+    submit: async (context) => {
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.characterNo]})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.alert.variant = 'success'
+                context.state.alert.message = response.data['result']
+                context.commit('showAlert')
             }).catch((error) => { 
                 context.state.alert.message = error['result']
                 Object.keys(context.state.validateMsg).map((key) => {
@@ -81,12 +123,13 @@ const actions = {
                 context.commit('showAlert')
             })
         }else{
+            context.state.alert.variant = 'danger'
             context.state.alert.message = '錯誤的API'
             context.commit('showAlert')
         }
     },
     initPage: async (context) => {
-
+        await context.dispatch('getData')
     }
 }
  

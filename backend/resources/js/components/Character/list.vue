@@ -6,9 +6,9 @@
                 <li class="breadcrumb-item active" aria-current="page">列表</li>
             </ol>
         </nav>
-        <b-alert variant="danger" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">
+        <b-alert :variant="alert.variant" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">
             <p>{{alert.message}}</p>
-            <b-progress variant="danger" :max="alert.dismissSecs-1" :value="alert.dismissCountDown-1" height="4px"></b-progress>
+            <b-progress :variant="alert.variant" :max="alert.dismissSecs-1" :value="alert.dismissCountDown-1" height="4px"></b-progress>
         </b-alert>
         <div class="row justify-content-center">
             <div class="col-12">
@@ -52,9 +52,11 @@
             ])
         },
         methods: {
-            ...mapActions('listData',[
-                'initPage',
+            ...mapMutations('listData',[
                 'countDownChanged'
+            ]),
+            ...mapActions('listData',[
+                'initPage'
             ])   
         }
     }

@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('v1')->group(function () {
-    // 經由middleware 驗證
     Route::namespace('api')->group(function () {
-        Route::get('character', 'CharacterController@index');
-        Route::post('character', 'CharacterController@store');
+        Route::prefix('character')->group(function () {
+            Route::get('/', 'CharacterController@index');
+            Route::post('/', 'CharacterController@store');
+            Route::post('/edit/{character_no}', 'CharacterController@edit');
+            Route::prefix('job')->group(function () {
+                Route::get('/', 'JobController@index');
+                Route::post('/', 'JobController@store');
+                Route::post('/edit/{job_no}', 'JobController@edit');
+            });
+        });
     });
 });

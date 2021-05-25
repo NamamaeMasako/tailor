@@ -7,6 +7,10 @@ import CharacterList from './components/Character/list.vue';
 import CharacterCreate from './components/Character/create.vue';
 import CharacterDetail from './components/Character/detail.vue';
 
+import JobList from './components/Job/list.vue';
+import JobCreate from './components/Job/create.vue';
+
+
 // 使用 Vue Router
 Vue.use(Router);
 
@@ -17,6 +21,9 @@ export const routes = [
 	{ path: '/character/list', component: CharacterList, name:'Character-list'},
 	{ path: '/character/create', component: CharacterCreate, name:'Character-create'},
 	{ path: '/character/:character_no', component: CharacterDetail, name:'Character-detail'},
+	{ path: '/character/job/list', component: JobList, name:'Job-list'},
+	{ path: '/character/job/create', component: JobCreate, name:'Job-create'},
+
 	// { path: '*', redirect: '/' },
 ];
 

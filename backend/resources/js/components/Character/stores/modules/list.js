@@ -32,6 +32,7 @@ const state = {
         dismissCountDown: 0,
         showDismissibleAlert: false
     },
+    validateMsg: {}
 }
 
 const getters = {
@@ -41,6 +42,9 @@ const getters = {
 }
  
 const mutations = {
+    countDownChanged: (state, payload) => {
+        state.alert.dismissCountDown = payload
+    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -54,7 +58,7 @@ const mutations = {
             })
         }
     },
-    showAlert(state, payload) {
+    showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
@@ -76,16 +80,16 @@ const actions = {
                     })
                 }
             }).catch((error) => { 
-                alert(error)
-                // context.state.alert.message = error['result']
-                // Object.keys(context.state.validateMsg).map((key) => {
-                //     if(error['message'][key] != undefined){
-                //         context.state.validateMsg[key] = error['message'][key]
-                //     }else{
-                //         context.state.validateMsg[key] = ''
-                //     }
-                // })
-                // context.commit('showAlert')
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
             })
         }else{
             return []

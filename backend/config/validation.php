@@ -7,5 +7,12 @@ return [
                 'gender' => 'required'
             ]
         ]
+    ],
+    'job' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required'
+            ]
+        ]
     ]
 ];

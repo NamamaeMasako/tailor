@@ -36,6 +36,9 @@ const getters = {
 }
  
 const mutations = {
+    countDownChanged: (state, payload) => {
+        state.alert.dismissCountDown = payload
+    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -52,15 +55,12 @@ const mutations = {
             })
         }
     },
-    showAlert(state, payload) {
+    showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
 
 const actions = {
-    countDownChanged(context, dismissCountDown) {
-        context.state.alert.dismissCountDown = dismissCountDown
-    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -69,7 +69,11 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data
                 }
+                context.state.alert.variant = 'success'
+                context.state.alert.message = response.data['result']
+                context.commit('showAlert')
             }).catch((error) => { 
+                context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
                 Object.keys(context.state.validateMsg).map((key) => {
                     if(error['message'][key] != undefined){
@@ -81,12 +85,13 @@ const actions = {
                 context.commit('showAlert')
             })
         }else{
+            context.state.alert.variant = 'danger'
             context.state.alert.message = '錯誤的API'
             context.commit('showAlert')
         }
     },
     initPage: async (context) => {
-
+        
     }
 }
  
