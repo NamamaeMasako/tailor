@@ -77,6 +77,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">可選職業</label>
+                            <div class="col-sm-10" v-if="editMode != true">
+                                <div class="form-control-plaintext">
+                                    <span class="badge badge-primary mr-1" v-for="(option, index) in dataList.selectList.job" :key="index" v-show="dataList.formList.job_no.indexOf(option.job_no) > -1">{{option.title}}</span>
+                                </div>
+                            </div>
+                            <div class="col-10" v-else>
+                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center" v-if="editMode == true">
                         <b-button variant="success" v-on:click="submit">送出</b-button>

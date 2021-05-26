@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Job extends Model
+class CharacterJob extends Model
 {
-    protected $table = 'jobs';
-    protected $primaryKey = 'job_no';
-    protected $keyType = 'string';
+    protected $table = 'character_jobs';
     protected $fillabled = ['*'];
     protected $guarded = ['id'];
     public $timestamps = true;
@@ -19,16 +17,19 @@ class Job extends Model
         parent::boot();
         static::creating(function($model)
         {
-            $model->job_no = 'J_'.Carbon::now()->timestamp;
-            $model->enable = 1;
+
         });
         static::updating(function($model)
         {
 
         });
     }
-    public function CharacterJob()
+    public function Character()
     {
-        return $this->hasMany('App\models\CharacterJob','job_no');
+        return $this->belongsTo('App\models\Character','character_no');
+    }
+    public function Job()
+    {
+        return $this->belongsTo('App\models\Job','job_no');
     }
 }

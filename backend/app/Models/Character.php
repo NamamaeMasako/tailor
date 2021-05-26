@@ -8,6 +8,8 @@ use Carbon\Carbon;
 class Character extends Model
 {
     protected $table = 'characters';
+    protected $primaryKey = 'character_no';
+    protected $keyType = 'string';
     protected $fillabled = ['*'];
     protected $guarded = ['id'];
     public $timestamps = true;
@@ -25,5 +27,9 @@ class Character extends Model
         {
 
         });
+    }
+    public function CharacterJob()
+    {
+        return $this->hasMany('App\models\CharacterJob','character_no');
     }
 }

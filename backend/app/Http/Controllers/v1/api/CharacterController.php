@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\api;  //路徑
 use App\Http\Controllers\Controller;
 use App\Models\Character;
+use App\Models\CharacterJob;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,6 +30,11 @@ class CharacterController extends Controller
                     $row->gender_text = Lang::get('status.character.gender')[$row->gender];
                     $row->enable_text = Lang::get('status.character.enable')[$row->enable];
                     $row->shelf_text = Lang::get('status.character.shelf')[$row->shelf];
+                    $job_no = [];
+                    foreach($row->CharacterJob as $CharacterJob){
+                        array_push($job_no,$CharacterJob->job_no);
+                    }
+                    $row->job_no = $job_no;
                 }
             }else{
                 $result['message'] = ['無對應資料'];
@@ -55,7 +61,26 @@ class CharacterController extends Controller
                 $result['message'] = $validator->errors();
                 throw new Exception('新增失敗');
             }
-            Character::create($request->all());
+            $resquest_character_create = [
+                'gender' => $request->gender,
+                'name' => $request->name
+            ];
+            $resquestArr_character_job_create = [];
+            if(is_array($request->job_no) && count($request->job_no) > 0){
+                foreach($request->job_no as $job_no){
+                    $res = [
+                        'job_no' => $job_no
+                    ];
+                    array_push($resquestArr_character_job_create,$res);
+                }
+            }
+            $response_character_create = Character::create($resquest_character_create);
+            if(count($resquestArr_character_job_create) > 0){
+                foreach($resquestArr_character_job_create as $res){
+                    $res['character_no'] = $response_character_create->character_no;
+                    CharacterJob::create($res);
+                }
+            }
             $result['status'] = true;
             $result['result'] = '新增成功';
             DB::commit();
@@ -80,11 +105,36 @@ class CharacterController extends Controller
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
+            $resquest_character_update = [
+                'gender' => $request->gender,
+                'name' => $request->name,
+                'enable' => $request->enable,
+                'shelf' => $request->shelf
+            ];
+            $resquestArr_character_job_update = [];
+            if(is_array($request->job_no) && count($request->job_no) > 0){
+                foreach($request->job_no as $job_no){
+                    $res = [
+                        'character_no' => $character_no,
+                        'job_no' => $job_no
+                    ];
+                    array_push($resquestArr_character_job_update,$res);
+                }
+            }
             $tb = Character::where('character_no',$character_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
-                $result['message'] = ['無對應資料'];
+                $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
             }
+            $tb->update($resquest_character_update);
+            
+            CharacterJob::where('character_no',$character_no)->delete();
+            if(count($resquestArr_character_job_update) > 0){
+                foreach($resquestArr_character_job_update as $res){
+                    CharacterJob::create($res);
+                }
+            }
+            
             $result['status'] = true;
             $result['result'] = '更新成功';
             DB::commit();

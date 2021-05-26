@@ -13,17 +13,17 @@ const state = {
         active: null,
         host: localStorage.getItem('HOST'),
         list: {
-            submit: {
-                baseURL: null,
-                url: '/api/character',
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                timeout: 5000,
-            },
             getJobList: {
                 baseURL: null,
                 url: '/api/character/job',
                 method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            submit: {
+                baseURL: null,
+                url: '/api/character',
+                method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
