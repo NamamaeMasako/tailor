@@ -1,17 +1,25 @@
 const state = {
+    editMode: false,
     dataList: {
+        jobNo: null,
         formList: {
-            gender: '',
-            name: ''
+            title: ''
         }
     },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list: {
+            getData: {
+                baseURL: null,
+                url: '/api/character/job',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
             submit: {
                 baseURL: null,
-                url: '/api/character',
+                url: '/api/character/job/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -26,8 +34,7 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        gender: '',
-        name: ''
+        title: ''
     }
 }
 
@@ -46,6 +53,8 @@ const mutations = {
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
                     state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -61,6 +70,33 @@ const mutations = {
 }
 
 const actions = {
+    getData: async (context) => {
+        context.commit('getApiSetting',{which:'getData',params:{'job_no': context.state.dataList.jobNo}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }              
+                context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -89,7 +125,7 @@ const actions = {
         }
     },
     initPage: async (context) => {
-
+        await context.dispatch('getData')
     }
 }
  

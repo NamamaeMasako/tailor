@@ -16,7 +16,7 @@ const mutations = {
 const actions = {
     getLinkList: async (context) => {
         context.state.linkList = [
-            { href: '/character/list' ,text: '角色' },
+            { href: '/character/list' ,text: '人物' },
             { href: '/character/job/list' ,text: '職業' }
         ]
     },

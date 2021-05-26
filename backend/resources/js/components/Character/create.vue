@@ -3,6 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">角色</li>
+                <li class="breadcrumb-item" aria-current="page">人物</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>

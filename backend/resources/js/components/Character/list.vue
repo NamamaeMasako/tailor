@@ -3,7 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">角色</li>
-                <li class="breadcrumb-item active" aria-current="page">列表</li>
+                <li class="breadcrumb-item active" aria-current="page">人物</li>
             </ol>
         </nav>
         <b-alert :variant="alert.variant" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">

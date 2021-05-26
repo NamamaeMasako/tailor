@@ -17,7 +17,7 @@
                 </li>
                 <li class="nav-item">
                     <router-link to="/character" class="nav-link">
-                        人物
+                        角色
                     </router-link>
                 </li>
             </ul>

@@ -2,7 +2,11 @@ const state = {
     editMode: false,
     dataList: {
         characterNo: null,
-        formList: {},
+        formList: {
+            gender: '',
+            name: '',
+            job_no: []
+        },
         selectList: {
             job: []
         }
@@ -87,7 +91,7 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data
                 }
-                context.state.dataList.formList = response.data.result[0]
+                context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -162,8 +166,8 @@ const actions = {
         }
     },
     initPage: async (context) => {
-        await context.dispatch('getData')
         await context.dispatch('getJobList')
+        await context.dispatch('getData')
     }
 }
  

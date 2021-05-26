@@ -32,8 +32,9 @@ class JobController extends Controller
                 $result['message'] = ['無對應資料'];
                 throw new Exception('查詢失敗');
             }
+
             $result['status'] = true;
-            $result['result'] = $tb;
+            $result['result'] = $tb->toArray();
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
         }
