@@ -9,7 +9,7 @@ const state = {
         list: {
             getLinkList: {
                 baseURL: null,
-                url: '/api/url',
+                url: '/api/system/url',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,

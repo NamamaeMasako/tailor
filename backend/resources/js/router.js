@@ -12,6 +12,9 @@ import JobDetail from './components/Job/detail.vue';
 
 import SystemList from './components/System/list.vue';
 
+import UrlList from './components/Url/list.vue';
+
+
 // 使用 Vue Router
 Vue.use(Router);
 
@@ -27,6 +30,7 @@ export const routes = [
 
 	{ path: '/system', redirect: '/system/list' },
 	{ path: '/system/list', component: SystemList, name:'System-list'},
+	{ path: '/system/url/list', component: UrlList, name:'Url-list'},
 
 
 	// { path: '*', redirect: '/' },

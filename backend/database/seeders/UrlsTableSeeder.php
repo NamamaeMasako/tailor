@@ -38,7 +38,7 @@ class UrlsTableSeeder extends Seeder
                 'mother_path' => '/system'
             ],
             [
-                'path' => '/url',
+                'path' => '/url/list',
                 'title' => '頁面連結',
                 'mother_path' => '/system'
             ],
