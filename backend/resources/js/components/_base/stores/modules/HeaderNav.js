@@ -1,6 +1,7 @@
 import axios from "axios";
  
 const state = {
+    currentPath: '',
     linkList: [],
     api: {
         active: null,
@@ -25,7 +26,14 @@ const state = {
 }
 
 const getters = {
-
+    motherPath: (state) => {
+        let pathArr = state.currentPath.split('/')
+        if(pathArr.length > 1){
+            return '/'+pathArr[1]
+        }else{
+            return null
+        }
+    }
 }
  
 const mutations = {
@@ -54,7 +62,6 @@ const actions = {
         context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path':''}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
-                console.log(response.data)
                 if(response.data.status != true){
                     throw response.data 
                 }
@@ -70,6 +77,25 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLinkList')
+    },
+    updateSideMenu: async (context, path) => {
+        context.state.currentPath = path
+        context.rootState.sideMenuData.currentPath = path
+        context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path': context.getters.motherPath}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.rootState.sideMenuData.linkList = response.data.result
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '無法取得清單'
+        }
     }
 }
  

@@ -65,7 +65,7 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "character detail" mounted.')
+            console.log('Component "job detail" mounted.')
             console.log(this)
             this.dataList.jobNo = this.$route.params.job_no
             this.initPage()

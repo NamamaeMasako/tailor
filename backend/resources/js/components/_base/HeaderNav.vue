@@ -10,7 +10,7 @@
         </button>
         <div class="collapse navbar-collapse" id="nav-header">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" v-for="(link, index) in linkList" :key="index">
+                <li class="nav-item" v-for="(link, index) in linkList" :key="index" v-on:click="updateSideMenu($route.path)">
                     <router-link :to="link.path" class="nav-link">
                         {{link.title}}
                     </router-link>
@@ -30,11 +30,14 @@
         },
         mounted() {
 			console.log('Component "header-nav" mounted.')
+            console.log(this)
+            this.currentPath = this.$route.path
             this.initPage()
 		},
         methods: {
             ...mapActions('headerNavData',[
-                'initPage'
+                'initPage',
+                'updateSideMenu'
             ])   
         }
 	}

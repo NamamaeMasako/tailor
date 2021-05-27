@@ -28,8 +28,8 @@ const state = {
 const getters = {
     motherPath: (state) => {
         let pathArr = state.currentPath.split('/')
-        if(pathArr.length > 0){
-            return pathArr[1]
+        if(pathArr.length > 1){
+            return '/'+pathArr[1]
         }else{
             return null
         }
@@ -59,10 +59,11 @@ const mutations = {
 
 const actions = {
     getLinkList: async (context) => {
-        context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path': '/'+context.getters.motherPath}})
+        console.log(context.state.currentPath)
+        console.log(context.getters.motherPath)
+        context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path': context.getters.motherPath}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
-                console.log(response.data)
                 if(response.data.status != true){
                     throw response.data 
                 }

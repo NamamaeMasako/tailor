@@ -42,7 +42,7 @@
             return this.$store.state.listData
         },
          mounted() {
-            console.log('Component "character list" mounted.')
+            console.log('Component "job list" mounted.')
             console.log(this)
             this.initPage()
         },

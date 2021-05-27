@@ -46,7 +46,7 @@
             return this.$store.state.createData
         },
          mounted() {
-            console.log('Component "character create" mounted.')
+            console.log('Component "job create" mounted.')
             console.log(this)
             this.initPage()
         },
