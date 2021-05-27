@@ -1,7 +1,27 @@
 import axios from "axios";
  
 const state = {
-
+    linkList: [],
+    api: {
+        active: null,
+        host: localStorage.getItem('HOST'),
+        list: {
+            getLinkList: {
+                baseURL: null,
+                url: '/api/url',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            }
+        }
+    },
+    alert: {
+        variant: 'danger',
+        message: '',
+        dismissSecs: 5,
+        dismissCountDown: 0,
+        showDismissibleAlert: false
+    }
 }
 
 const getters = {
@@ -9,11 +29,48 @@ const getters = {
 }
  
 const mutations = {
-
+    getApiSetting: (state, payload) => {
+        state.api.active = null
+        if(typeof payload.which == 'string'){
+            if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
+                state.api.active = state.api.list[payload.which]
+                if(state.api.active.method == 'post'){
+                    state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    state.api.active.params = payload.params
+                }
+            }
+        }
+        if(Array.isArray(payload.paraArr)){
+            payload.paraArr.forEach((el) => {
+                state.api.active.url += '/'+el
+            })
+        }
+    }
 }
 
 const actions = {
-
+    getLinkList: async (context) => {
+        context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path':''}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.linkList = response.data.result
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '無法取得清單'
+        }
+    },
+    initPage: async (context) => {
+        await context.dispatch('getLinkList')
+    }
 }
  
 const module = {

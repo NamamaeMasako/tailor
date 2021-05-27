@@ -10,14 +10,9 @@
         </button>
         <div class="collapse navbar-collapse" id="nav-header">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <router-link to="/example" class="nav-link">
-                        範例
-                    </router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/character" class="nav-link">
-                        角色
+                <li class="nav-item" v-for="(link, index) in linkList" :key="index">
+                    <router-link :to="link.path" class="nav-link">
+                        {{link.title}}
                     </router-link>
                 </li>
             </ul>
@@ -26,9 +21,21 @@
 </nav>
 </template>
 <script>
+    import store from './stores/index.js'
+    import { mapActions } from 'vuex'
     export default {
+        store,
+        data(){
+            return this.$store.state.headerNavData
+        },
         mounted() {
 			console.log('Component "header-nav" mounted.')
-		}
+            this.initPage()
+		},
+        methods: {
+            ...mapActions('headerNavData',[
+                'initPage'
+            ])   
+        }
 	}
 </script>

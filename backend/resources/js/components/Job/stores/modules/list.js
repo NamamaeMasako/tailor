@@ -91,7 +91,8 @@ const actions = {
                 context.commit('showAlert')
             })
         }else{
-            return []
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
         }
     },
     initPage: async (context) => {

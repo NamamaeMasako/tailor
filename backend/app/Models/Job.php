@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
 class Job extends Model
 {
+    use HasFactory;
+
     protected $table = 'jobs';
     protected $primaryKey = 'job_no';
     protected $keyType = 'string';

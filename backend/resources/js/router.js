@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 // 引用頁面的 Component
-import Example from './components/ExampleComponent.vue';
 import CharacterList from './components/Character/list.vue';
 import CharacterCreate from './components/Character/create.vue';
 import CharacterDetail from './components/Character/detail.vue';
@@ -17,7 +16,6 @@ Vue.use(Router);
 
 // Route 設定
 export const routes = [
-	{ path: '/example', component: Example, name:'Example'},
 	{ path: '/character', redirect: '/character/list' },
 	{ path: '/character/list', component: CharacterList, name:'Character-list'},
 	{ path: '/character/create', component: CharacterCreate, name:'Character-create'},
@@ -25,6 +23,8 @@ export const routes = [
 	{ path: '/character/job/list', component: JobList, name:'Job-list'},
 	{ path: '/character/job/create', component: JobCreate, name:'Job-create'},
 	{ path: '/character/job/:job_no', component: JobDetail, name:'job-detail'},
+
+	{ path: '/system', redirect: '/system/list' },
 
 	// { path: '*', redirect: '/' },
 ];

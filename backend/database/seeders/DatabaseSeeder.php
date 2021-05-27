@@ -13,7 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(UrlsTableSeeder::class);
+
         // \App\Models\User::factory(10)->create();
-        \App\Models\Character::factory(10)->create();
+        for ( $i=0 ; $i<5 ; $i++ ) {
+            \App\Models\Character::factory()->create();
+            sleep(1);
+        }
+        for ( $i=0 ; $i<10 ; $i++ ) {
+            \App\Models\Job::factory()->create();
+            sleep(1);
+        }
     }
 }

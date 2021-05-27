@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('v1')->group(function () {
     Route::namespace('api')->group(function () {
+        Route::prefix('url')->group(function () {
+            Route::get('/', 'UrlController@index');
+        });
         Route::prefix('character')->group(function () {
             Route::get('/', 'CharacterController@index');
             Route::post('/', 'CharacterController@store');
