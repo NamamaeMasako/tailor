@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <span class="mt-2">共{{itemsCount}}筆</span>
-                        <b-button variant="primary" href="/character/job/create">新增</b-button>
+                        <b-button variant="primary" href="/system/url/create">新增</b-button>
                     </div>
                     <div class="card-body">
                         <b-table :items="dataList.items" :fields="dataList.fields" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">

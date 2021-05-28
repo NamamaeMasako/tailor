@@ -14,5 +14,15 @@ return [
                 'title' => 'required'
             ]
         ]
+    ],
+    'url' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required',
+                'mother_path' => 'required',
+                'path' => 'required'
+            ]
+        ]
     ]
+
 ];

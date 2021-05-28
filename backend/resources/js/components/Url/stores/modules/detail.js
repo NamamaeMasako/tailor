@@ -1,9 +1,11 @@
 const state = {
     editMode: false,
     dataList: {
-        jobNo: null,
+        id: null,
         formList: {
-            title: ''
+            title: '',
+            mother_path: '',
+            path: ''
         }
     },
     api: {
@@ -12,14 +14,14 @@ const state = {
         list: {
             getData: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/system/url',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
             submit: {
                 baseURL: null,
-                url: '/api/character/job/edit',
+                url: '/api/system/url/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -34,7 +36,9 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        title: '',
+        mother_path: '',
+        path: ''
     }
 }
 

@@ -66,7 +66,7 @@ class JobController extends Controller
         return $result;
     }
 
-    public function edit(Request $request,$character_no) {
+    public function edit(Request $request,$job_no) {
         $result = [
             'status' => false,
             'result' => null,
@@ -74,16 +74,22 @@ class JobController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.character.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.job.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
-            $tb = Character::where('character_no',$character_no);
+            $resquest_job_update = [
+                'title' => $request->title,
+                'enable' => $request->enable
+            ];
+            $tb = Job::where('job_no',$job_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
-                $result['message'] = ['無對應資料'];
+                $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
             }
+            $tb->update($resquest_job_update);
+
             $result['status'] = true;
             $result['result'] = '更新成功';
             DB::commit();

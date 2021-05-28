@@ -2,8 +2,8 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
-                <li class="breadcrumb-item" aria-current="page">職業</li>
+                <li class="breadcrumb-item" aria-current="page">系統</li>
+                <li class="breadcrumb-item" aria-current="page">頁面連結</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>
@@ -15,15 +15,33 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/system/url/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">名稱</label>
+                            <label for="title" class="col-sm-2 col-form-label">連結名稱</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" :class="{'is-invalid': validateMsg.title != ''}" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mother_path" class="col-sm-2 col-form-label">所屬路徑</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" :class="{'is-invalid': validateMsg.mother_path != ''}" id="mother_path" v-model="dataList.formList.mother_path">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.mother_path" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="path" class="col-sm-2 col-form-label">路徑</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" :class="{'is-invalid': validateMsg.path != ''}" id="path" v-model="dataList.formList.path">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.path" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>

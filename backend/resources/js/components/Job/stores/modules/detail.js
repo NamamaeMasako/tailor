@@ -98,7 +98,7 @@ const actions = {
         }
     },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit'})
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.jobNo]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)

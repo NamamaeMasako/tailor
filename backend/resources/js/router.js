@@ -13,6 +13,8 @@ import JobDetail from './components/Job/detail.vue';
 import SystemList from './components/System/list.vue';
 
 import UrlList from './components/Url/list.vue';
+import UrlCreate from './components/Url/create.vue';
+import UrlDetail from './components/Url/detail.vue';
 
 
 // 使用 Vue Router
@@ -31,6 +33,8 @@ export const routes = [
 	{ path: '/system', redirect: '/system/list' },
 	{ path: '/system/list', component: SystemList, name:'System-list'},
 	{ path: '/system/url/list', component: UrlList, name:'Url-list'},
+	{ path: '/system/url/create', component: UrlCreate, name:'Url-create'},
+	{ path: '/system/url/:id', component: UrlDetail, name:'Url-detail'},
 
 
 	// { path: '*', redirect: '/' },

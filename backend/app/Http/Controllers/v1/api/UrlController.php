@@ -29,4 +29,65 @@ class UrlController extends Controller
         }
         return $result;
     }
+
+    public function store(Request $request) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.url.rules.store'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('新增失敗');
+            }
+            Url::create($request->all());
+            $result['status'] = true;
+            $result['result'] = '新增成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
+
+    public function edit(Request $request,$id) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.url.rules.store'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('更新失敗');
+            }
+            $resquest_url_update = [
+                'title' => $request->title,
+                'mother_path' => $request->mother_path,
+                'path' => $request->path
+            ];
+            $tb = Url::find($id);
+            if(count($tb->get()) > 1 || count($tb->get()) <= 0){
+                $result['message'] = ['無對應資料'];
+                throw new Exception('更新失敗');
+            }
+            $tb->update($resquest_url_update);
+
+            $result['status'] = true;
+            $result['result'] = '更新成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
 }
