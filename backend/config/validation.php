@@ -15,6 +15,18 @@ return [
             ]
         ]
     ],
+    'member' => [
+        'rules' => [
+            'store' => [
+                'name' => 'required',
+                'email' => 'required|email|unique:members',
+                'password' => 'required'
+            ],
+            'store' => [
+                'name' => 'required'
+            ]
+        ]
+    ],
     'url' => [
         'rules' => [
             'store' => [

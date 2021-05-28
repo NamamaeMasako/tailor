@@ -24,5 +24,9 @@ class DatabaseSeeder extends Seeder
             \App\Models\Job::factory()->create();
             sleep(1);
         }
+        for ( $i=0 ; $i<1 ; $i++ ) {
+            \App\Models\Member::factory()->create();
+            sleep(1);
+        }
     }
 }

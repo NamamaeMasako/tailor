@@ -10,6 +10,10 @@ import JobList from './components/Job/list.vue';
 import JobCreate from './components/Job/create.vue';
 import JobDetail from './components/Job/detail.vue';
 
+import MemberList from './components/Member/list.vue';
+import MemberCreate from './components/Member/create.vue';
+import MemberDetail from './components/Member/detail.vue';
+
 import SystemList from './components/System/list.vue';
 
 import UrlList from './components/Url/list.vue';
@@ -29,6 +33,11 @@ export const routes = [
 	{ path: '/character/job/list', component: JobList, name:'Job-list'},
 	{ path: '/character/job/create', component: JobCreate, name:'Job-create'},
 	{ path: '/character/job/:job_no', component: JobDetail, name:'job-detail'},
+
+	{ path: '/member', redirect: '/member/list' },
+	{ path: '/member/list', component: MemberList, name:'Member-list'},
+	{ path: '/member/create', component: MemberCreate, name:'Member-create'},
+	{ path: '/member/:member_no', component: MemberDetail, name:'Member-detail'},
 
 	{ path: '/system', redirect: '/system/list' },
 	{ path: '/system/list', component: SystemList, name:'System-list'},

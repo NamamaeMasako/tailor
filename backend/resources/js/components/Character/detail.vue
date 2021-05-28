@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-2 col-form-label">名字</label>
+                            <label for="name" class="col-2 col-form-label">名稱</label>
                             <div class="col-10">
                                 <input type="text" :class="{'is-invalid': validateMsg.name != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="name" v-model="dataList.formList.name">
                                 <div class="invalid-feedback">

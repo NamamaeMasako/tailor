@@ -19,8 +19,12 @@ class UrlsTableSeeder extends Seeder
                 'title' => '角色',
             ],
             [
+                'path' => '/member',
+                'title' => '遊戲管理',
+            ],
+            [
                 'path' => '/system',
-                'title' => '系統',
+                'title' => '後臺設定',
             ],
             [
                 'path' => '/list',
@@ -31,6 +35,11 @@ class UrlsTableSeeder extends Seeder
                 'path' => '/job/list',
                 'title' => '職業',
                 'mother_path' => '/character'
+            ],
+            [
+                'path' => '/list',
+                'title' => '會員',
+                'mother_path' => '/member'
             ],
             [
                 'path' => '/list',

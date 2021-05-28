@@ -2,7 +2,7 @@ const state = {
     dataList: {
         fields: [
             { key: 'character_no', label: '角色編號', sortable: false },
-            { key: 'name', label: '名字', sortable: false },
+            { key: 'name', label: '名稱', sortable: false },
             { key: 'enable_text', label: '情報公開狀態', sortable: false },
             { key: 'shelf_text', label: '販賣狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
