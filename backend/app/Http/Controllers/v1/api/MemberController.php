@@ -27,6 +27,16 @@ class MemberController extends Controller
             if(count($tb) > 0){
                 foreach($tb as $row){
                     $row->enable_text = Lang::get('status.member.enable')[$row->enable];
+                    if(count($row->MemberCharacter) > 0){
+                        foreach($row->MemberCharacter as $MemberCharacter){
+                            $tb_character = Character::where('character_no',$MemberCharacter->character_no);
+                            if(count($tb_character->get()) > 1 || count($tb_character->get()) <= 0){
+                                $result['message'] = ['資料異常'];
+                                throw new Exception('更新失敗');
+                            }
+                            $MemberCharacter->character_name = $tb_character->first()->name;
+                        }
+                    }
                 }
             }else{
                 $result['message'] = ['無對應資料'];

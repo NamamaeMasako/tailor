@@ -35,4 +35,8 @@ class Character extends Model
     {
         return $this->hasMany('App\models\CharacterJob','character_no');
     }
+    public function MemberCharacter()
+    {
+        return $this->hasMany('App\models\MemberCharacter','character_no');
+    }
 }

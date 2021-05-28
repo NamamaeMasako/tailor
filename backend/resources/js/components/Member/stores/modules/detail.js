@@ -5,6 +5,7 @@ const state = {
         formList: {
             email: '',
             name: '',
+            member_character: []
         }
     },
     api: {

@@ -30,4 +30,8 @@ class Member extends Model
 
         });
     }
+    public function MemberCharacter()
+    {
+        return $this->hasMany('App\models\MemberCharacter','member_no');
+    }
 }

@@ -15,8 +15,8 @@ class CreateCharactersTable extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
-            $table->string('character_no')->uniqid()->comment('編號');
-            $table->string('name')->comment('名字');
+            $table->string('character_no')->uniqid()->comment('角色編號');
+            $table->string('name')->comment('名稱');
             $table->string('gender')->comment('性別');
             $table->string('enable')->comment('情報開放狀態');
             $table->string('shelf')->comment('販賣狀態');

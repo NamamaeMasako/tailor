@@ -15,7 +15,7 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('job_no')->unique()->comment('編號');
+            $table->string('job_no')->unique()->comment('職業編號');
             $table->string('title')->comment('職稱');
             $table->string('enable')->comment('開放狀態');
             $table->timestamps();

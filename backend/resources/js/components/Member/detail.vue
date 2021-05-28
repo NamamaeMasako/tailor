@@ -53,6 +53,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12 accordion">
+                                <div class="card">
+                                    <div class="card-header bg-success btn text-light text-left" data-toggle="collapse" data-target="#characters">
+                                        持有角色
+                                        <span class="close text-light"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+                                    <div class="collapse" id="characters">
+                                        <div class="card-body">
+                                            <ul class="list-group" v-if="dataList.formList.member_character.length > 0">
+                                                <li class="list-group-item" v-for="(character, index) in dataList.formList.member_character" :key="index">{{character.character_name}}</li>
+                                            </ul>
+                                            <p v-else>尚未持有任何角色</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center" v-if="editMode == true">
                         <b-button variant="success" v-on:click="submit">送出</b-button>
