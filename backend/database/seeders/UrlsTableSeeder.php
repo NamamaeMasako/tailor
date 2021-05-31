@@ -15,34 +15,39 @@ class UrlsTableSeeder extends Seeder
     {
         $insertDatas = [
             [
-                'path' => '/character',
-                'title' => '角色',
+                'path' => '/game',
+                'title' => '遊戲管理',
             ],
             [
                 'path' => '/member',
-                'title' => '遊戲管理',
+                'title' => '會員',
             ],
             [
                 'path' => '/system',
                 'title' => '後臺設定',
             ],
             [
-                'path' => '/list',
-                'title' => '人物',
-                'mother_path' => '/character'
+                'path' => '/character/list',
+                'title' => '角色',
+                'mother_path' => '/game'
             ],
             [
                 'path' => '/job/list',
                 'title' => '職業',
-                'mother_path' => '/character'
+                'mother_path' => '/game'
+            ],
+            [
+                'path' => '/area/list',
+                'title' => '區域',
+                'mother_path' => '/game'
             ],
             [
                 'path' => '/list',
-                'title' => '會員',
+                'title' => '列表',
                 'mother_path' => '/member'
             ],
             [
-                'path' => '/list',
+                'path' => '/manerger/list',
                 'title' => '管理員',
                 'mother_path' => '/system'
             ],

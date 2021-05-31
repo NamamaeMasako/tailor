@@ -81,7 +81,7 @@ const actions = {
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/character/'+data.character_no
+                        data.detailLink = '/game/character/'+data.character_no
                     })
                 }
             }).catch((error) => { 

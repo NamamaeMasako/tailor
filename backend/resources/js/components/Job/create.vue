@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
+                <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
                 <li class="breadcrumb-item" aria-current="page">職業</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

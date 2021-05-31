@@ -14,7 +14,11 @@ import MemberList from './components/Member/list.vue';
 import MemberCreate from './components/Member/create.vue';
 import MemberDetail from './components/Member/detail.vue';
 
-import SystemList from './components/System/list.vue';
+import AreaList from './components/Area/list.vue';
+import AreaCreate from './components/Area/create.vue';
+import AreaDetail from './components/Area/detail.vue';
+
+import ManagerList from './components/Manager/list.vue';
 
 import UrlList from './components/Url/list.vue';
 import UrlCreate from './components/Url/create.vue';
@@ -26,21 +30,24 @@ Vue.use(Router);
 
 // Route 設定
 export const routes = [
-	{ path: '/character', redirect: '/character/list' },
-	{ path: '/character/list', component: CharacterList, name:'Character-list'},
-	{ path: '/character/create', component: CharacterCreate, name:'Character-create'},
-	{ path: '/character/:character_no', component: CharacterDetail, name:'Character-detail'},
-	{ path: '/character/job/list', component: JobList, name:'Job-list'},
-	{ path: '/character/job/create', component: JobCreate, name:'Job-create'},
-	{ path: '/character/job/:job_no', component: JobDetail, name:'job-detail'},
-
 	{ path: '/member', redirect: '/member/list' },
 	{ path: '/member/list', component: MemberList, name:'Member-list'},
 	{ path: '/member/create', component: MemberCreate, name:'Member-create'},
 	{ path: '/member/:member_no', component: MemberDetail, name:'Member-detail'},
+	
+	{ path: '/game', redirect: '/game/character/list' },
+	{ path: '/game/character/list', component: CharacterList, name:'Character-list'},
+	{ path: '/game/character/create', component: CharacterCreate, name:'Character-create'},
+	{ path: '/game/character/:character_no', component: CharacterDetail, name:'Character-detail'},
+	{ path: '/game/job/list', component: JobList, name:'Job-list'},
+	{ path: '/game/job/create', component: JobCreate, name:'Job-create'},
+	{ path: '/game/job/:job_no', component: JobDetail, name:'job-detail'},
+	{ path: '/game/area/list', component: AreaList, name:'Area-list'},
+	{ path: '/game/area/create', component: AreaCreate, name:'Area-create'},
+	{ path: '/game/area/:area_no', component: AreaDetail, name:'Area-detail'},
 
-	{ path: '/system', redirect: '/system/list' },
-	{ path: '/system/list', component: SystemList, name:'System-list'},
+	{ path: '/system', redirect: '/system/manager/list' },
+	{ path: '/system/manager/list', component: ManagerList, name:'Manager-list'},
 	{ path: '/system/url/list', component: UrlList, name:'Url-list'},
 	{ path: '/system/url/create', component: UrlCreate, name:'Url-create'},
 	{ path: '/system/url/:id', component: UrlDetail, name:'Url-detail'},

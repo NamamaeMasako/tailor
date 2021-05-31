@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
+                <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
                 <li class="breadcrumb-item" aria-current="page">職業</li>
                 <li class="breadcrumb-item active" aria-current="page">詳細資料</li>
             </ol>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                         <b-form-checkbox v-model="editMode" name="check-button" class="col-form-label" switch>
                             <b v-if="editMode != true">編輯模式：關</b>
                             <b class="text-primary" v-else>編輯模式：開</b>
