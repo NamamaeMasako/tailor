@@ -56,7 +56,7 @@
                         <div class="row">
                             <div class="col-12 accordion">
                                 <div class="card">
-                                    <div class="card-header bg-success btn text-light text-left" data-toggle="collapse" data-target="#characters">
+                                    <div class="card-header bg-info btn text-light text-left" data-toggle="collapse" data-target="#characters">
                                         持有角色
                                         <span class="close text-light"><i class="fa fa-angle-down"></i></span>
                                     </div>

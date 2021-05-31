@@ -1,9 +1,10 @@
 const state = {
     dataList: {
         fields: [
-            { key: 'job_no', label: '職業編號', sortable: false },
+            { key: 'area_no', label: '區域編號', sortable: false },
             { key: 'title', label: '名稱', sortable: false },
-            { key: 'enable_text', label: '選用狀態', sortable: false },
+            { key: 'order', label: '順序', sortable: false },
+            { key: 'enable_text', label: '開放狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '詳細資料', sortable: false },
         ],
@@ -17,7 +18,7 @@ const state = {
         list:{
             getItems: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/area',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -74,8 +75,9 @@ const actions = {
                 context.state.dataList.items = response.data.result
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
+                        data.order = parseInt(data.order) + 1
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/character/job/'+data.job_no
+                        data.detailLink = '/game/area/'+data.area_no
                     })
                 }
             }).catch((error) => { 

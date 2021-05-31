@@ -15,8 +15,8 @@ class CreateStagesTable extends Migration
     {
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
-            $table->string('stage_no')->unique()->comment('關卡編號');
-            $table->string('area_no')->comment('區域編號');
+            $table->string('stage_no')->unique()->comment('任務編號');
+            $table->string('area_no')->nullable()->comment('區域編號');
             $table->string('title')->comment('名稱');
             $table->string('order')->comment('順序');
             $table->time('time')->comment('執行時間');

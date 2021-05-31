@@ -42,6 +42,11 @@ class UrlsTableSeeder extends Seeder
                 'mother_path' => '/game'
             ],
             [
+                'path' => '/stage/list',
+                'title' => '任務',
+                'mother_path' => '/game'
+            ],
+            [
                 'path' => '/list',
                 'title' => '列表',
                 'mother_path' => '/member'

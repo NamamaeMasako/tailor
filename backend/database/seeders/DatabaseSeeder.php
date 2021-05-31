@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::factory(10)->create();
         for ( $i=0 ; $i<5 ; $i++ ) {
+            \App\Models\Area::factory()->create();
+            sleep(1);
+        }
+        for ( $i=0 ; $i<5 ; $i++ ) {
             \App\Models\Character::factory()->create();
             sleep(1);
         }
@@ -26,6 +30,10 @@ class DatabaseSeeder extends Seeder
         }
         for ( $i=0 ; $i<1 ; $i++ ) {
             \App\Models\Member::factory()->create();
+            sleep(1);
+        }
+        for ( $i=0 ; $i<4 ; $i++ ) {
+            \App\Models\Stage::factory()->create();
             sleep(1);
         }
     }

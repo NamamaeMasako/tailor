@@ -2,8 +2,8 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
-                <li class="breadcrumb-item" aria-current="page">職業</li>
+                <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
+                <li class="breadcrumb-item" aria-current="page">區域</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/area/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -24,6 +24,15 @@
                                 <input type="text" class="form-control" :class="{'is-invalid': validateMsg.title != ''}" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label">順序</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" min=0 :class="{'is-invalid': validateMsg.order != ''}" id="title" v-model="dataList.formList.order">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,13 @@
 <?php
 return [
+    'area' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required',
+                'order' => 'required|integer'
+            ]
+        ]
+    ],
     'character' => [
         'rules' => [
             'store' => [
@@ -22,7 +30,7 @@ return [
                 'email' => 'required|email|unique:members',
                 'password' => 'required'
             ],
-            'store' => [
+            'edit' => [
                 'name' => 'required'
             ]
         ]

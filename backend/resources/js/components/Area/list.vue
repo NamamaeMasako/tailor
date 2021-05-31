@@ -3,7 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
-                <li class="breadcrumb-item active" aria-current="page">關卡</li>
+                <li class="breadcrumb-item active" aria-current="page">區域</li>
             </ol>
         </nav>
         <b-alert :variant="alert.variant" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">

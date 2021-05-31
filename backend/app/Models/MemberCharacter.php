@@ -32,5 +32,4 @@ class MemberCharacter extends Model
     {
         return $this->belongsTo('App\models\Character','character_no');
     }
-    
 }

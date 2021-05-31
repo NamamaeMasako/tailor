@@ -12,14 +12,14 @@ const state = {
         list: {
             getData: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/job',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
             submit: {
                 baseURL: null,
-                url: '/api/character/job/edit',
+                url: '/api/game/job/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,

@@ -1,9 +1,10 @@
 const state = {
     editMode: false,
     dataList: {
-        jobNo: null,
+        areaNo: null,
         formList: {
-            title: ''
+            title: '',
+            order: ''
         }
     },
     api: {
@@ -12,14 +13,14 @@ const state = {
         list: {
             getData: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/area',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
             submit: {
                 baseURL: null,
-                url: '/api/character/job/edit',
+                url: '/api/game/area/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -34,7 +35,8 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        title: '',
+        order: ''
     }
 }
 
@@ -71,7 +73,7 @@ const mutations = {
 
 const actions = {
     getData: async (context) => {
-        context.commit('getApiSetting',{which:'getData',params:{'job_no': context.state.dataList.jobNo}})
+        context.commit('getApiSetting',{which:'getData',params:{'area_no': context.state.dataList.areaNo}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
@@ -98,7 +100,7 @@ const actions = {
         }
     },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.jobNo]})
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.areaNo]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)

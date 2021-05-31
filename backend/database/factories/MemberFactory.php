@@ -17,6 +17,8 @@ class MemberFactory extends Factory
 
     /**
      * Define the model's default state.
+     * 
+     * faker rules: https://github.com/fzaninotto/Faker
      *
      * @return array
      */

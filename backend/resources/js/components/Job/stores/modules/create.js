@@ -10,7 +10,7 @@ const state = {
         list: {
             submit: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/job',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,

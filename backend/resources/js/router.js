@@ -18,6 +18,10 @@ import AreaList from './components/Area/list.vue';
 import AreaCreate from './components/Area/create.vue';
 import AreaDetail from './components/Area/detail.vue';
 
+import StageList from './components/Stage/list.vue';
+import StageCreate from './components/Stage/create.vue';
+import StageDetail from './components/Stage/detail.vue';
+
 import ManagerList from './components/Manager/list.vue';
 
 import UrlList from './components/Url/list.vue';
@@ -45,6 +49,9 @@ export const routes = [
 	{ path: '/game/area/list', component: AreaList, name:'Area-list'},
 	{ path: '/game/area/create', component: AreaCreate, name:'Area-create'},
 	{ path: '/game/area/:area_no', component: AreaDetail, name:'Area-detail'},
+	{ path: '/game/stage/list', component: StageList, name:'Stage-list'},
+	{ path: '/game/stage/create', component: StageCreate, name:'Stage-create'},
+	{ path: '/game/stage/:stage_no', component: StageDetail, name:'Stage-detail'},
 
 	{ path: '/system', redirect: '/system/manager/list' },
 	{ path: '/system/manager/list', component: ManagerList, name:'Manager-list'},

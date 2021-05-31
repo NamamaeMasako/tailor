@@ -2,8 +2,8 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
-                <li class="breadcrumb-item" aria-current="page">職業</li>
+                <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
+                <li class="breadcrumb-item" aria-current="page">區域</li>
                 <li class="breadcrumb-item active" aria-current="page">詳細資料</li>
             </ol>
         </nav>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/area/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                         <b-form-checkbox v-model="editMode" name="check-button" class="col-form-label" switch>
                             <b v-if="editMode != true">編輯模式：關</b>
                             <b class="text-primary" v-else>編輯模式：開</b>
@@ -32,14 +32,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">選用狀態</label>
+                            <label for="title" class="col-sm-2 col-form-label">名稱</label>
+                            <div class="col-sm-10">
+                                <input type="number" :class="{'is-invalid': validateMsg.order != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="order" min=0 v-model="dataList.formList.order">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">開放狀態</label>
                             <div class="col-sm-10" v-if="editMode != true">
                                 <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.enable_text">
                             </div>
                             <div class="col-10" v-else>
                                 <div class="d-flex py-1" :class="{'is-invalid': validateMsg.enable != ''}">
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="0">不可選用</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">可選用</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="0">未開放</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">開放</b-form-radio>
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
@@ -49,6 +58,18 @@
                     </div>
                     <div class="card-footer d-flex justify-content-center" v-if="editMode == true">
                         <b-button variant="success" v-on:click="submit">送出</b-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-light">
+                        所屬任務
+                    </div>
+                    <div class="card-body">
+
                     </div>
                 </div>
             </div>

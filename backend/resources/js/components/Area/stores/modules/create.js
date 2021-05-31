@@ -1,7 +1,8 @@
 const state = {
     dataList: {
         formList: {
-            title: ''
+            title: '',
+            order: ''
         }
     },
     api: {
@@ -10,7 +11,7 @@ const state = {
         list: {
             submit: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/area',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -25,7 +26,8 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        title: '',
+        order: ''
     }
 }
 

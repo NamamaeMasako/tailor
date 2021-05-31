@@ -16,14 +16,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('v1')->group(function () {
     Route::namespace('api')->group(function () {
-        Route::prefix('character')->group(function () {
-            Route::get('/', 'CharacterController@index');
-            Route::post('/', 'CharacterController@store');
-            Route::post('/edit/{character_no}', 'CharacterController@edit');
+        Route::prefix('game')->group(function () {
+            Route::prefix('character')->group(function () {
+                Route::get('/', 'CharacterController@index');
+                Route::post('/', 'CharacterController@store');
+                Route::post('/edit/{character_no}', 'CharacterController@edit');
+            });
             Route::prefix('job')->group(function () {
                 Route::get('/', 'JobController@index');
                 Route::post('/', 'JobController@store');
                 Route::post('/edit/{job_no}', 'JobController@edit');
+            });
+            Route::prefix('area')->group(function () {
+                Route::get('/', 'AreaController@index');
+                Route::post('/', 'AreaController@store');
+                Route::post('/edit/{area_no}', 'AreaController@edit');
+            });
+            Route::prefix('stage')->group(function () {
+                Route::get('/', 'StageController@index');
+                Route::post('/', 'StageController@store');
+                Route::post('/edit/{stage_no}', 'StageController@edit');
             });
         });
         Route::prefix('member')->group(function () {

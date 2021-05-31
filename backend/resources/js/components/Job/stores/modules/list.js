@@ -17,7 +17,7 @@ const state = {
         list:{
             getItems: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/game/job',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
