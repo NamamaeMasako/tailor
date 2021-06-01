@@ -9,6 +9,11 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
 
+body.auth{
+    height: 100vh;
+    width: 100vw;
+}
+
 #nav-header{
     .router-link-active{
         font-weight: bold;

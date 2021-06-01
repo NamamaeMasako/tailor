@@ -59,7 +59,6 @@ export const routes = [
 	{ path: '/system/url/create', component: UrlCreate, name:'Url-create'},
 	{ path: '/system/url/:id', component: UrlDetail, name:'Url-detail'},
 
-
 	// { path: '*', redirect: '/' },
 ];
 

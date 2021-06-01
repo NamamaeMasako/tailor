@@ -12589,6 +12589,11 @@ h3 {
     border-color: #dee2e6;
   }
 }
+body.auth {
+  height: 100vh;
+  width: 100vw;
+}
+
 #nav-header .router-link-active {
   font-weight: bold;
   background-color: white;
