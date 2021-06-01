@@ -2,6 +2,18 @@ const state = {
     editMode: false,
     dataList: {
         areaNo: null,
+        showOrder: 1,
+        fields: [
+            { key: 'stage_no', label: '任務編號', sortable: false },
+            { key: 'title', label: '名稱', sortable: false },
+            { key: 'order', label: '順序', sortable: false },
+            { key: 'time', label: '執行時間', sortable: false },
+            { key: 'enable_text', label: '開放狀態', sortable: false },
+            { key: 'created_at', label: '建立時間', sortable: false },
+            { key: 'detailLink', label: '詳細資料', sortable: false },
+        ],
+        perPage: 10,
+        currentPage: 1,
         formList: {
             title: '',
             order: ''
@@ -69,6 +81,10 @@ const mutations = {
     showAlert(state, payload) {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
+    updateOrder: (state, payload) => {
+        console.log('updateOrder')
+        console.log(payload)
+    }
 }
 
 const actions = {
@@ -81,6 +97,14 @@ const actions = {
                     throw response.data
                 }              
                 context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
+                context.state.dataList.showOrder = parseInt(response.data.result[Object.keys(response.data.result)[0]].order) + 1
+                if(context.state.dataList.formList.stage.length > 0){
+                    context.state.dataList.formList.stage.forEach((data) => {
+                        data.order = parseInt(data.order) + 1
+                        data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
+                        data.detailLink = '/game/stage/'+data.stage_no
+                    })
+                }
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']

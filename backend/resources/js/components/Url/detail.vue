@@ -25,7 +25,7 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">名稱</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="title" v-model="dataList.formList.title">
+                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
                                 </div>
@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label for="mother_path" class="col-sm-2 col-form-label">所屬路徑</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.mother_path != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="mother_path" v-model="dataList.formList.mother_path">
+                                <input type="text" :class="{'is-invalid': validateMsg.mother_path != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="mother_path" v-model="dataList.formList.mother_path">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.mother_path" :key="index">{{msg}}</span>
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <label for="path" class="col-sm-2 col-form-label">路徑</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.path != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="path" v-model="dataList.formList.path">
+                                <input type="text" :class="{'is-invalid': validateMsg.path != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="path" v-model="dataList.formList.path">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.path" :key="index">{{msg}}</span>
                                 </div>

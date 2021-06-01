@@ -75,7 +75,7 @@ const actions = {
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/character/job/'+data.job_no
+                        data.detailLink = '/game/job/'+data.job_no
                     })
                 }
             }).catch((error) => { 

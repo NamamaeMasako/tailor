@@ -27,6 +27,9 @@ class AreaController extends Controller
             if(count($tb) > 0){
                 foreach($tb as $row){
                     $row->enable_text = Lang::get('status.area.enable')[$row->enable];
+                    foreach($row->Stage as $stage_row){
+                        $stage_row->enable_text = Lang::get('status.stage.enable')[$row->enable];
+                    }
                 }
             }else{
                 $result['message'] = ['無對應資料'];
@@ -81,6 +84,7 @@ class AreaController extends Controller
             }
             $resquest_job_update = [
                 'title' => $request->title,
+                'order' => $request->order,
                 'enable' => $request->enable
             ];
             $tb = Area::where('area_no',$area_no);

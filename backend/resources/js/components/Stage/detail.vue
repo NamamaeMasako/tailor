@@ -25,7 +25,7 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">名稱</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="title" v-model="dataList.formList.title">
+                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
                                 </div>
@@ -46,9 +46,31 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">順序</label>
                             <div class="col-sm-10">
-                                <input type="number" :class="{'is-invalid': validateMsg.order != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="order" min=0 v-model="dataList.formList.order">
+                                <input type="number" :class="{'is-invalid': validateMsg.order != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="order" min="1" v-model="dataList.showOrder">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="time" class="col-sm-2 col-form-label">執行時間</label>
+                            <div class="col-sm-10" v-if="editMode != true">
+                                <input type="text" class="form-control-plaintext" disabled id="time" v-model="dataList.formList.time">
+                            </div>
+                            <div class="col-sm-10" v-else>
+                                <div class="input-group" :class="{'is-invalid': validateMsg.time != ''}">
+                                    <input type="text" class="form-control" v-model="dataList.showHour" placeholder="時">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                    </div>
+                                    <input type="text" class="form-control" v-model="dataList.showMinute" placeholder="分">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                    </div>
+                                    <input type="text" class="form-control" v-model="dataList.showSecond" placeholder="秒">
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.time" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>
@@ -93,6 +115,38 @@
         },
         computed: {
 
+        },
+        watch: {
+            'dataList.showOrder': (newVal) => {
+                store.state.detailData.dataList.formList.order = newVal - 1
+            },
+            'dataList.showHour': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = v+':'+store.state.detailData.dataList.showMinute+':'+store.state.detailData.dataList.showSecond
+            },
+            'dataList.showMinute': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = store.state.detailData.dataList.showHour+':'+v+':'+store.state.detailData.dataList.showSecond
+            },
+            'dataList.showSecond': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = store.state.detailData.dataList.showHour+':'+store.state.detailData.dataList.showMinute+':'+v
+            }
         },
         methods: {
             ...mapMutations('detailData',[

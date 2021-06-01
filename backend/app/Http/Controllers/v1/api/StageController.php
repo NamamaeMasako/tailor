@@ -29,6 +29,8 @@ class StageController extends Controller
                     $row->enable_text = Lang::get('status.stage.enable')[$row->enable];
                     if($row->Area == null){
                         $row->area_title = '無所屬';
+                    }else{
+                        $row->area_title = $row->Area->title;
                     }
                 }
             }else{
@@ -69,7 +71,7 @@ class StageController extends Controller
         return $result;
     }
 
-    public function edit(Request $request,$area_no) {
+    public function edit(Request $request,$stage_no) {
         $result = [
             'status' => false,
             'result' => null,
@@ -77,21 +79,24 @@ class StageController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.stage.rules.edit'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
-            $resquest_job_update = [
+            $resquest_stage_update = [
+                'area_no' => $request->area_no,
                 'title' => $request->title,
-                'enable' => $request->enable
+                'order' => $request->order,
+                'enable' => $request->enable,
+                'time' => $request->time
             ];
-            $tb = Area::where('area_no',$area_no);
+            $tb = Stage::where('stage_no',$stage_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
                 $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
             }
-            $tb->update($resquest_job_update);
+            $tb->update($resquest_stage_update);
 
             $result['status'] = true;
             $result['result'] = '更新成功';

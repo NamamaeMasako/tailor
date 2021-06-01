@@ -3,7 +3,7 @@ const state = {
         fields: [
             { key: 'area_no', label: '區域編號', sortable: false },
             { key: 'title', label: '名稱', sortable: false },
-            { key: 'order', label: '順序', sortable: false },
+            { key: 'showOrder', label: '順序', sortable: false },
             { key: 'enable_text', label: '開放狀態', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '詳細資料', sortable: false },
@@ -75,7 +75,7 @@ const actions = {
                 context.state.dataList.items = response.data.result
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
-                        data.order = parseInt(data.order) + 1
+                        data.showOrder = parseInt(data.order) + 1
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
                         data.detailLink = '/game/area/'+data.area_no
                     })

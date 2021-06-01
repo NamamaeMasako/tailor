@@ -30,7 +30,6 @@
         },
         mounted() {
 			console.log('Component "header-nav" mounted.')
-            console.log(this)
             this.currentPath = this.$route.path
             this.initPage()
 		},

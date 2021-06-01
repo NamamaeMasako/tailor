@@ -35,6 +35,19 @@ return [
             ]
         ]
     ],
+    'stage'=> [
+        'rules' => [
+            'store' => [
+                'title' => 'required',
+                'order' => 'required|integer'
+            ],
+            'edit' => [
+                'title' => 'required',
+                'order' => 'required|integer',
+                'time' => 'required'
+            ]
+        ]
+    ],
     'url' => [
         'rules' => [
             'store' => [

@@ -25,16 +25,16 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">名稱</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="title" v-model="dataList.formList.title">
+                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">名稱</label>
+                            <label for="title" class="col-sm-2 col-form-label">順序</label>
                             <div class="col-sm-10">
-                                <input type="number" :class="{'is-invalid': validateMsg.order != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" id="order" min=0 v-model="dataList.formList.order">
+                                <input type="number" :class="{'is-invalid': validateMsg.order != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="order" min="1" v-model="dataList.showOrder">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
                                 </div>
@@ -69,7 +69,11 @@
                         所屬任務
                     </div>
                     <div class="card-body">
-
+                        <b-table :items="dataList.formList.stage" :fields="dataList.fields" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
+                            <template #cell(detailLink)="data">
+                                <b-button variant="info" class="text-light" :href="data.item.detailLink"><i class="fas fa-file-alt"></i></b-button>
+                            </template>
+                        </b-table>
                     </div>
                 </div>
             </div>
@@ -86,13 +90,18 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "job detail" mounted.')
+            console.log('Component "area detail" mounted.')
             console.log(this)
-            this.dataList.jobNo = this.$route.params.job_no
+            this.dataList.areaNo = this.$route.params.area_no
             this.initPage()
         },
         computed: {
 
+        },
+        watch: {
+            'dataList.showOrder': (newVal) => {
+                store.state.detailData.dataList.formList.order = newVal - 1
+            }
         },
         methods: {
             ...mapMutations('detailData',[

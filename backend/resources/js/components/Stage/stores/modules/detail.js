@@ -2,12 +2,18 @@ const state = {
     editMode: false,
     dataList: {
         stageNo: null,
+        showOrder: 1,
+        showHour: '00',
+        showMinute: '00',
+        showSecond: '00',
         formList: {
+            area_no: null,
             title: '',
-            order: ''
+            order: '',
+            time: ''
         },
         selectList: {
-            area: []
+            area: [{ value: null, text: '無所屬' }]
         }
     },
     api: {
@@ -45,8 +51,10 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
+        area_no: '',
         title: '',
-        order: ''
+        order: '',
+        time: ''
     }
 }
 
@@ -90,7 +98,14 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data
                 }
-                context.state.dataList.selectList.area = response.data.result
+                context.state.dataList.selectList.area = [{ value: null, text: '無所屬' }]
+                Object.values(response.data.result).forEach((el) => {
+                    let option = {
+                        value: el.area_no,
+                        text: el.title
+                    }
+                    context.state.dataList.selectList.area.push(option)
+                })
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = '區域列表取得失敗'
@@ -118,6 +133,10 @@ const actions = {
                     throw response.data
                 }              
                 context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
+                context.state.dataList.showOrder = parseInt(response.data.result[Object.keys(response.data.result)[0]].order) + 1
+                context.state.dataList.showHour = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[0]
+                context.state.dataList.showMinute = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[1]
+                context.state.dataList.showSecond = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[2]
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
