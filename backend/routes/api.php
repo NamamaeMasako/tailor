@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('v1')->group(function () {
     Route::namespace('api')->group(function () {
+        Route::post('/login', 'AuthController@login');
+        Route::post('/register', 'AuthController@register');
         Route::prefix('game')->middleware('auth')->group(function () {
             Route::prefix('character')->group(function () {
                 Route::get('/', 'CharacterController@index');
@@ -43,7 +45,7 @@ Route::namespace('v1')->group(function () {
             Route::post('/', 'MemberController@store');
             Route::post('/edit/{member_no}', 'MemberController@edit');
         });
-        Route::prefix('system')->middleware('auth')->group(function () {
+        Route::prefix('system')->group(function () {
             Route::prefix('url')->group(function () {
                 Route::get('/', 'UrlController@index');
             });

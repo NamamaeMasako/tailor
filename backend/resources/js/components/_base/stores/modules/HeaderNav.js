@@ -1,6 +1,7 @@
 import axios from "axios";
  
 const state = {
+    loginData: null,
     currentPath: '',
     linkList: [],
     api: {
@@ -75,8 +76,15 @@ const actions = {
             context.state.alert.message = '無法取得清單'
         }
     },
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != null){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }
+        console.log(context.state.loginData)
+    },
     initPage: async (context) => {
         await context.dispatch('getLinkList')
+        await context.dispatch('getLoginData')
     },
     updateSideMenu: async (context, path) => {
         context.state.currentPath = path

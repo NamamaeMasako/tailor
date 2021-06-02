@@ -56,6 +56,19 @@ return [
                 'path' => 'required'
             ]
         ]
+    ],
+    'user' => [
+        'rules' => [
+            'login' => [
+                'email' => 'required|email',
+                'password' => 'required'
+            ],
+            'register' => [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+                'password_confirm' => 'required|same:password'
+            ]
+        ]
     ]
-
 ];

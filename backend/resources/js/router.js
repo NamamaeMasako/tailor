@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 // 引用頁面的 Component
+import Login from './components/Auth/login.vue';
+import Register from './components/Auth/register.vue';
+
 import CharacterList from './components/Character/list.vue';
 import CharacterCreate from './components/Character/create.vue';
 import CharacterDetail from './components/Character/detail.vue';
@@ -34,6 +37,9 @@ Vue.use(Router);
 
 // Route 設定
 export const routes = [
+	{ path: '/login', component: Login, name:'Login' },
+	{ path: '/register', component: Register, name:'Register' },
+
 	{ path: '/member', redirect: '/member/list' },
 	{ path: '/member/list', component: MemberList, name:'Member-list'},
 	{ path: '/member/create', component: MemberCreate, name:'Member-create'},
@@ -59,7 +65,7 @@ export const routes = [
 	{ path: '/system/url/create', component: UrlCreate, name:'Url-create'},
 	{ path: '/system/url/:id', component: UrlDetail, name:'Url-detail'},
 
-	// { path: '*', redirect: '/' },
+	{ path: '*', redirect: '/game' },
 ];
 
 // 建立 Vue Router instance

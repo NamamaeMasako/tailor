@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('app');
 // });
 
-// 將除了 api prefix 的 request 都導向 welcome.blade.php
 Route::get('/login', function () {
-    return view('login');
+    return view('app');
 })->name('login');
+
+// 將除了 api prefix 的 request 都導向 welcome.blade.php
 
 Route::get('/{path}', function () {
     return view('app');
