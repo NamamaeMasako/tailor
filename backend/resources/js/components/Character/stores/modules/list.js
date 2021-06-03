@@ -55,7 +55,6 @@ const mutations = {
                     state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
                 }else if(state.api.active.method == 'get'){
-                    console.log(payload)
                     if(payload.params == undefined){
                         payload.params = {}
                     }
@@ -111,7 +110,10 @@ const actions = {
                 context.commit('showAlert')
             })
         }else{
-            return []
+            context.state.dataList.items = []
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
         }
     },
     initPage: async (context) => {

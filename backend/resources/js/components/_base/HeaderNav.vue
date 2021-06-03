@@ -24,10 +24,9 @@
                 </div>
                 <input type="text" class="form-control-plaintext bg-light text-center" disabled placeholder="Username" v-model="loginData.name">
                 <div class="input-group-append">
-                    <b-button variant="outline-light" class="btn-sm" href="/login">登出</b-button>
+                    <b-button variant="outline-light" href="/login">登出</b-button>
                 </div>
             </div>
-            <!-- 歡迎，{{loginData.name}}<b-button variant="outline-light" class="btn-sm">登出</b-button> -->
         </div>
 
     </div>
