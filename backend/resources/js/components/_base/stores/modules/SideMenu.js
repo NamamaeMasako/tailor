@@ -1,6 +1,7 @@
 import axios from "axios";
  
 const state = {
+    loginData: null,
     currentPath: '',
     linkList: [],
     api: {
@@ -43,8 +44,13 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
                 }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
                     state.api.active.params = payload.params
                 }
             }
@@ -77,7 +83,13 @@ const actions = {
             context.state.alert.message = '無法取得清單'
         }
     },
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != null){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }
+    },
     initPage: async (context) => {
+        await context.dispatch('getLoginData')
         await context.dispatch('getLinkList')
     }
 }

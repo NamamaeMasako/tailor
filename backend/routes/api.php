@@ -46,7 +46,7 @@ Route::namespace('v1')->group(function () {
             Route::post('/', 'MemberController@store');
             Route::post('/edit/{member_no}', 'MemberController@edit');
         });
-        Route::prefix('system')->group(function () {
+        Route::prefix('system')->middleware('auth')->group(function () {
             Route::prefix('url')->group(function () {
                 Route::get('/', 'UrlController@index');
             });

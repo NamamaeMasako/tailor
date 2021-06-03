@@ -8,7 +8,7 @@
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#nav-header">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="nav-header" v-if="loginData != null">
+        <div class="collapse navbar-collapse" id="nav-header" v-if="loginData.access_token != null">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" v-for="(link, index) in linkList" :key="index" v-on:click="updateSideMenu($route.path)">
                     <router-link :to="link.path" class="nav-link">
@@ -17,7 +17,7 @@
                 </li>
             </ul>
         </div>
-        <div class="h-100" v-if="loginData != null">
+        <div class="h-100" v-if="loginData.access_token != null">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">歡迎，</span>
