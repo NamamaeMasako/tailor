@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="col-10" v-else>
-                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
+                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2 mt-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
                             </div>
                         </div>
                     </div>

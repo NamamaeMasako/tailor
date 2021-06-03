@@ -61,14 +61,18 @@ return [
         'rules' => [
             'login' => [
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required_without:access_token',
+                'access_token' => 'required_without:password'
             ],
             'register' => [
                 'name' => 'required',
                 'email' => 'required|email',
                 'password' => 'required',
                 'password_confirm' => 'required|same:password'
-            ]
+            ],
+            'logout' => [
+                'email' => 'required|email'
+            ],
         ]
     ]
 ];

@@ -30,8 +30,19 @@ class AuthController extends Controller
                 $result['message'] = ['尚未註冊'];
                 throw new Exception('登入失敗');
             }else{
-                if (!Hash::check($request->password, $tb->first()->password)){
-                    $result['message'] = ['密碼錯誤'];
+                if($request->access_token != null){
+                    $quest = $request->access_token;
+                    $answer = $tb->first()->access_token;
+                    $chk = $quest == $answer;
+                    $msg = '登入失效';
+                }else{
+                    $quest = $request->password;
+                    $answer = $tb->first()->password;
+                    $chk = Hash::check($quest, $answer);
+                    $msg = '密碼錯誤';
+                }
+                if (!$chk){
+                    $result['message'] = [$msg];
                     throw new Exception('登入失敗');
                 }
             }
@@ -83,7 +94,7 @@ class AuthController extends Controller
         return $result;
     }
 
-    public function edit(Request $request,$area_no) {
+    public function logout(Request $request) {
         $result = [
             'status' => false,
             'result' => null,
@@ -91,25 +102,23 @@ class AuthController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.user.rules.logout'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
-                throw new Exception('更新失敗');
+                throw new Exception('登出失敗');
             }
-            $resquest_job_update = [
-                'title' => $request->title,
-                'order' => $request->order,
-                'enable' => $request->enable
+            $resquest_logout_update = [
+                'access_token' => null
             ];
-            $tb = Area::where('area_no',$area_no);
+            $tb = User::where('email',$request->email);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
                 $result['message'] = ['資料異常'];
-                throw new Exception('更新失敗');
+                throw new Exception('登出失敗');
             }
-            $tb->update($resquest_job_update);
+            $tb->update($resquest_logout_update);
 
             $result['status'] = true;
-            $result['result'] = '更新成功';
+            $result['result'] = '登出成功';
             DB::commit();
         }catch(Exception $e){
             $result['result'] = $e->getMessage();

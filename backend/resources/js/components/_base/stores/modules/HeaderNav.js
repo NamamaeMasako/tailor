@@ -1,7 +1,12 @@
 import axios from "axios";
  
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
+    dataList:{
+        formList: null
+    },
     currentPath: '',
     linkList: [],
     api: {
@@ -12,6 +17,13 @@ const state = {
                 baseURL: null,
                 url: '/api/system/url',
                 method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            logout: {
+                baseURL: null,
+                url: '/api/logout',
+                method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
@@ -44,8 +56,13 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
                 }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
                     state.api.active.params = payload.params
                 }
             }
@@ -80,11 +97,29 @@ const actions = {
         if(localStorage.getItem('login_data') != null){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
         }
-        console.log(context.state.loginData)
     },
     initPage: async (context) => {
-        await context.dispatch('getLinkList')
         await context.dispatch('getLoginData')
+        await context.dispatch('getLinkList')
+    },
+    logout:async (context) => {
+        context.state.dataList.formList = context.state.loginData
+        context.commit('getApiSetting',{which:'logout'})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                localStorage.removeItem('login_data')
+                window.location = '/login'
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+        }
     },
     updateSideMenu: async (context, path) => {
         context.state.currentPath = path

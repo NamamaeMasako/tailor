@@ -24,7 +24,7 @@
                 </div>
                 <input type="text" class="form-control-plaintext bg-light text-center" disabled placeholder="Username" v-model="loginData.name">
                 <div class="input-group-append">
-                    <b-button variant="outline-light" href="/login">登出</b-button>
+                    <b-button variant="outline-light" v-on:click="logout">登出</b-button>
                 </div>
             </div>
         </div>
@@ -48,7 +48,8 @@
         methods: {
             ...mapActions('headerNavData',[
                 'initPage',
-                'updateSideMenu'
+                'updateSideMenu',
+                'logout'
             ])   
         }
 	}
