@@ -28,9 +28,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">順序</label>
+                            <label for="order" class="col-sm-2 col-form-label">順序</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" min=0 :class="{'is-invalid': validateMsg.order != ''}" id="title" v-model="dataList.formList.order">
+                                <input type="number" class="form-control" min=1 :class="{'is-invalid': validateMsg.order != ''}" id="order" v-model="dataList.showOrder">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
                                 </div>
@@ -61,6 +61,11 @@
         },
         computed: {
 
+        },
+        watch: {
+            'dataList.showOrder': (newVal) => {
+                store.state.createData.dataList.formList.order = newVal - 1
+            }
         },
         methods: {
             ...mapMutations('createData',[

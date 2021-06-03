@@ -1,4 +1,5 @@
 const state = {
+    loginData: null,
     dataList: {
         formList: {
             title: ''
@@ -43,7 +44,14 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = state.api.list[payload.which]
                 if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -59,6 +67,13 @@ const mutations = {
 }
 
 const actions = {
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != undefined){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -88,7 +103,7 @@ const actions = {
         }
     },
     initPage: async (context) => {
-
+        await context.dispatch('getLoginData')
     }
 }
  
