@@ -78,7 +78,7 @@ class CharacterController extends Controller
             $response_character_create = Character::create($resquest_character_create);
             if(count($resquestArr_character_job_create) > 0){
                 foreach($resquestArr_character_job_create as $res){
-                    $res['character_no'] = $response_character_create->character_no;
+                    $res['character_no'] = Character::orderBy('updated_at','desc')->first()->character_no;
                     CharacterJob::create($res);
                 }
             }
