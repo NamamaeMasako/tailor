@@ -50,6 +50,7 @@ Route::namespace('v1')->group(function () {
             Route::prefix('manager')->group(function () {
                 Route::get('/', 'ManagerController@index');
                 Route::post('/edit/{id}', 'ManagerController@edit');
+                Route::post('/resetpassword/{id}', 'ManagerController@resetpassword');
             });
             Route::prefix('url')->group(function () {
                 Route::get('/', 'UrlController@index');

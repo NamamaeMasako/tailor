@@ -146,4 +146,39 @@ class ManagerController extends Controller
 
         return $result;
     }
+
+    public function resetpassword(Request $request,$id) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.user.rules.resetpassword'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('重置失敗');
+            }
+            $password = Str::random(5);
+            $resquest_user_update = [
+                'password' => Hash::make($password)
+            ];
+            $tb = User::where('id',$id);
+            if(count($tb->get()) > 1 || count($tb->get()) <= 0){
+                $result['message'] = ['資料異常'];
+                throw new Exception('更新失敗');
+            }
+            $tb->update($resquest_user_update);
+            
+            $result['status'] = true;
+            $result['result'] = '新密碼: '.$password;
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
 }

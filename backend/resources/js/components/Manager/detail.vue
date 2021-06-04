@@ -47,27 +47,28 @@
                             <div class="col-10">
                                 <div class="form-group row">
                                     <div class="col-2">
-                                        <b-button variant="info" class="btn-block" >修改密碼</b-button>
+                                        <b-button variant="info" class="btn-block" v-on:click="showEditPassword">修改密碼</b-button>
                                     </div>
                                     <div class="col-2">
-                                        <b-button variant="warning" class="btn-block" >重置密碼</b-button>
+                                        <b-button variant="warning" class="btn-block" v-on:click="resetPassword">重置密碼</b-button>
                                     </div>
                                 </div>
-                                <div class="form-group my-0">
+                                <div class="form-group my-0" v-if="editPassword">
+                                    {{dataList.editPassword}}
                                     <label for="origin_password" class="col-form-label">修改前密碼</label>
                                     <input type="text" class="form-control" :class="{'is-invalid': validateMsg.origin_password != ''}" id="origin_password" v-model="dataList.formList.origin_password">
                                     <div class="invalid-feedback">
                                         <span v-for="(msg,index) in validateMsg.origin_password" :key="index">{{msg}}</span>
                                     </div>
                                 </div>
-                                <div class="form-group my-0">
+                                <div class="form-group my-0" v-if="editPassword">
                                     <label for="new_password" class="col-form-label">新密碼</label>
                                     <input type="text" class="form-control" :class="{'is-invalid': validateMsg.new_password != ''}" id="new_password" v-model="dataList.formList.new_password">
                                     <div class="invalid-feedback">
                                         <span v-for="(msg,index) in validateMsg.new_password" :key="index">{{msg}}</span>
                                     </div>
                                 </div>
-                                <div class="form-group my-0">
+                                <div class="form-group my-0" v-if="editPassword">
                                     <label for="new_password" class="col-form-label">確認新密碼</label>
                                     <input type="text" class="form-control" :class="{'is-invalid': validateMsg.new_password_chk != ''}" id="new_password_chk" v-model="dataList.formList.new_password_chk">
                                     <div class="invalid-feedback">
@@ -101,7 +102,7 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "character detail" mounted.')
+            console.log('Component "manager detail" mounted.')
             console.log(this)
             this.dataList.manager_id = this.$route.params.id
             this.initPage()
@@ -120,10 +121,12 @@
         },
         methods: {
             ...mapMutations('detailData',[
-                'countDownChanged'
+                'countDownChanged',
+                'showEditPassword'
             ]),
             ...mapActions('detailData',[
                 'initPage',
+                'resetPassword',
                 'submit'
             ])   
         }

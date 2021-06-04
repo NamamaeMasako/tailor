@@ -1,6 +1,7 @@
 const state = {
     loginData: null,
     editMode: false,
+    editPassword: false,
     dataList: {
         verified_text: null,
         manager_id: '',
@@ -21,6 +22,13 @@ const state = {
                 baseURL: null,
                 url: '/api/system/manager',
                 method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            resetPassword: {
+                baseURL: null,
+                url: '/api/system/manager/resetpassword',
+                method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
@@ -56,6 +64,9 @@ const getters = {
 const mutations = {
     countDownChanged: (state, payload) => {
         state.alert.dismissCountDown = payload
+    },
+    showEditPassword: (state, payload) => {
+        state.editPassword = !state.editPassword
     },
     getApiSetting: (state, payload) => {
         state.api.active = null
@@ -118,6 +129,33 @@ const actions = {
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
         }else{
             window.location = '/login'
+        }
+    },
+    resetPassword: async (context) => {
+        context.commit('getApiSetting',{which:'resetPassword',paraArr:[context.state.dataList.manager_id]})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.alert.variant = 'success'
+                context.state.alert.message = response.data['result']
+                context.commit('showAlert')
+            }).catch((error) => { 
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
         }
     },
     submit: async (context) => {
