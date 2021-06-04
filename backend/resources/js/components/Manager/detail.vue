@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">後臺設定</li>
+                <li class="breadcrumb-item" aria-current="page">系統</li>
                 <li class="breadcrumb-item" aria-current="page">管理員</li>
                 <li class="breadcrumb-item active" aria-current="page">詳細資料</li>
             </ol>

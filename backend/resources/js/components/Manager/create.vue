@@ -2,8 +2,8 @@
     <div class="container">
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">角色</li>
-                <li class="breadcrumb-item" aria-current="page">職業</li>
+                <li class="breadcrumb-item" aria-current="page">系統</li>
+                <li class="breadcrumb-item" aria-current="page">管理員</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>
@@ -15,16 +15,31 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/character/job/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/system/manager/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">名稱</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" :class="{'is-invalid': validateMsg.title != ''}" id="title" v-model="dataList.formList.title">
-                                <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
-                                </div>
+                            <label for="name" class="col-2 col-form-label">名稱</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" id="name" v-model="dataList.formList.name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-2 col-form-label">電子郵件</label>
+                            <div class="col-10">
+                                <input type="email" class="form-control" id="email" v-model="dataList.formList.email">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-2 col-form-label">密碼</label>
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="password" v-model="dataList.formList.password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password_confirm" class="col-2 col-form-label">確認密碼</label>
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="password_confirm" v-model="dataList.formList.password_confirm">
                             </div>
                         </div>
                     </div>
