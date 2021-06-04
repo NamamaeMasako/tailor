@@ -108,7 +108,8 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "stage detail" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.dataList.stageNo = this.$route.params.stage_no
             this.initPage()

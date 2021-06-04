@@ -90,9 +90,10 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "character detail" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
-            this.dataList.characterNo = this.$route.params.character_no
+            this.dataList.memberNo = this.$route.params.member_no
             this.initPage()
         },
         computed: {

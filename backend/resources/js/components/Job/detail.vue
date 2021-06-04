@@ -65,7 +65,8 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "job detail" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.dataList.jobNo = this.$route.params.job_no
             this.initPage()

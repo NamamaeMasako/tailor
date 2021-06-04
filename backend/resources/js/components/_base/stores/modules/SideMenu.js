@@ -65,8 +65,6 @@ const mutations = {
 
 const actions = {
     getLinkList: async (context) => {
-        console.log(context.state.currentPath)
-        console.log(context.getters.motherPath)
         context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path': context.getters.motherPath}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {

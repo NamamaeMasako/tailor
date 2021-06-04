@@ -68,7 +68,8 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "character detail" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.dataList.id = this.$route.params.id
             this.initPage()

@@ -1,7 +1,7 @@
 <template>
 <aside id="main-aside">
     <div class="list-group list-group-flush w-100">
-        <router-link v-for="(link, index) in linkList" :key='index' :to="link.mother_path+link.path" class="list-group-item list-group-item-action">
+        <router-link v-for="(link, index) in linkList" :key='index' :to="link.mother_path+link.path" class="list-group-item list-group-item-action" :class="{'action':currentPath.indexOf(link.path)>-1}">
             {{link.title}}
         </router-link>
     </div>

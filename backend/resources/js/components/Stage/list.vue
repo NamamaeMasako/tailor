@@ -42,7 +42,8 @@
             return this.$store.state.listData
         },
          mounted() {
-            console.log('Component "stage list" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.initPage()
         },
