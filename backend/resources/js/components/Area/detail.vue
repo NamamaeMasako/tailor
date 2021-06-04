@@ -90,7 +90,8 @@
             return this.$store.state.detailData
         },
          mounted() {
-            console.log('Component "area detail" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.dataList.areaNo = this.$route.params.area_no
             this.initPage()

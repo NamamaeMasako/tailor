@@ -55,7 +55,8 @@
             return this.$store.state.createData
         },
          mounted() {
-            console.log('Component "job create" mounted.')
+            console.log('Component "'+this.$route.name+'" mounted.')
+            this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.initPage()
         },
