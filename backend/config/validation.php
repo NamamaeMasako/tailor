@@ -73,6 +73,12 @@ return [
             'logout' => [
                 'email' => 'required|email'
             ],
+            'edit' => [
+                'email' => 'required|email',
+                'name' => 'required',
+                'origin_password' => 'required_with:new_password',
+                'new_password_chk' => 'required_with:new_password|same:new_password'
+            ],
         ]
     ]
 ];

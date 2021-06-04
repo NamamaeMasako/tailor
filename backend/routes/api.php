@@ -47,6 +47,10 @@ Route::namespace('v1')->group(function () {
             Route::post('/edit/{member_no}', 'MemberController@edit');
         });
         Route::prefix('system')->middleware('auth')->group(function () {
+            Route::prefix('manager')->group(function () {
+                Route::get('/', 'ManagerController@index');
+                Route::post('/edit/{id}', 'ManagerController@edit');
+            });
             Route::prefix('url')->group(function () {
                 Route::get('/', 'UrlController@index');
             });

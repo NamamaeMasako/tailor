@@ -52,7 +52,7 @@ class UrlsTableSeeder extends Seeder
                 'mother_path' => '/member'
             ],
             [
-                'path' => '/manerger/list',
+                'path' => '/manager/list',
                 'title' => '管理員',
                 'mother_path' => '/system'
             ],

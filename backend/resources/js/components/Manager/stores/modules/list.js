@@ -1,9 +1,9 @@
 const state = {
+    loginData: null,
     dataList: {
         fields: [
-            { key: 'job_no', label: '職業編號', sortable: false },
-            { key: 'title', label: '名稱', sortable: false },
-            { key: 'enable_text', label: '選用狀態', sortable: false },
+            { key: 'email', label: '電子郵件', sortable: false },
+            { key: 'name', label: '名稱', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '詳細資料', sortable: false },
         ],
@@ -17,7 +17,7 @@ const state = {
         list:{
             getItems: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/system/manager',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -48,7 +48,17 @@ const mutations = {
         state.api.active = null
         if(typeof payload.which == 'string'){
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
-                state.api.active = state.api.list[payload.which]
+                state.api.active = Object.assign({},state.api.list[payload.which])
+                if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
+                    state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
+                    state.api.active.params = payload.params
+                }
             }
         }
         if(Array.isArray(payload.paraArr)){
@@ -63,6 +73,13 @@ const mutations = {
 }
 
 const actions = {
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != undefined){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
     getItems: async (context) => {
         context.commit('getApiSetting',{which:'getItems'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -75,7 +92,7 @@ const actions = {
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/character/job/'+data.job_no
+                        data.detailLink = '/system/manager/'+data.id
                     })
                 }
             }).catch((error) => { 
@@ -96,6 +113,7 @@ const actions = {
         }
     },
     initPage: async (context) => {
+        await context.dispatch('getLoginData')
         await context.dispatch('getItems')
     }
 }

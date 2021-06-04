@@ -43,7 +43,7 @@ const mutations = {
         state.api.active = null
         if(typeof payload.which == 'string'){
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
-                state.api.active = state.api.list[payload.which]
+                state.api.active = Object.assign({},state.api.list[payload.which])
                 if(state.api.active.method == 'post'){
                     state.api.active.data = state.dataList.formList
                 }

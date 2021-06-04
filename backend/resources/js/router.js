@@ -26,6 +26,7 @@ import StageCreate from './components/Stage/create.vue';
 import StageDetail from './components/Stage/detail.vue';
 
 import ManagerList from './components/Manager/list.vue';
+import ManagerDetail from './components/Manager/detail.vue';
 
 import UrlList from './components/Url/list.vue';
 import UrlCreate from './components/Url/create.vue';
@@ -61,6 +62,7 @@ export const routes = [
 
 	{ path: '/system', redirect: '/system/manager/list' },
 	{ path: '/system/manager/list', component: ManagerList, name:'Manager-list'},
+	{ path: '/system/manager/:id', component: ManagerDetail, name:'Manager-detail'},
 	{ path: '/system/url/list', component: UrlList, name:'Url-list'},
 	{ path: '/system/url/create', component: UrlCreate, name:'Url-create'},
 	{ path: '/system/url/:id', component: UrlDetail, name:'Url-detail'},

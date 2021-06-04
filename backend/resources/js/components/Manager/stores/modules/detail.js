@@ -1,9 +1,16 @@
 const state = {
+    loginData: null,
     editMode: false,
     dataList: {
-        jobNo: null,
+        verified_text: null,
+        manager_id: '',
         formList: {
-            title: ''
+            name: '',
+            email_verified_at: '',
+            email: '',
+            origin_password: '',
+            new_password: '',
+            new_password_chk: ''
         }
     },
     api: {
@@ -12,14 +19,14 @@ const state = {
         list: {
             getData: {
                 baseURL: null,
-                url: '/api/character/job',
+                url: '/api/system/manager',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
             submit: {
                 baseURL: null,
-                url: '/api/character/job/edit',
+                url: '/api/system/manager/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -34,7 +41,11 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        name: '',
+        email: '',
+        origin_password: '',
+        new_password: '',
+        new_password_chk: ''
     }
 }
 
@@ -50,10 +61,15 @@ const mutations = {
         state.api.active = null
         if(typeof payload.which == 'string'){
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
-                state.api.active = state.api.list[payload.which]
+                state.api.active = Object.assign({},state.api.list[payload.which])
                 if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
                 }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
                     state.api.active.params = payload.params
                 }
             }
@@ -97,8 +113,15 @@ const actions = {
             context.commit('showAlert')
         }
     },
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != undefined){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit'})
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.manager_id]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
@@ -125,6 +148,7 @@ const actions = {
         }
     },
     initPage: async (context) => {
+        await context.dispatch('getLoginData')
         await context.dispatch('getData')
     }
 }
