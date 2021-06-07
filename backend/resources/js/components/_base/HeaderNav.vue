@@ -1,7 +1,7 @@
 <template>
 <nav class="bg-info">
     <div class="navbar navbar-expand-lg navbar-light shadow h-100">
-        <a href="#" class="navbar-brand">
+        <a href="/" class="navbar-brand">
             Tailor
             <!-- <img src="" class="w-100 h-100" alt="logo"> -->
         </a>

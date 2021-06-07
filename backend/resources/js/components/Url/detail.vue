@@ -72,6 +72,7 @@
             this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
             this.dataList.id = this.$route.params.id
+            console.log(this.dataList.id)
             this.initPage()
         },
         computed: {

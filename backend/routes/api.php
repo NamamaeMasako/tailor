@@ -54,6 +54,7 @@ Route::namespace('v1')->group(function () {
             });
             Route::prefix('url')->group(function () {
                 Route::get('/', 'UrlController@index');
+                Route::post('/edit/{id}', 'UrlController@edit');
             });
         }); 
     });

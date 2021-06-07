@@ -5,6 +5,8 @@ use App\Models\Url;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Lang;
 
 class UrlController extends Controller
 {
@@ -73,7 +75,7 @@ class UrlController extends Controller
                 'mother_path' => $request->mother_path,
                 'path' => $request->path
             ];
-            $tb = Url::find($id);
+            $tb = Url::where('id',$id);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
                 $result['message'] = ['無對應資料'];
                 throw new Exception('更新失敗');

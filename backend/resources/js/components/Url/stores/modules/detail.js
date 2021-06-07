@@ -81,7 +81,7 @@ const mutations = {
 
 const actions = {
     getData: async (context) => {
-        context.commit('getApiSetting',{which:'getData',params:{'job_no': context.state.dataList.jobNo}})
+        context.commit('getApiSetting',{which:'getData',params:{'id': context.state.dataList.id}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
@@ -115,7 +115,7 @@ const actions = {
         }
     },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit'})
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.id]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
