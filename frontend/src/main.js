@@ -4,12 +4,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-//引用設定好的vue router
-import router from './router.js';
-
 // axios
 import axios from 'axios';
 Vue.prototype.$axios = axios;
+
+//引用設定好的vue router
+import router from './router.js';
 
 //bootstrap vue
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';

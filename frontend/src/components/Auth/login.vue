@@ -21,7 +21,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-6">
-                                <b-button variant="success" class="btn-block">登入</b-button>
+                                <b-button variant="success" class="btn-block" v-on:click="submit">登入</b-button>
                             </div>
                             <div class="col-6">
                                 <b-button variant="primary" href="/register" class="btn-block">註冊</b-button>
@@ -34,3 +34,27 @@
     </div>
 </div>  
 </template>
+<script>
+import store from './stores/index.js' 
+import { mapMutations, mapActions } from 'vuex'
+export default {
+    store,
+    data() {
+        return this.$store.state.loginData
+    },
+    mounted() {
+        console.log('Component "login" mounted.')
+        console.log(this)
+        this.initPage()
+    },
+    methods: {
+        ...mapMutations('loginData',[
+            'countDownChanged'
+        ]),
+        ...mapActions('loginData',[
+            'initPage',
+            'submit'
+        ])   
+    }
+}
+</script>
