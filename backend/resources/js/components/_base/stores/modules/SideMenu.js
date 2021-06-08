@@ -1,7 +1,9 @@
 import axios from "axios";
  
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     currentPath: '',
     linkList: [],
     api: {

@@ -5,7 +5,7 @@ const state = {
         access_token: null
     },
     dataList:{
-        formList: null
+        formList: {}
     },
     currentPath: '',
     linkList: [],

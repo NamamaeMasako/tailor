@@ -1,5 +1,7 @@
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     dataList: {
         formList: {
             email: '',
@@ -70,7 +72,7 @@ const actions = {
         }
     },
     getLoginData: async (context) => {
-        if(localStorage.getItem('login_data') != null){
+        if(localStorage.getItem('login_data') != undefined){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
         }
     },

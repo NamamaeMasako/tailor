@@ -1,5 +1,7 @@
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     editMode: false,
     dataList: {
         stageNo: null,

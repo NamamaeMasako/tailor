@@ -20,6 +20,7 @@ class CreateMembersTable extends Migration
             $table->string('password')->comment('密碼');
             $table->string('name')->comment('名稱');
             $table->string('enable')->comment('驗證狀態');
+            $table->string('access_token')->nullable();
             $table->timestamps();
         });
     }

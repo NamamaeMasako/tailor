@@ -1,5 +1,7 @@
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     dataList: {
         fields: [
             { key: 'stage_no', label: '任務編號', sortable: false },

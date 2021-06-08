@@ -1,0 +1,42 @@
+<template>
+<nav class="container-fluid py-3 fixed-top">
+    <div class="row">
+        <div class="col-5">
+            <div class="row">
+                <img src="../../assets/images/girl.svg" class="col-2" alt="avator">
+                <div class="col-9">
+                    <div class="row h-100">
+                        <div class="col-12 align-self-start">
+                            <div class="row">
+                                <div class="col-6 d-flex align-items-center">生前很正<span class="badge badge-warning ml-1">VIP</span></div>
+                                <div class="col-6">Lv. 9999</div>
+                            </div>
+                        </div>
+                        <div class="col-12 align-self-end">
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="font-weight-light">exp.</span>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="68" style="width: 68%" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <span class="font-weight-light">sta.</span>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="68" style="width: 68%" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</template>
+<script>
+export default {
+    
+}
+</script>
