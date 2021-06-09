@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     dataList: {
         formList: {
             email: '',
@@ -74,6 +76,8 @@ const actions = {
     getLoginData: async (context) => {
         if(localStorage.getItem('login_data') != null){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
         }
     },
     submit: async (context) => {
@@ -110,7 +114,6 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
-        await context.dispatch('checkLogin')
     }
 }
  

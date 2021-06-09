@@ -141,6 +141,41 @@ class AuthController extends Controller
         return $result;
     }
 
+    public function memberRegister(Request $request) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.user.rules.register'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('註冊失敗');
+            }
+            $check_tb = Member::where('email', $request->email)->get();
+            if(count($check_tb) > 0){
+                $result['message'] = ['email' => '與現有資料重複'];
+                throw new Exception('註冊失敗');
+            }
+            $resquest_register = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ];
+            Member::create($resquest_register);
+            $result['status'] = true;
+            $result['result'] = '註冊成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
+
     public function logout(Request $request) {
         $result = [
             'status' => false,
@@ -159,7 +194,41 @@ class AuthController extends Controller
             ];
             $tb = User::where('email',$request->email);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
-                $result['message'] = ['資料異常'];
+                $result['message'] = ['沒有對應的登入資料'];
+                throw new Exception('登出失敗');
+            }
+            $tb->update($resquest_logout_update);
+
+            $result['status'] = true;
+            $result['result'] = '登出成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
+
+    public function memberLogout(Request $request) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.user.rules.logout'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('登出失敗');
+            }
+            $resquest_logout_update = [
+                'access_token' => null
+            ];
+            $tb = Member::where('email',$request->email);
+            if(count($tb->get()) > 1 || count($tb->get()) <= 0){
+                $result['message'] = ['沒有對應的登入資料'];
                 throw new Exception('登出失敗');
             }
             $tb->update($resquest_logout_update);

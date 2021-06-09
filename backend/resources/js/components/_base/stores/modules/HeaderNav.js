@@ -110,8 +110,6 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
-                localStorage.removeItem('login_data')
-                window.location = '/login'
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -120,6 +118,8 @@ const actions = {
             context.state.alert.variant = 'danger'
             context.state.alert.message = '錯誤的API'
         }
+        localStorage.removeItem('login_data')
+        window.location = '/login'
     },
     updateSideMenu: async (context, path) => {
         context.state.currentPath = path

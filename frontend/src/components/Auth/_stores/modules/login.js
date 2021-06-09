@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const state = {
-    loginData: null,
+    loginData: {
+        access_token: null
+    },
     dataList: {
         formList: {
             email: '',
@@ -48,7 +50,14 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = Object.assign({},state.api.list[payload.which])
                 if(state.api.active.method == 'post'){
+                    state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    payload.params.access_token = state.loginData.access_token
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -65,7 +74,7 @@ const mutations = {
 
 const actions = {
     checkLogin: async (context) => {
-        if(context.state.loginData != null){
+        if(context.state.loginData.access_token != null){
             context.state.dataList.formList.email = context.state.loginData.email
             context.state.dataList.formList.access_token = context.state.loginData.access_token
             await context.dispatch('submit')

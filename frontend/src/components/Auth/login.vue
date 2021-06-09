@@ -14,11 +14,11 @@
                     </b-alert>
                     <div class="form-group">
                         <label for="email">電子郵件</label>
-                        <input type="text" id="email" class="form-control">
+                        <input type="text" id="email" class="form-control" v-model="dataList.formList.email">
                     </div>
                     <div class="form-group">
                         <label for="password">密碼</label>
-                        <input type="text" id="password" class="form-control">
+                        <input type="text" id="password" class="form-control" v-model="dataList.formList.password">
                     </div>
                 </div>
                 <div class="card-footer">
@@ -42,7 +42,7 @@ import { mapMutations, mapActions } from 'vuex'
 export default {
     store,
     data() {
-        return JSON.parse(JSON.stringify(this.$store.state.loginData))
+        return this.$store.state.loginData
     },
     mounted() {
         console.log('Component "login" mounted.')

@@ -65,7 +65,7 @@ const mutations = {
 
 const actions = {
     checkLogin: async (context) => {
-        if(context.state.loginData != null){
+        if(context.state.loginData.access_token != null){
             context.state.dataList.formList.email = context.state.loginData.email
             context.state.dataList.formList.access_token = context.state.loginData.access_token
             await context.dispatch('submit')
