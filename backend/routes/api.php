@@ -19,6 +19,7 @@ Route::namespace('v1')->group(function () {
         Route::post('/login', 'AuthController@login');
         Route::post('/member/login', 'AuthController@memberLogin');
         Route::post('/logout', 'AuthController@logout');
+        Route::post('/member/logout', 'AuthController@memberLogout');
         Route::post('/register', 'AuthController@register');
         Route::prefix('game')->middleware('auth')->group(function () {
             Route::prefix('character')->group(function () {

@@ -23,6 +23,9 @@ class Member extends Model
         static::creating(function($model)
         {
             $model->member_no = 'M_'.Carbon::now()->timestamp;
+            $model->level = 1;
+            $model->experience = 0;
+            $model->stamina = 1;
             $model->enable = 0;
         });
         static::updating(function($model)

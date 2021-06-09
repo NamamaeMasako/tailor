@@ -20,6 +20,9 @@ class CreateMembersTable extends Migration
             $table->string('password')->comment('密碼');
             $table->string('name')->comment('名稱');
             $table->string('enable')->comment('驗證狀態');
+            $table->integer('level')->comment('等級');
+            $table->integer('experience')->comment('獲得經驗值');
+            $table->integer('stamina')->comment('目前體力');
             $table->string('access_token')->nullable();
             $table->timestamps();
         });
