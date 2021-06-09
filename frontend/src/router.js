@@ -7,6 +7,7 @@ import Register from './components/Auth/register.vue';
 
 import Home from './components/Home/index.vue';
 import Quest from './components/Quest/index.vue';
+import Character from './components/Character/index.vue';
 
 // 使用 Vue Router
 Vue.use(Router);
@@ -16,6 +17,7 @@ export const routes = [
 	{ path: '/', redirect: '/home' },
 	{ path: '/home', component: Home, name:'home' },
 	{ path: '/quest', component: Quest, name:'quest' },
+	{ path: '/character', component: Character, name:'character' },
 
 	{ path: '/login', component: Login, name:'login' },
 	{ path: '/register', component: Register, name:'register' },

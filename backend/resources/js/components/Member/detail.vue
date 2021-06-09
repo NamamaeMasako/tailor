@@ -67,6 +67,26 @@
                                             </ul>
                                             <p v-else>尚未持有任何角色</p>
                                         </div>
+                                        <div class="card-footer">
+                                            <b-button variant="success" v-b-modal.add-character>新增角色</b-button>
+                                            <b-modal id="add-character" title="新增角色">
+                                                <b-form-group label="選擇欲新增的角色">
+                                                    <b-form-checkbox-group :options="dataList.characterList" buttons button-variant="outline-primary" name="characters" v-model="dataList.member_character"></b-form-checkbox-group>
+                                                </b-form-group>
+                                                <template v-slot:modal-footer>
+                                                    <div class="col-12">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-3">
+                                                                <b-button variant="secondary" class="btn-block">取消</b-button>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <b-button variant="success" class="btn-block">確認</b-button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </b-modal>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

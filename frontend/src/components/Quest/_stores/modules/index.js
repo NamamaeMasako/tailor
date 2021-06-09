@@ -68,7 +68,7 @@ const mutations = {
 
 const actions = {
     getAreaList: async (context) => {
-        context.commit('getApiSetting',{which:'getAreaList'})
+        context.commit('getApiSetting',{which:'getAreaList',params:{'enable': 1}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
                 console.log(response.data)
