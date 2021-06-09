@@ -18,6 +18,12 @@ class JobController extends Controller
             'message' => []
         ];
         try{
+            $isMember = false;
+            if($request->isMember == true){
+                $isMember = true;
+            }
+            $request->request->remove('isMember');
+            
             $tb = Job::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){

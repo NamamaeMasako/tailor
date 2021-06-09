@@ -1,5 +1,4 @@
-import axios from 'axios';
-import moment from 'moment'
+import axios from 'axios'
 
 const state = {
     loginData: null,
@@ -10,9 +9,9 @@ const state = {
         active: null,
         host: localStorage.getItem('HOST'),
         list:{
-            getItems: {
-                baseURL: null,
-                url: '/api/area',
+            getAreaList: {
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/game/area',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -68,28 +67,15 @@ const mutations = {
 }
 
 const actions = {
-    getLoginData: async (context) => {
-        if(localStorage.getItem('login_data') != undefined){
-            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
-        }else{
-            window.location = '/login'
-        }
-    },
-    getItems: async (context) => {
-        context.commit('getApiSetting',{which:'getItems'})
+    getAreaList: async (context) => {
+        context.commit('getApiSetting',{which:'getAreaList'})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
                 console.log(response.data)
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.dataList.items = response.data.result
-                if(context.state.dataList.items.length > 0){
-                    context.state.dataList.items.forEach((data) => {
-                        data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/member/'+data.member_no
-                    })
-                }
+                context.state.dataList.areaList = response.data.result
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -106,9 +92,16 @@ const actions = {
             return []
         }
     },
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != undefined){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
-        await context.dispatch('getItems')
+        await context.dispatch('getAreaList')
     }
 }
  

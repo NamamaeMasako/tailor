@@ -18,6 +18,12 @@ class AreaController extends Controller
             'message' => []
         ];
         try{
+            $isMember = false;
+            if($request->isMember == true){
+                $isMember = true;
+            }
+            $request->request->remove('isMember');
+
             $tb = Area::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){
@@ -27,8 +33,14 @@ class AreaController extends Controller
             if(count($tb) > 0){
                 foreach($tb as $row){
                     $row->enable_text = Lang::get('status.area.enable')[$row->enable];
-                    foreach($row->Stage as $stage_row){
-                        $stage_row->enable_text = Lang::get('status.stage.enable')[$row->enable];
+                    if($isMember){
+                        foreach($row->enableStage as $stage_row){
+                            $stage_row->enable_text = Lang::get('status.stage.enable')[$row->enable];
+                        }
+                    }else{
+                        foreach($row->Stage as $stage_row){
+                            $stage_row->enable_text = Lang::get('status.stage.enable')[$row->enable];
+                        }
                     }
                 }
             }else{
@@ -52,6 +64,12 @@ class AreaController extends Controller
         ];
         DB::beginTransaction();
         try{
+            $isMember = false;
+            if($request->isMember == true){
+                $isMember = true;
+            }
+            $request->request->remove('isMember');
+
             $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();

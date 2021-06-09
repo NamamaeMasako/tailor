@@ -18,6 +18,12 @@ class StageController extends Controller
             'message' => []
         ];
         try{
+            $isMember = false;
+            if($request->isMember == true){
+                $isMember = true;
+            }
+            $request->request->remove('isMember');
+            
             $tb = Stage::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){

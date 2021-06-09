@@ -34,4 +34,8 @@ class Area extends Model
     {
         return $this->hasMany('App\models\Stage','area_no');
     }
+    public function enableStage()
+    {
+        return $this->hasMany('App\models\Stage','area_no')->where('enable',1);
+    }
 }

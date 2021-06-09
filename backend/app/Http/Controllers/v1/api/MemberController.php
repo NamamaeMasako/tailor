@@ -18,6 +18,12 @@ class MemberController extends Controller
             'message' => []
         ];
         try{
+            $isMember = false;
+            if($request->isMember == true){
+                $isMember = true;
+            }
+            $request->request->remove('isMember');
+            
             $tb = Member::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Closure;
 use Exception;
@@ -20,11 +21,15 @@ class Auth
             if($request->access_token == null || $request->access_token == 'undefined'){
                 throw new Exception('無效的token');
             }
-            $tb = User::where('access_token','=',$request->access_token)->first();
-            if(is_null($tb)){
+            $tb_user = User::where('access_token','=',$request->access_token)->first();
+            $tb_member = Member::where('access_token','=',$request->access_token)->first();
+            if(is_null($tb_user) && is_null($tb_member)){
                 throw new Exception('token無對應資料');
             }
-            
+            $request->isMember = false;
+            if(!is_null($tb_member)){
+                $request->isMember = true;
+            }
             // $result['status'] = true;
             // $result['result'] = [
             //     'name' => $tb->name,
