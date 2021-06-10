@@ -63,24 +63,24 @@
                                     <div class="collapse" id="characters">
                                         <div class="card-body">
                                             <ul class="list-group" v-if="dataList.formList.member_character.length > 0">
-                                                <li class="list-group-item" v-for="(character, index) in dataList.formList.member_character" :key="index">{{character.character_name}}</li>
+                                                <li class="list-group-item" v-for="(character, index) in dataList.formList.member_character" :key="index">{{character.name}}</li>
                                             </ul>
                                             <p v-else>尚未持有任何角色</p>
                                         </div>
                                         <div class="card-footer">
-                                            <b-button variant="success" v-b-modal.add-character>新增角色</b-button>
-                                            <b-modal id="add-character" title="新增角色">
-                                                <b-form-group label="選擇欲新增的角色">
-                                                    <b-form-checkbox-group :options="dataList.characterList" buttons button-variant="outline-primary" name="characters" v-model="dataList.member_character"></b-form-checkbox-group>
+                                            <b-button variant="success" v-b-modal.add-character>編輯</b-button>
+                                            <b-modal id="add-character" title="編輯持有角色" v-model="modalStatus.addCharacter">
+                                                <b-form-group label="選取:已持有，未選取:未持有">
+                                                    <b-form-checkbox-group :options="selectList.characterList" buttons button-variant="outline-primary" name="characters" v-model="dataList.formList.member_character"></b-form-checkbox-group>
                                                 </b-form-group>
                                                 <template v-slot:modal-footer>
                                                     <div class="col-12">
                                                         <div class="row justify-content-center">
                                                             <div class="col-3">
-                                                                <b-button variant="secondary" class="btn-block">取消</b-button>
+                                                                <b-button variant="secondary" class="btn-block" v-on:click="closeAddCharacter">取消</b-button>
                                                             </div>
                                                             <div class="col-3">
-                                                                <b-button variant="success" class="btn-block">確認</b-button>
+                                                                <b-button variant="success" class="btn-block" v-on:click="updateCharacter">確認</b-button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -124,8 +124,10 @@
                 'countDownChanged'
             ]),
             ...mapActions('detailData',[
+                'closeAddCharacter',
                 'initPage',
-                'submit'
+                'submit',
+                'updateCharacter'
             ])   
         }
     }

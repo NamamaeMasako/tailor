@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\v1\api;  //路徑
 use App\Http\Controllers\Controller;
+use App\Models\Character;
 use App\Models\Member;
+use App\Models\MemberCharacter;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -40,7 +42,7 @@ class MemberController extends Controller
                                 $result['message'] = ['資料異常'];
                                 throw new Exception('更新失敗');
                             }
-                            $MemberCharacter->character_name = $tb_character->first()->name;
+                            $MemberCharacter->name = $tb_character->first()->name;
                         }
                     }
                 }
@@ -101,17 +103,38 @@ class MemberController extends Controller
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
+
             $resquest_member_update = [
                 'name' => $request->name,
                 'enable' => $request->enable
             ];
-            $tb = Character::where('member_no',$member_no);
-            if(count($tb->get()) > 1 || count($tb->get()) <= 0){
-                $result['message'] = ['資料異常'];
-                throw new Exception('更新失敗');
+            $resquestArr_member_character_update = [];
+            if(is_array($request->member_character) && count($request->member_character) > 0){
+                foreach($request->member_character as $member_character){
+                    $res = [
+                        'member_no' => $member_no,
+                        'character_no' => $member_character
+                    ];
+                    array_push($resquestArr_member_character_update,$res);
+                }
             }
-            $tb->update($resquest_member_update);
-            
+
+            if($request->update_character){
+                MemberCharacter::where('member_no',$member_no)->delete();
+                if(count($resquestArr_member_character_update) > 0){
+                    foreach($resquestArr_member_character_update as $res){
+                        MemberCharacter::create($res);
+                    }
+                }
+            }else{
+                $tb = Member::where('member_no',$member_no);
+                if(count($tb->get()) > 1 || count($tb->get()) <= 0){
+                    $result['message'] = ['資料異常'];
+                    throw new Exception('更新失敗');
+                }
+                $tb->update($resquest_member_update);
+            }
+
             $result['status'] = true;
             $result['result'] = '更新成功';
             DB::commit();

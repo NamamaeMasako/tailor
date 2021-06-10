@@ -10,8 +10,10 @@ const state = {
             name: '',
             member_character: []
         },
+        copy_formList: {}
+    },
+    selectList:{
         characterList: [],
-        member_character: []
     },
     api: {
         active: null,
@@ -57,6 +59,9 @@ const state = {
     validateMsg: {
         email: '',
         name: ''
+    },
+    modalStatus: {
+        addCharacter: false
     }
 }
 
@@ -97,8 +102,12 @@ const mutations = {
 }
 
 const actions = {
+    closeAddCharacter: async (context) => {
+        context.state.dataList.formList.member_character = JSON.parse(JSON.stringify(context.state.dataList.copy_formList.member_character))
+        context.state.modalStatus.addCharacter = false
+    },
     getCharacterList: async (context) => {
-        context.state.dataList.characterList = []
+        context.state.selectList.characterList = []
         context.commit('getApiSetting',{which:'getCharacterList',params:{'shelf': 1}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
@@ -109,9 +118,12 @@ const actions = {
                 Object.keys(response.data.result).map((key) => {
                     let option = {
                         text: response.data.result[key].name,
-                        value: response.data.result[key].character_no
+                        value: {
+                            name: response.data.result[key].name,
+                            character_no: response.data.result[key].character_no
+                        }
                     }
-                    context.state.dataList.characterList.push(option)
+                    context.state.selectList.characterList.push(option)
                 })
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -140,6 +152,17 @@ const actions = {
                     throw response.data
                 }
                 context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
+                let resetArr = []
+                context.state.dataList.formList.member_character.forEach((el)=>{
+                    let reset = {
+                        name: el.name,
+                        character_no: el.character_no
+                    }
+                    resetArr.push(reset)
+                })
+                context.state.dataList.formList.member_character = resetArr
+                context.state.dataList.copy_formList = JSON.parse(JSON.stringify(context.state.dataList.formList))
+                context.state.dataList.formList.update_character = false
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -192,6 +215,7 @@ const actions = {
             context.state.alert.message = '錯誤的API'
             context.commit('showAlert')
         }
+        context.state.dataList.formList.update_character = false
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
@@ -199,32 +223,9 @@ const actions = {
         await context.dispatch('getCharacterList')
     },
     updateCharacter: async (context) => {
-        context.commit('getApiSetting',{which:'updateCharacter',paraArr:[context.state.dataList.memberNo]})
-        if(context.state.api.active != undefined || context.state.api.active != null){
-            axios(context.state.api.active).then((response) => {
-                console.log(response.data)
-                if(response.data.status != true){
-                    throw response.data
-                }
-                context.state.alert.variant = 'success'
-                context.state.alert.message = response.data['result']
-                context.commit('showAlert')
-            }).catch((error) => { 
-                context.state.alert.message = error['result']
-                Object.keys(context.state.validateMsg).map((key) => {
-                    if(error['message'][key] != undefined){
-                        context.state.validateMsg[key] = error['message'][key]
-                    }else{
-                        context.state.validateMsg[key] = ''
-                    }
-                })
-                context.commit('showAlert')
-            })
-        }else{
-            context.state.alert.variant = 'danger'
-            context.state.alert.message = '錯誤的API'
-            context.commit('showAlert')
-        }
+        context.state.dataList.formList.update_character = true
+        await context.dispatch('submit')
+        context.state.modalStatus.addCharacter = false
     }
 }
  
