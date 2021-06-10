@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <ul class="list-group" v-if="area.enable_stage.length > 0">
-                    <li class="list-group-item" v-for="(stage, index) in area.stage" :key="index">{{stage.title}}</li>
+                    <button type="button" class="list-group-item list-group-item-action btn" v-for="(stage, index) in area.enable_stage" :key="index">{{stage.title}}</button>
                 </ul>
             </div>
         </div>

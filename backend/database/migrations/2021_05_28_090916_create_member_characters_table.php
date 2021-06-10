@@ -17,6 +17,8 @@ class CreateMemberCharactersTable extends Migration
             $table->id();
             $table->string('member_no')->comment('會員編號');
             $table->string('character_no')->comment('角色編號');
+            $table->string('stage_no')->nullable()->comment('執行中任務編號');
+            $table->timestamp('stage_start_time')->nullable()->comment('執行中任務開始時間');
             $table->timestamps();
         });
     }
