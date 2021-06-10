@@ -83,6 +83,8 @@ const actions = {
     getLoginData: async (context) => {
         if(localStorage.getItem('login_data') != null){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
         }
     },
     logout: async (context) => {

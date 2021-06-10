@@ -1,7 +1,17 @@
 <template>
 <div id="main-content" class="container-fluid">
     <header-nav />
-    charater
+    <div class="row">
+        <div class="col-12">
+            <b-card no-body class="w-100">
+                <b-tabs pills card vertical nav-wrapper-class="col-3">
+                    <b-tab :title="character.name" v-for="(character, index) in selectList.characterList" :key="index">
+                        <b-card-text>{{character}}</b-card-text>
+                    </b-tab>
+                </b-tabs>
+            </b-card>
+        </div>
+    </div>
 </div>
 </template>
 <script>

@@ -18,9 +18,6 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-//use bootstrap
-import 'bootstrap';
-
 import App from './App.vue'
 
 Vue.config.productionTip = false

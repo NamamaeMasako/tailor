@@ -28,7 +28,11 @@ class CharacterController extends Controller
             $tb = Character::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){
-                    $tb = $tb->where($key,$request[$key]);
+                    if(is_array($request[$key])){
+                        $tb = $tb->whereIn($key,$request[$key]);
+                    }else{
+                        $tb = $tb->where($key,$request[$key]);
+                    }
                 }
             }
             if(count($tb) > 0){

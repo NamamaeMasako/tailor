@@ -5,10 +5,20 @@ const state = {
     dataList: {
         formList: []
     },
+    selectList:{
+        characterList:[]
+    },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list:{
+            getCharacterList: {
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/game/character',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
             getMemberData: {
                 baseURL: localStorage.getItem('HOST'),
                 url: '/api/member',
@@ -69,6 +79,41 @@ const mutations = {
 const actions = {
     getCharacterList: async (context) => {
         let params = {
+            'enable': [1,2]
+        }
+        context.commit('getApiSetting',{which:'getCharacterList',params: params})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.selectList.characterList = response.data.result
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            alert('API設定失敗')
+        }
+    },
+    getLoginData: async (context) => {
+        if(localStorage.getItem('login_data') != undefined){
+            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
+    getMemberData: async (context) => {
+        let params = {
             'member_no': context.state.loginData.member_no
         }
         context.commit('getApiSetting',{which:'getMemberData',params: params})
@@ -93,13 +138,6 @@ const actions = {
             })
         }else{
             return []
-        }
-    },
-    getLoginData: async (context) => {
-        if(localStorage.getItem('login_data') != undefined){
-            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
-        }else{
-            window.location = '/login'
         }
     },
     initPage: async (context) => {
