@@ -113,7 +113,7 @@ class MemberController extends Controller
                 foreach($request->member_character as $member_character){
                     $res = [
                         'member_no' => $member_no,
-                        'character_no' => $member_character
+                        'character_no' => $member_character['character_no']
                     ];
                     array_push($resquestArr_member_character_update,$res);
                 }
