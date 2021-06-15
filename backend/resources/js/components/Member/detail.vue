@@ -70,9 +70,10 @@
                                         <div class="card-footer">
                                             <b-button variant="success" v-b-modal.add-character>編輯</b-button>
                                             <b-modal id="add-character" title="編輯持有角色" v-model="modalStatus.addCharacter">
-                                                <b-form-group label="選取:已持有，未選取:未持有">
+                                                <b-form-group label="選取:已持有，未選取:未持有" v-if="selectList.characterList.length > 0">
                                                     <b-form-checkbox-group :options="selectList.characterList" buttons button-variant="outline-primary" name="characters" v-model="dataList.formList.member_character"></b-form-checkbox-group>
                                                 </b-form-group>
+                                                <p v-else>無可使用角色</p>
                                                 <template v-slot:modal-footer>
                                                     <div class="col-12">
                                                         <div class="row justify-content-center">
