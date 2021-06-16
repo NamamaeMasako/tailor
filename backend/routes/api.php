@@ -43,10 +43,12 @@ Route::namespace('v1')->group(function () {
                 Route::post('/edit/{stage_no}', 'StageController@edit');
             });
         });
-        Route::prefix('member')->middleware('auth')->group(function () {
-            Route::get('/', 'MemberController@index');
-            Route::post('/', 'MemberController@store');
-            Route::post('/edit/{member_no}', 'MemberController@edit');
+        Route::prefix('data')->middleware('auth')->group(function () {
+            Route::prefix('member')->group(function () {
+                Route::get('/', 'MemberController@index');
+                Route::post('/', 'MemberController@store');
+                Route::post('/edit/{member_no}', 'MemberController@edit');
+            });
         });
         Route::prefix('system')->middleware('auth')->group(function () {
             Route::prefix('manager')->group(function () {

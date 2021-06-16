@@ -42,10 +42,11 @@ export const routes = [
 	{ path: '/login', component: Login, name:'login' },
 	{ path: '/register', component: Register, name:'register' },
 
-	{ path: '/member', redirect: '/member/list' },
-	{ path: '/member/list', component: MemberList, name:'member-list'},
-	{ path: '/member/create', component: MemberCreate, name:'member-create'},
-	{ path: '/member/:member_no', component: MemberDetail, name:'member-detail'},
+	{ path: '/data', redirect: '/data/member' },
+	{ path: '/data/member', redirect: '/data/member/list' },
+	{ path: '/data/member/list', component: MemberList, name:'member-list'},
+	{ path: '/data/member/create', component: MemberCreate, name:'member-create'},
+	{ path: '/data/member/:member_no', component: MemberDetail, name:'member-detail'},
 	
 	{ path: '/game', redirect: '/game/character' },
 	{ path: '/game/character', redirect: '/game/character/list' },
@@ -79,9 +80,13 @@ export const routes = [
 ];
 
 // 建立 Vue Router instance
-const router = new Router({
+let router = new Router({
 	mode: 'history',
 	routes
 });
 
 export default router;
+
+export function isPageReady(getDataPromise) {
+    return this.pageIsReady
+}

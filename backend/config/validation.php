@@ -52,7 +52,6 @@ return [
         'rules' => [
             'store' => [
                 'title' => 'required',
-                'mother_path' => 'required',
                 'path' => 'required'
             ]
         ]
