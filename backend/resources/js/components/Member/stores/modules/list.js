@@ -20,7 +20,7 @@ const state = {
         list:{
             getItems: {
                 baseURL: null,
-                url: '/api/member',
+                url: '/api/data/member',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -95,7 +95,7 @@ const actions = {
                 if(context.state.dataList.items.length > 0){
                     context.state.dataList.items.forEach((data,index) => {
                         data.created_at = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-                        data.detailLink = '/member/'+data.member_no
+                        data.detailLink = '/data/member/'+data.member_no
                     })
                 }
             }).catch((error) => { 

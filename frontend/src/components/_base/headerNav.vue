@@ -9,7 +9,7 @@
                         <div class="col-12 align-self-start">
                             <div class="row">
                                 <div class="col-6 d-flex align-items-center">{{loginData.name}}<span class="badge badge-warning ml-1">VIP</span></div>
-                                <div class="col-6">Lv. 9999</div>
+                                <div class="col-6">Lv. {{loginData.level}}</div>
                             </div>
                         </div>
                         <div class="col-12 align-self-end">
@@ -17,13 +17,13 @@
                                 <div class="col-6">
                                     <span class="font-weight-light">exp.</span>
                                     <div class="progress" style="height: 5px">
-                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="68" style="width: 68%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 28%"></div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <span class="font-weight-light">sta.</span>
                                     <div class="progress" style="height: 5px">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="68" style="width: 68%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 68%"></div>
                                     </div>
                                 </div>
                             </div>

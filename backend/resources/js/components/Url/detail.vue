@@ -16,10 +16,10 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <b-button variant="info" class="text-light" href="/system/url/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
-                        <b-form-checkbox v-model="editMode" name="check-button" class="col-form-label" switch>
+                        <!-- <b-form-checkbox v-model="editMode" name="check-button" class="col-form-label" switch>
                             <b v-if="editMode != true">編輯模式：關</b>
                             <b class="text-primary" v-else>編輯模式：開</b>
-                        </b-form-checkbox>
+                        </b-form-checkbox> -->
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

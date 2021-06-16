@@ -6,7 +6,8 @@ const state = {
         formList: []
     },
     selectList:{
-        characterList:[]
+        characterList:[],
+        ownedCharacterList:[]
     },
     api: {
         active: null,
@@ -21,7 +22,7 @@ const state = {
             },
             getMemberData: {
                 baseURL: localStorage.getItem('HOST'),
-                url: '/api/member',
+                url: '/api/data/member',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -89,6 +90,8 @@ const actions = {
                     throw response.data 
                 }
                 context.state.selectList.characterList = response.data.result
+                console.log(context.state.selectList.characterList)
+
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -123,7 +126,11 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.dataList.areaList = response.data.result
+                if(response.data.result[0].member_character.length > 0){
+                    response.data.result[0].member_character.forEach((el) => {
+                        context.state.selectList.ownedCharacterList.push(el.character_no)
+                    })
+                }
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -143,6 +150,7 @@ const actions = {
     initPage: async (context) => {
         await context.dispatch('getLoginData')
         await context.dispatch('getCharacterList')
+        await context.dispatch('getMemberData')
     }
 }
  

@@ -12,7 +12,7 @@ const state = {
         list: {
             submit: {
                 baseURL: null,
-                url: '/api/member',
+                url: '/api/data/member',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
