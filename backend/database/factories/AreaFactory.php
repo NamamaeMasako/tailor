@@ -26,7 +26,8 @@ class AreaFactory extends Factory
     {
         return [
             'title' => $this->faker->state(),
-            'order' => 0
+            'order' => 0,
+            'enable' => rand(0,1)
         ];
     }
 

@@ -27,7 +27,8 @@ class StageFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'order' => 0,
-            'time' => $this->faker->time($format = 'H:i:s')
+            'time' => $this->faker->time($format = 'H:i:s'),
+            'enable' => rand(0,1)
         ];
     }
 
