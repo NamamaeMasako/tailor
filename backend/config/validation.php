@@ -32,6 +32,9 @@ return [
             ],
             'edit' => [
                 'name' => 'required'
+            ],
+            'updatestage' => [
+                'character_no' => 'required'
             ]
         ]
     ],

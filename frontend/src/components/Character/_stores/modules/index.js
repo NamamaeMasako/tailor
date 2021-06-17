@@ -3,11 +3,11 @@ import axios from 'axios'
 const state = {
     loginData: null,
     dataList: {
-        formList: []
-    },
-    selectList:{
-        characterList:[],
-        ownedCharacterList:[]
+        formList: [],
+        selectList:{
+            characterList:[],
+            ownedCharacterList:[]
+        },
     },
     api: {
         active: null,
@@ -89,9 +89,7 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.selectList.characterList = response.data.result
-                console.log(context.state.selectList.characterList)
-
+                context.state.dataList.selectList.characterList = response.data.result
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -126,9 +124,10 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
+                context.state.dataList.selectList.ownedCharacterList = []
                 if(response.data.result[0].member_character.length > 0){
                     response.data.result[0].member_character.forEach((el) => {
-                        context.state.selectList.ownedCharacterList.push(el.character_no)
+                        context.state.dataList.selectList.ownedCharacterList.push(el.character_no)
                     })
                 }
             }).catch((error) => { 

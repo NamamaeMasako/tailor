@@ -133,7 +133,7 @@ const actions = {
         }
     },
     getData: async (context) => {
-        context.commit('getApiSetting',{which:'getData',params:{'area_no': context.state.dataList.areaNo}})
+        context.commit('getApiSetting',{which:'getData',params:{'stage_no': context.state.dataList.stageNo}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)

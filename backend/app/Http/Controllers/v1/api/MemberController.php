@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Character;
 use App\Models\Member;
 use App\Models\MemberCharacter;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -145,4 +146,47 @@ class MemberController extends Controller
 
         return $result;
     }
+
+    public function updatestage(Request $request,$member_no) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.member.rules.updatestage'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('更新失敗');
+            }
+
+            if($request->stage_no == null){
+                $request->stage_start_time = null;
+            }else{
+                $request->stage_start_time = Carbon::now();
+            }
+            $request_member_character = [
+                'stage_no' => $request->stage_no,
+                'stage_start_time' => $request->stage_start_time
+            ];
+            $tb = MemberCharacter::where('member_no',$member_no)->where('character_no',$request->character_no);
+            if(count($tb->get()) <= 0){
+                $result['message'] = ['無對應資料'];
+                throw new Exception('更新失敗');
+            }else{
+                $tb->update($request_member_character);
+            }
+
+            $result['status'] = true;
+            $result['result'] = '更新成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
+
 }

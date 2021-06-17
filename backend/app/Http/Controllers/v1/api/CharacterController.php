@@ -48,7 +48,6 @@ class CharacterController extends Controller
                 }
             }else{
                 $result['message'] = ['無對應資料'];
-                // throw new Exception('查詢失敗');
             }
 
             $result['status'] = true;

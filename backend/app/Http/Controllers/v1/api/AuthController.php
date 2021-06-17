@@ -97,9 +97,11 @@ class AuthController extends Controller
             $tb->update([
                 'access_token' => Hash::make($token)
             ]);
+            $tb = $tb->first();
+            $tb['member_character'] = $tb->MemberCharacter;
 
             $result['status'] = true;
-            $result['result'] = $tb->first();
+            $result['result'] = $tb;
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
         }

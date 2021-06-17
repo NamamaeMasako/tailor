@@ -5,10 +5,10 @@
         <div class="col-12">
             <b-card no-body class="w-100">
                 <b-tabs pills card vertical nav-wrapper-class="col-3">
-                    <b-tab :title="character.name" v-for="(character, index) in selectList.characterList" :key="index">
+                    <b-tab :title="character.name" v-for="(character, index) in dataList.selectList.characterList" :key="index">
                         <template v-slot:title>
                             {{character.name}}
-                            <span class="badge badge-pill badge-success" v-if="selectList.ownedCharacterList.indexOf(character.character_no) > -1">
+                            <span class="badge badge-pill badge-success" v-if="dataList.selectList.ownedCharacterList.indexOf(character.character_no) > -1">
                                 <i class="fas fa-check"></i>
                             </span>
                         </template>
