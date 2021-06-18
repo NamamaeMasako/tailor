@@ -10,7 +10,7 @@
                 <ul class="list-group" v-if="area.enable_stage.length > 0">
                     <li class="list-group-item list-group-item-action" v-for="(stage, index) in area.enable_stage" :key="index">
                         <div class="row mb-2">
-                            <div class="col-8 d-flex align-items-center h6">{{stage.title}}</div>
+                            <div class="col-8 d-flex align-items-center h6">{{stage.title}},{{stage.stage_no}}</div>
                         </div>
                         <div class="row">
                             <div class="col-8 d-flex align-items-center">執行時間：{{stage.time}}</div>
@@ -21,6 +21,8 @@
                         </div>
                         <b-progress class="my-2" variant="info" :max="stage.millisecond" :value="stage.executor.goTimeValue" height="4px" v-if="stage.executor != undefined && stage.executor != null"></b-progress>
                         <div class="row" v-if="stage.executor != undefined && stage.executor != null">
+                        {{stage.executor.goTimeValue}}
+
                             <div class="col-12 text-right">
                                 {{stage.executor.name}}執行中
                             </div>
