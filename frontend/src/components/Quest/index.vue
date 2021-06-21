@@ -10,7 +10,7 @@
                 <ul class="list-group" v-if="area.enable_stage.length > 0">
                     <li class="list-group-item list-group-item-action" v-for="(stage, index) in area.enable_stage" :key="index">
                         <div class="row mb-2">
-                            <div class="col-8 d-flex align-items-center h6">{{stage.title}},{{stage.stage_no}}</div>
+                            <div class="col-8 d-flex align-items-center h6">{{stage.title}}</div>
                         </div>
                         <div class="row">
                             <div class="col-8 d-flex align-items-center">執行時間：{{stage.time}}</div>

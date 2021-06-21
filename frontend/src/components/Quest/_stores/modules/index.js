@@ -199,7 +199,7 @@ const actions = {
                                             if(stage_el.executor.goTimeValue < stage_el.millisecond){
                                                 context.dispatch('setCountDown',{ 'area_no': area_el.area_no, 'stage_no': stage_el.stage_no })
                                             }else{
-                                                context.dispatch('cancelQuest',{ 'character_no': el.character_no })
+                                                context.dispatch('cancelQuest',stage_el)
                                             }
                                         }
                                     })
