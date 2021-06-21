@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import axios from 'axios'
 import moment from 'moment'
@@ -12,11 +11,13 @@ const state = {
         },
         selectList: {
             areaList: [],
-            ownedCharacterList: []
+            ownedCharacterList: [],
+            finishedQuestList: []
         }
     },
     modalStatus:{
-        characterSelect: false
+        characterSelect: false,
+        finishedQuest: false
     },
     api: {
         active: null,
@@ -60,20 +61,6 @@ const getters = {
 }
  
 const mutations = {
-    countDownChanged: (state, payload) => {
-        state.dataList.selectList.areaList.forEach((el) => {
-            if(el.area_no == payload.area_no && el.enable_stage.length > 0){
-                el.enable_stage.forEach((stage_el) => {
-                    if(stage_el.stage_no == payload.stage_no && (stage_el.executor != null || stage_el.executor != undefined)){
-                        stage_el.executor.goTimeValue -= 1000
-                        if(stage_el.executor.goTimeValue < 0){
-                            stage_el.executor.goTimeValue = 0
-                        }
-                    }
-                })
-            }
-        })
-    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -107,9 +94,6 @@ const actions = {
         context.state.dataList.formList.character_no = payload.executor.character_no
         context.state.dataList.formList.stage_no = null
         await context.dispatch('doQuest')
-    },
-    doCountDown: async (context,payload) => {
-        context.commit('countDownChanged', payload)
     },
     doQuest: async (context) => {
         context.commit('getApiSetting',{which:'doQuest',paraArr:[context.state.loginData.member_no]})
@@ -199,6 +183,8 @@ const actions = {
                                             if(stage_el.executor.goTimeValue < stage_el.millisecond){
                                                 context.dispatch('setCountDown',{ 'area_no': area_el.area_no, 'stage_no': stage_el.stage_no })
                                             }else{
+                                                context.state.dataList.selectList.finishedQuestList.push(stage_el)
+                                                context.state.modalStatus.finishedQuest = true
                                                 context.dispatch('cancelQuest',stage_el)
                                             }
                                         }
@@ -241,6 +227,8 @@ const actions = {
                                 await context.dispatch('setCountDown',payload)
                             },1000)
                         }else{
+                            context.state.dataList.selectList.finishedQuestList.push(stage_el)
+                            context.state.modalStatus.finishedQuest = true
                             context.dispatch('cancelQuest',stage_el)
                         }
                     }

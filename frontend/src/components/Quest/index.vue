@@ -21,8 +21,6 @@
                         </div>
                         <b-progress class="my-2" variant="info" :max="stage.millisecond" :value="stage.executor.goTimeValue" height="4px" v-if="stage.executor != undefined && stage.executor != null"></b-progress>
                         <div class="row" v-if="stage.executor != undefined && stage.executor != null">
-                        {{stage.executor.goTimeValue}}
-
                             <div class="col-12 text-right">
                                 {{stage.executor.name}}執行中
                             </div>
@@ -35,8 +33,8 @@
     <b-modal centered v-model="modalStatus.characterSelect" title="select character">
         <ul class="list-group">
             <label class="list-group-item list-group-item-action" v-for="(character, index) in dataList.selectList.ownedCharacterList" :key="index">
-                <input type="radio" name="character_select" :value="character.character_no" v-model="dataList.formList.character_no">
-                {{character.name}}
+                <input type="radio" name="character_select" :value="character.character_no" v-model="dataList.formList.character_no" v-if="character.stage_no == null">
+                {{character.name}}<span class="badge badge-secondary ml-1" v-if="character.stage_no != null">任務執行中</span>
             </label>
         </ul>
         <template v-slot:modal-footer>
@@ -44,7 +42,19 @@
                 <b-button class="btn-block" v-on:click="modalStatus.characterSelect = false">取消</b-button>
             </div>
             <div class="col-6">
-                <b-button variant="success" class="btn-block" v-on:click="doQuest">出發</b-button>
+                <b-button variant="success" class="btn-block" v-on:click="doQuest" :disabled="dataList.formList.character_no == null">出發</b-button>
+            </div>
+        </template>
+    </b-modal>
+    <b-modal centered v-model="modalStatus.finishedQuest" title="任務完成">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action" v-for="(quest, index) in dataList.selectList.finishedQuestList" :key="index">
+                恭喜，{{quest.executor.name}}執行{{quest.title}}完成!
+            </li>
+        </ul>
+        <template v-slot:modal-footer>
+            <div class="col-6">
+                <b-button class="btn-block" v-on:click="modalStatus.finishedQuest = false">知道了</b-button>
             </div>
         </template>
     </b-modal>
@@ -66,6 +76,13 @@ export default {
     },
     components: {
         'header-nav': HeaderNav
+    },
+    watch: {
+        '$store.state.indexData.modalStatus.finishedQuest': (newVal) => {
+            if(newVal == false) {
+                store.state.indexData.dataList.selectList.finishedQuestList = []
+            }
+        }
     },
     methods: {
         ...mapActions('indexData',[
