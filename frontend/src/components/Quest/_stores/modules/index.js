@@ -131,7 +131,7 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.dataList.selectList.areaList = response.data.result
+                context.state.dataList.selectList.areaList = Object.values(response.data.result)
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
