@@ -41,7 +41,7 @@
         </ul>
         <template v-slot:modal-footer>
             <div class="col-6">
-                <b-button class="btn-block">取消</b-button>
+                <b-button class="btn-block" v-on:click="modalStatus.characterSelect = false">取消</b-button>
             </div>
             <div class="col-6">
                 <b-button variant="success" class="btn-block" v-on:click="doQuest">出發</b-button>

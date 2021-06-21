@@ -240,6 +240,8 @@ const actions = {
                             setTimeout(async () => {
                                 await context.dispatch('setCountDown',payload)
                             },1000)
+                        }else{
+                            context.dispatch('cancelQuest',stage_el)
                         }
                     }
                 })
