@@ -23,6 +23,10 @@ class CreateMembersTable extends Migration
             $table->integer('level')->comment('等級');
             $table->integer('experience')->comment('獲得經驗值');
             $table->integer('stamina')->comment('目前體力');
+            $table->integer('bug')->comment('材料數量-蟲');
+            $table->integer('feather')->comment('材料數量-羽毛');
+            $table->integer('cannabis')->comment('材料數量-葉');
+            $table->integer('gem')->comment('材料數量-寶石');
             $table->string('access_token')->nullable();
             $table->timestamps();
         });

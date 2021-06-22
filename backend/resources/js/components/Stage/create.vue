@@ -3,7 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
-                <li class="breadcrumb-item" aria-current="page">區域</li>
+                <li class="breadcrumb-item" aria-current="page">任務</li>
                 <li class="breadcrumb-item active" aria-current="page">新增</li>
             </ol>
         </nav>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/game/area/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/stage/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -33,6 +33,25 @@
                                 <input type="number" class="form-control" min=0 :class="{'is-invalid': validateMsg.order != ''}" id="title" v-model="dataList.formList.order">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="time" class="col-sm-2 col-form-label">執行時間</label>
+                            <div class="col-sm-10">
+                                <div class="input-group" :class="{'is-invalid': validateMsg.time != ''}">
+                                    <input type="number" class="form-control" v-model="dataList.showHour" placeholder="時">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                    </div>
+                                    <input type="number" class="form-control" v-model="dataList.showMinute" placeholder="分">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                    </div>
+                                    <input type="number" class="form-control" v-model="dataList.showSecond" placeholder="秒">
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.time" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>
