@@ -96,6 +96,9 @@ const actions = {
             second = '0'+second
         }
         context.state.dataList.formList.time = hour+':'+minute+':'+second
+        if(context.state.dataList.formList.order > 0){
+            context.state.dataList.formList.order -= 1
+        }
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {

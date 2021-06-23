@@ -64,7 +64,7 @@ class StageController extends Controller
                 $result['message'] = $validator->errors();
                 throw new Exception('新增失敗');
             }
-            Area::create($request->all());
+            Stage::create($request->all());
             $result['status'] = true;
             $result['result'] = '新增成功';
             DB::commit();
