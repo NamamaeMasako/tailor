@@ -10,6 +10,15 @@ const state = {
             title: '',
             order: '',
             time: ''
+        },
+        selectList: {
+            amount: [
+                { value: 0, text: '無' },
+                { value: 1, text: '少' },
+                { value: 2, text: '普' },
+                { value: 3, text: '多' },
+                { value: 4, text: '豐' }
+            ]
         }
     },
     api: {

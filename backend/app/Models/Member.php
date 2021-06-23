@@ -27,6 +27,10 @@ class Member extends Model
             $model->experience = 0;
             $model->stamina = 1;
             $model->enable = 0;
+            $model->bug = 10;
+            $model->feather = 10;
+            $model->cannabis = 10;
+            $model->gem = 10;
         });
         static::updating(function($model)
         {

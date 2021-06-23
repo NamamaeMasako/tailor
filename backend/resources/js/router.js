@@ -9,6 +9,8 @@ import CharacterList from './components/Character/list.vue';
 import CharacterCreate from './components/Character/create.vue';
 import CharacterDetail from './components/Character/detail.vue';
 
+import ConstantList from './components/Constant/list.vue';
+
 import JobList from './components/Job/list.vue';
 import JobCreate from './components/Job/create.vue';
 import JobDetail from './components/Job/detail.vue';
@@ -47,6 +49,8 @@ export const routes = [
 	{ path: '/data/member/list', component: MemberList, name:'member-list'},
 	{ path: '/data/member/create', component: MemberCreate, name:'member-create'},
 	{ path: '/data/member/:member_no', component: MemberDetail, name:'member-detail'},
+	{ path: '/data/constant', redirect: '/data/constant/list' },
+	{ path: '/data/constant/list', component: ConstantList, name:'constant-list'},
 	
 	{ path: '/game', redirect: '/game/character' },
 	{ path: '/game/character', redirect: '/game/character/list' },

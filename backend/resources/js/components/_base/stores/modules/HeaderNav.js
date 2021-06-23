@@ -80,6 +80,7 @@ const actions = {
         context.commit('getApiSetting',{which:'getLinkList',params:{'mother_path':''}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
+                console.log(response.data)
                 if(response.data.status != true){
                     throw response.data 
                 }

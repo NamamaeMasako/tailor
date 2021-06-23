@@ -19,8 +19,8 @@ class UrlsTableSeeder extends Seeder
                 'title' => '遊戲管理',
             ],
             [
-                'path' => '/member',
-                'title' => '會員',
+                'path' => '/data',
+                'title' => '資料管理',
             ],
             [
                 'path' => '/system',
@@ -47,9 +47,14 @@ class UrlsTableSeeder extends Seeder
                 'mother_path' => '/game'
             ],
             [
-                'path' => '/list',
-                'title' => '列表',
-                'mother_path' => '/member'
+                'path' => '/member/list',
+                'title' => '會員',
+                'mother_path' => '/data'
+            ],
+            [
+                'path' => '/constant/list',
+                'title' => '參數',
+                'mother_path' => '/data'
             ],
             [
                 'path' => '/manager/list',

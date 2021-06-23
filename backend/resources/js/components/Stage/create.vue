@@ -19,8 +19,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">名稱</label>
-                            <div class="col-sm-10">
+                            <label for="title" class="col-2 col-form-label">名稱</label>
+                            <div class="col-10">
                                 <input type="text" class="form-control" :class="{'is-invalid': validateMsg.title != ''}" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
@@ -28,8 +28,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">順序</label>
-                            <div class="col-sm-10">
+                            <label for="title" class="col-2 col-form-label">順序</label>
+                            <div class="col-10">
                                 <input type="number" class="form-control" min=0 :class="{'is-invalid': validateMsg.order != ''}" id="title" v-model="dataList.formList.order">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.order" :key="index">{{msg}}</span>
@@ -37,8 +37,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="time" class="col-sm-2 col-form-label">執行時間</label>
-                            <div class="col-sm-10">
+                            <label for="time" class="col-2 col-form-label">執行時間</label>
+                            <div class="col-10">
                                 <div class="input-group" :class="{'is-invalid': validateMsg.time != ''}">
                                     <input type="number" class="form-control" v-model="dataList.showHour" placeholder="時">
                                     <div class="input-group-append">
@@ -52,6 +52,57 @@
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.time" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">可獲得獎勵</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-bug"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-feather"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-gem"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-coins"></i></span>
+                                                    </div>
+                                                    <input type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

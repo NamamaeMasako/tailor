@@ -50,6 +50,10 @@ Route::namespace('v1')->group(function () {
                 Route::post('/edit/{member_no}', 'MemberController@edit');
                 Route::post('/updatestage/{member_no}', 'MemberController@updatestage');
             });
+            Route::prefix('constant')->group(function () {
+                Route::get('/', 'ConstantController@index');
+                Route::post('/edit/{page}', 'ConstantController@edit');
+            });
         });
         Route::prefix('system')->middleware('auth')->group(function () {
             Route::prefix('manager')->group(function () {

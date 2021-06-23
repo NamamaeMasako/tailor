@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UrlsTableSeeder::class);
+        $this->call(ConstantsTableSeeder::class);
 
         // \App\Models\User::factory(10)->create();
         for ( $i=0 ; $i<5 ; $i++ ) {
