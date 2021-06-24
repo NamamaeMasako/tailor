@@ -19,7 +19,7 @@ class CreateConstantsTable extends Migration
             $table->string('function')->comment('功能參數');
             $table->string('value')->comment('參考值');
             $table->string('text')->comment('對應文字');
-            $table->string('description')->comment('說明');
+            $table->string('usage')->comment('應用值');
             $table->timestamps();
         });
     }

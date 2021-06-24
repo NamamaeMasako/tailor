@@ -38,6 +38,9 @@ class ConstantController extends Controller
                 'data' => $tb->groupBy('page'),
                 'titleList' => Url::pluck('title','path')
             ];
+            foreach($res['data'] as $i => $item_i){
+                $res['data'][$i] = collect($item_i)->groupBy('function');
+            }
 
             $result['status'] = true;
             $result['result'] = $res;

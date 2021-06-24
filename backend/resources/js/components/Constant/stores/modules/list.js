@@ -93,10 +93,17 @@ const actions = {
                 }
                 context.state.dataList.items = response.data.result.data
                 context.state.dataList.tabTitleList = {}
-                Object.keys(context.state.dataList.items).forEach((el) => {
-                    Object.keys(response.data.result.titleList).forEach((title_el) => {
-                        if(title_el.indexOf(el) > -1){
-                            context.state.dataList.tabTitleList[el] = response.data.result.titleList[title_el]
+                Object.keys(context.state.dataList.items).forEach((index) => {
+                    Object.keys(context.state.dataList.items[index]).forEach((index_i) => {
+                        if(index_i == 'resource'){
+                            context.state.dataList.items[index][index_i].forEach((el) => {
+                                el.usage = el.usage.split('|')
+                            })
+                        }
+                    })
+                    Object.keys(response.data.result.titleList).forEach((index_title) => {
+                        if(index_title.indexOf(index) > -1){
+                            context.state.dataList.tabTitleList[index] = response.data.result.titleList[index_title]
                         }
                     })
                 })

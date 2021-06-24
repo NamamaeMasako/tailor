@@ -16,88 +16,46 @@ class ConstantsTableSeeder extends Seeder
         $insertDatas = [
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '0',
                 'text' => '無',
-                'description' => '獲得資源數量下拉清單'
+                'usage' => '0|0',
             ],
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '1',
                 'text' => '微',
-                'description' => '獲得資源數量下拉清單'
+                'usage' => '0|20',
             ],
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '2',
                 'text' => '少',
-                'description' => '獲得資源數量下拉清單'
+                'usage' => '20|40',
             ],
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '3',
                 'text' => '普',
-                'description' => '獲得資源數量下拉清單'
+                'usage' => '40|60',
             ],
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '4',
                 'text' => '多',
-                'description' => '獲得資源數量下拉清單'
+                'usage' => '60|80',
             ],
             [
                 'page' => 'stage',
-                'function' => 'resource-list',
+                'function' => 'resource',
                 'value' => '5',
                 'text' => '豐',
-                'description' => '獲得資源數量下拉清單'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '0',
-                'text' => '0',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '1',
-                'text' => '0|20',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '2',
-                'text' => '20|40',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '3',
-                'text' => '40|60',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '4',
-                'text' => '60|80',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
-            [
-                'page' => 'stage',
-                'function' => 'resource-amount',
-                'value' => '5',
-                'text' => '80|100',
-                'description' => '獲得資源數量下拉清單對應實際數量'
-            ],
+                'usage' => '80|100',
+            ]
         ];
         foreach($insertDatas as $data){
             \DB::table('constants')->insert($data);

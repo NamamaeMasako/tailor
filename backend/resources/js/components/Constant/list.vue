@@ -14,8 +14,26 @@
             <div class="col-12">
                 <b-card no-body>
                     <b-tabs pills card vertical nav-wrapper-class="col-3">
-                        <b-tab :title="dataList.tabTitleList[index]" v-for="(constantList, index) in dataList.items" :key="index" :active="index == 'stage'">
-                            <b-card-text>Tab contents 1</b-card-text>
+                        <b-tab :title="dataList.tabTitleList[index]" v-for="(pagList, index) in dataList.items" :key="index" :active="index == 'stage'">
+                            <ul class="list-group">
+                                <li class="list-group-item" v-for="(constantList, i) in pagList" :key="i">
+                                    <b-card-text>可獲得資源數量設定</b-card-text>
+                                    <div class="row">
+                                        <div class="col-4" v-for="(constant, j) in constantList" :key="j">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">{{constant.text}}</span>
+                                                </div>
+                                                <input type="text" class="form-control" v-model="constant.usage[0]">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="basic-addon1">~</span>
+                                                </div>
+                                                <input type="text" class="form-control" v-model="constant.usage[1]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </b-tab>
                     </b-tabs>
                 </b-card>
