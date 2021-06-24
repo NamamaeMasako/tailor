@@ -1,16 +1,10 @@
 const state = {
     loginData: null,
     dataList: {
-        fields: [
-            { key: 'area_no', label: '區域編號', sortable: false },
-            { key: 'title', label: '名稱', sortable: false },
-            { key: 'showOrder', label: '順序', sortable: false },
-            { key: 'enable_text', label: '開放狀態', sortable: false },
-            { key: 'created_at', label: '建立時間', sortable: false },
-            { key: 'detailLink', label: '詳細資料', sortable: false },
-        ],
+        selectList: {
+            url: {}
+        },
         items: [],
-        tabTitleList: {},
         perPage: 10,
         currentPage: 1
     },
@@ -21,6 +15,13 @@ const state = {
             getItems: {
                 baseURL: null,
                 url: '/api/data/constant',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getUrlList: {
+                baseURL: null,
+                url: '/api/system/url',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -91,7 +92,7 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.dataList.items = response.data.result.data
+                context.state.dataList.items = response.data.result
                 context.state.dataList.tabTitleList = {}
                 Object.keys(context.state.dataList.items).forEach((index) => {
                     Object.keys(context.state.dataList.items[index]).forEach((index_i) => {
@@ -101,11 +102,37 @@ const actions = {
                             })
                         }
                     })
-                    Object.keys(response.data.result.titleList).forEach((index_title) => {
-                        if(index_title.indexOf(index) > -1){
-                            context.state.dataList.tabTitleList[index] = response.data.result.titleList[index_title]
-                        }
-                    })
+                })
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                console.log(error)
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+        }
+    },
+    getUrlList: async (context) => {
+        context.commit('getApiSetting',{which:'getUrlList'})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.dataList.selectList.url = {}
+                response.data.result.forEach((el) => {
+                    let key = el.path.split('/')[1]
+                    context.state.dataList.selectList.url[key] = el.title
                 })
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -126,6 +153,7 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
+        await context.dispatch('getUrlList')
         await context.dispatch('getItems')
     }
 }

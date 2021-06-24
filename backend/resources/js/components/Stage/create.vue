@@ -66,7 +66,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fas fa-bug"></i></span>
                                                     </div>
-                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.bug_value"></b-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -74,7 +74,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fas fa-feather"></i></span>
                                                     </div>
-                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.feather_value"></b-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -82,7 +82,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
                                                     </div>
-                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.cannabis_value"></b-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -90,7 +90,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fas fa-gem"></i></span>
                                                     </div>
-                                                    <b-select class="form-control" :options="dataList.selectList.amount"></b-select>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.gem_value"></b-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -98,7 +98,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fas fa-coins"></i></span>
                                                     </div>
-                                                    <input type="number" class="form-control">
+                                                    <input type="number" class="form-control" v-model="dataList.formList.coins">
                                                 </div>
                                             </div>
                                         </div>

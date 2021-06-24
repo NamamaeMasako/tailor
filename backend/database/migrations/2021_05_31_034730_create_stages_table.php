@@ -21,6 +21,11 @@ class CreateStagesTable extends Migration
             $table->string('order')->comment('順序');
             $table->time('time')->comment('執行時間');
             $table->string('enable')->comment('開放狀態');
+            $table->integer('bug_value')->comment('材料數量參考值-蟲');
+            $table->integer('feather_value')->comment('材料數量參考值-羽毛');
+            $table->integer('cannabis_value')->comment('材料數量參考值-葉');
+            $table->integer('gem_value')->comment('材料數量參考值-寶石');
+            $table->integer('coins')->comment('金錢');
             $table->timestamps();
         });
     }

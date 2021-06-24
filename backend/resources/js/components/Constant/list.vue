@@ -14,7 +14,7 @@
             <div class="col-12">
                 <b-card no-body>
                     <b-tabs pills card vertical nav-wrapper-class="col-3">
-                        <b-tab :title="dataList.tabTitleList[index]" v-for="(pagList, index) in dataList.items" :key="index" :active="index == 'stage'">
+                        <b-tab :title="dataList.selectList.url[index]" v-for="(pagList, index) in dataList.items" :key="index" :active="index == 'stage'">
                             <ul class="list-group">
                                 <li class="list-group-item" v-for="(constantList, i) in pagList" :key="i">
                                     <b-card-text>可獲得資源數量設定</b-card-text>
@@ -32,6 +32,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12 text-right">
+                                            <b-button variant="success">變更</b-button>
+                                        </div>
+                                    </div>
+
                                 </li>
                             </ul>
                         </b-tab>

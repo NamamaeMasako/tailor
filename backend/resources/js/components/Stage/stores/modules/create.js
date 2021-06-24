@@ -9,22 +9,28 @@ const state = {
         formList: {
             title: '',
             order: '',
-            time: ''
+            time: '',
+            bug_value: '0',
+            feather_value: '0',
+            cannabis_value: '0',
+            gem_value: '0',
+            coins: '0'
         },
         selectList: {
-            amount: [
-                { value: 0, text: '無' },
-                { value: 1, text: '少' },
-                { value: 2, text: '普' },
-                { value: 3, text: '多' },
-                { value: 4, text: '豐' }
-            ]
+            resource: []
         }
     },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list: {
+            getResourceList: {
+                baseURL: null,
+                url: '/api/data/constant',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
             submit: {
                 baseURL: null,
                 url: '/api/game/stage',
@@ -91,6 +97,32 @@ const actions = {
             window.location = '/login'
         }
     },
+    getResourceList: async (context) => {
+        context.commit('getApiSetting',{which:'getResourceList',params:{'page': 'stage','function': 'resource'}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.dataList.selectList.resource = response.data['result'].stage.resource
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
     submit: async (context) => {
         let hour = context.state.dataList.showHour
         let minute = context.state.dataList.showMinute
@@ -137,6 +169,7 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
+        await context.dispatch('getResourceList')
     }
 }
  

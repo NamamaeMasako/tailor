@@ -34,12 +34,9 @@ class ConstantController extends Controller
             if(count($tb) <= 0){
                 $result['message'] = ['無對應資料'];
             }
-            $res = [
-                'data' => $tb->groupBy('page'),
-                'titleList' => Url::pluck('title','path')
-            ];
-            foreach($res['data'] as $i => $item_i){
-                $res['data'][$i] = collect($item_i)->groupBy('function');
+            $res = $tb->groupBy('page');
+            foreach($res as $i => $item_i){
+                $res[$i] = collect($item_i)->groupBy('function');
             }
 
             $result['status'] = true;
