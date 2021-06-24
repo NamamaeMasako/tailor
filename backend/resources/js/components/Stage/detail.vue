@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">所屬區域</label>
                             <div class="col-sm-10" v-if="editMode != true">
-                                <input type="text" class="form-control-plaintext" v-model="dataList.formList.area_title">
+                                <input type="text" class="form-control-plaintext" v-model="dataList.formList.area_title" disabled>
                             </div>
                             <div class="col-sm-10" v-else>
                                 <b-form-select v-model="dataList.formList.area_no" :options="dataList.selectList.area"></b-form-select>
@@ -86,6 +86,72 @@
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">可獲得獎勵</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-bug"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.bug_value" :disabled="editMode != true"></b-select>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.bug_value" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-feather"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.feather_value" :disabled="editMode != true"></b-select>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.feather_value" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.cannabis_value" :disabled="editMode != true"></b-select>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.cannabis_value" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-gem"></i></span>
+                                                    </div>
+                                                    <b-select class="form-control" :options="dataList.selectList.resource" v-model="dataList.formList.gem_value" :disabled="editMode != true"></b-select>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.gem_value" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-coins"></i></span>
+                                                    </div>
+                                                    <input type="number" class="form-control" v-model="dataList.formList.coins" :disabled="editMode != true">
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.coins" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

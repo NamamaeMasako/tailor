@@ -16,7 +16,8 @@ const state = {
             time: ''
         },
         selectList: {
-            area: [{ value: null, text: '無所屬' }]
+            area: [{ value: null, text: '無所屬' }],
+            resource: []
         }
     },
     api: {
@@ -33,6 +34,13 @@ const state = {
             getData: {
                 baseURL: null,
                 url: '/api/game/stage',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getResourceList: {
+                baseURL: null,
+                url: '/api/data/constant',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -170,6 +178,32 @@ const actions = {
             window.location = '/login'
         }
     },
+    getResourceList: async (context) => {
+        context.commit('getApiSetting',{which:'getResourceList',params:{'page': 'stage','function': 'resource'}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.dataList.selectList.resource = response.data['result'].stage.resource
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.stageNo]})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -200,6 +234,7 @@ const actions = {
     initPage: async (context) => {
         await context.dispatch('getLoginData')
         await context.dispatch('getAreaList')
+        await context.dispatch('getResourceList')
         await context.dispatch('getData')
     }
 }

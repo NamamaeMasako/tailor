@@ -94,7 +94,12 @@ class StageController extends Controller
                 'title' => $request->title,
                 'order' => $request->order,
                 'enable' => $request->enable,
-                'time' => $request->time
+                'time' => $request->time,
+                'bug_value' => $request->bug_value,
+                'feather_value' => $request->feather_value,
+                'cannabis_value' => $request->cannabis_value,
+                'gem_value' => $request->gem_value,
+                'coins' => $request->coins
             ];
             $tb = Stage::where('stage_no',$stage_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
