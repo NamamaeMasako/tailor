@@ -37,5 +37,9 @@ class DatabaseSeeder extends Seeder
             \App\Models\Stage::factory()->create();
             sleep(1);
         }
+        for ( $i=0 ; $i<2 ; $i++ ) {
+            \App\Models\Costume::factory()->create();
+            sleep(1);
+        }
     }
 }

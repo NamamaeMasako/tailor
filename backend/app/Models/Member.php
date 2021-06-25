@@ -42,4 +42,8 @@ class Member extends Model
     {
         return $this->hasMany('App\models\MemberCharacter','member_no');
     }
+    public function MemberCostume()
+    {
+        return $this->hasMany('App\models\MemberCostume','member_no');
+    }
 }
