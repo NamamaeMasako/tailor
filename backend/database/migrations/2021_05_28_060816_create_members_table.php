@@ -27,6 +27,7 @@ class CreateMembersTable extends Migration
             $table->integer('feather')->comment('材料數量-羽毛');
             $table->integer('cannabis')->comment('材料數量-葉');
             $table->integer('gem')->comment('材料數量-寶石');
+            $table->integer('coins')->comment('金錢');
             $table->string('access_token')->nullable();
             $table->timestamps();
         });

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\v1\api;  //路徑
 use App\Http\Controllers\Controller;
 use App\Models\Character;
+use App\Models\Constant;
 use App\Models\Member;
 use App\Models\MemberCharacter;
+use App\Models\Stage;
 use Carbon\Carbon;
 use DB;
 use Exception;
@@ -170,13 +172,46 @@ class MemberController extends Controller
                 'stage_no' => $request->stage_no,
                 'stage_start_time' => $request->stage_start_time
             ];
-            $tb = MemberCharacter::where('member_no',$member_no)->where('character_no',$request->character_no);
-            if(count($tb->get()) <= 0){
-                $result['message'] = ['無對應資料'];
+            $tb_MemberCharacter = MemberCharacter::where('member_no',$member_no)->where('character_no',$request->character_no);
+            $tb_Member = Member::where('member_no',$member_no);
+            $tb_Constant = Constant::where('page','stage')->where('function','resource')->get();
+
+            if(count($tb_MemberCharacter->get()) <= 0 || count($tb_Member->get()) <= 0){
+                $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
             }else{
-                $tb->update($request_member_character);
+                $stage_no = $tb_MemberCharacter->first()->stage_no;
+                $tb_Stage = Stage::where('stage_no',$stage_no);
+                if($request->stage_no == null){
+                    $tb_Member = $tb_Member->first();
+                    $tb_Stage = $tb_Stage->first();
+                    foreach($tb_Constant as $constant){
+                        $constant->usage = explode('|',$constant->usage);
+                        if($tb_Stage->bug_value == $constant->value){
+                            $bug = rand($constant->usage[0],$constant->usage[1]);
+                        }
+                        if($tb_Stage->feather_value == $constant->value){
+                            $feather = rand($constant->usage[0],$constant->usage[1]);
+                        }
+                        if($tb_Stage->cannabis_value == $constant->value){
+                            $cannabis = rand($constant->usage[0],$constant->usage[1]);
+                        }
+                        if($tb_Stage->gem_value == $constant->value){
+                            $gem = rand($constant->usage[0],$constant->usage[1]);
+                        }
+                    }
+                    $request_member = [
+                        'bug' => $tb_Member->bug+$bug,
+                        'feather' => $tb_Member->feather+$feather,
+                        'cannabis' => $tb_Member->cannabis+$cannabis,
+                        'gem' => $tb_Member->gem+$gem,
+                        'coins' => $tb_Member->coins+$tb_Stage->coins
+                    ];
+                    $tb_Member->update($request_member);
+                }
+                $tb_MemberCharacter->update($request_member_character);
             }
+
 
             $result['status'] = true;
             $result['result'] = '更新成功';

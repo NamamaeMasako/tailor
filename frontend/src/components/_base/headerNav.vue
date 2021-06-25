@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-6 d-flex align-items-center">{{loginData.name}}<span class="badge badge-warning ml-1">VIP</span></div>
                                 <div class="col-2">Lv. {{loginData.level}}</div>
-                                <div class="col-4"><i class="fas fa-coins mr-2"></i>99999</div>
+                                <div class="col-4"><i class="fas fa-coins mr-2"></i>{{loginData.coins}}</div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -57,7 +57,7 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-6 font-weight-light">原料存量</div>
-                                        <div class="col-6 text-right">88/1000</div>
+                                        <div class="col-6 text-right">{{loginData.bug+loginData.feather+loginData.cannabis+loginData.gem}}/1000</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
@@ -71,16 +71,16 @@
                         </div>
                         <div class="col-12 d-flex">
                             <div class="col-3 d-flex align-items-center justify-content-center bg-dark text-light border border-white rounded-pill p-1">
-                                <i class="fas fa-bug"></i><span class="badge badge-pill badge-light ml-1">22</span>
+                                <i class="fas fa-bug"></i><span class="badge badge-pill badge-light ml-1">{{loginData.bug}}</span>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-center bg-dark text-light border border-white rounded-pill p-1">
-                                <i class="fas fa-feather"></i><span class="badge badge-pill badge-light ml-1">22</span>
+                                <i class="fas fa-feather"></i><span class="badge badge-pill badge-light ml-1">{{loginData.feather}}</span>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-center bg-dark text-light border border-white rounded-pill p-1">
-                                <i class="fas fa-cannabis"></i><span class="badge badge-pill badge-light ml-1">22</span>
+                                <i class="fas fa-cannabis"></i><span class="badge badge-pill badge-light ml-1">{{loginData.cannabis}}</span>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-center bg-dark text-light border border-white rounded-pill p-1">
-                                <i class="fas fa-gem"></i><span class="badge badge-pill badge-light ml-1">22</span>
+                                <i class="fas fa-gem"></i><span class="badge badge-pill badge-light ml-1">{{loginData.gem}}</span>
                             </div>
                         </div>
                     </div>

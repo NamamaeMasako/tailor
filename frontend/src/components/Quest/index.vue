@@ -72,6 +72,7 @@ export default {
     },
     mounted() {
         console.log('Component "'+this.$route.name+'" mounted.')
+        console.log(HeaderNav)
         this.initPage()
     },
     components: {
@@ -82,7 +83,10 @@ export default {
             if(newVal == false) {
                 store.state.indexData.dataList.selectList.finishedQuestList = []
             }
-        }
+        },
+        '$store.state.indexData.loginData': () => {
+            HeaderNav.store.dispatch('headerNavData/getLoginData')
+        },
     },
     methods: {
         ...mapActions('indexData',[

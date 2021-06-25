@@ -31,6 +31,7 @@ class Member extends Model
             $model->feather = 10;
             $model->cannabis = 10;
             $model->gem = 10;
+            $model->coins = 500;
         });
         static::updating(function($model)
         {

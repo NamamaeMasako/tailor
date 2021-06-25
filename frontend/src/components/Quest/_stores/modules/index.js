@@ -166,6 +166,8 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
+                localStorage.setItem('login_data', JSON.stringify(response.data.result[0]));
+                context.dispatch('getLoginData')
                 context.state.dataList.selectList.ownedCharacterList = response.data.result[0].member_character
                 if(response.data.result[0].member_character.length > 0){
                     response.data.result[0].member_character.forEach((el) => {
