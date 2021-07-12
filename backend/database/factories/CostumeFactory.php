@@ -27,14 +27,14 @@ class CostumeFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'gender' => 0,
-            'part' => 0,
-            'bug' => 5,
-            'feather' => 5,
-            'cannabis' => 5,
-            'gem' => 5,
+            'part' => rand(0,9),
+            'bug' => rand(1,10),
+            'feather' => rand(1,10),
+            'cannabis' => rand(1,10),
+            'gem' => rand(1,10),
             'stamina' => 5,
-            'experience' => 1,
-            'price' => 2,
+            'experience' => rand(1,5),
+            'price' => rand(1,10),
             'enable' => 0,
         ];
     }

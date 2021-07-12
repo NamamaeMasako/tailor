@@ -38,6 +38,7 @@ class CostumeController extends Controller
                 foreach($tb as $row){
                     $row->gender_text = Lang::get('status.costume.gender')[$row->gender];
                     $row->enable_text = Lang::get('status.costume.enable')[$row->enable];
+                    $row->part_text = Lang::get('status.costume.part')[$row->part];
                 }
             }else{
                 $result['message'] = ['無對應資料'];
@@ -95,7 +96,7 @@ class CostumeController extends Controller
         return $result;
     }
 
-    public function edit(Request $request,$character_no) {
+    public function edit(Request $request,$costume_no) {
         $result = [
             'status' => false,
             'result' => null,
@@ -103,40 +104,27 @@ class CostumeController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.character.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.costume.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
-            $resquest_character_update = [
+            $resquest_costume_update = [
+                'title' => $request->title,
                 'gender' => $request->gender,
-                'name' => $request->name,
+                'part' => $request->part,
+                'bug' => $request->bug,
+                'feather' => $request->feather,
+                'cannabis' => $request->cannabis,
+                'gem' => $request->gem,
                 'enable' => $request->enable,
-                'shelf' => $request->shelf
             ];
-            $resquestArr_character_job_update = [];
-            if(is_array($request->job_no) && count($request->job_no) > 0){
-                foreach($request->job_no as $job_no){
-                    $res = [
-                        'character_no' => $character_no,
-                        'job_no' => $job_no
-                    ];
-                    array_push($resquestArr_character_job_update,$res);
-                }
-            }
-            $tb = Character::where('character_no',$character_no);
+            $tb = Costume::where('costume_no',$costume_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
                 $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
             }
-            $tb->update($resquest_character_update);
-            
-            CharacterJob::where('character_no',$character_no)->delete();
-            if(count($resquestArr_character_job_update) > 0){
-                foreach($resquestArr_character_job_update as $res){
-                    CharacterJob::create($res);
-                }
-            }
+            $tb->update($resquest_costume_update);
             
             $result['status'] = true;
             $result['result'] = '更新成功';

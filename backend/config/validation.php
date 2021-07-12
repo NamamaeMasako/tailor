@@ -12,6 +12,23 @@ return [
         'rules' => [
             'store' => [
                 'name' => 'required',
+                'gender' => 'required',
+                'part' => 'required',
+                'bug' => 'required|integer|max:0',
+                'feather' => 'required|integer|max:0',
+                'cannabis' => 'required|integer|max:0',
+                'gem' => 'required|integer|max:0',
+                'stamina' => 'required|integer|max:0',
+                'experience' => 'required|integer|max:0',
+                'price' => 'required|integer|max:0',
+                'enable' => 'required',
+            ]
+        ]
+    ],
+    'costume' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required',
                 'gender' => 'required'
             ]
         ]

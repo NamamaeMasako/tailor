@@ -3,7 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
-                <li class="breadcrumb-item" aria-current="page">角色</li>
+                <li class="breadcrumb-item" aria-current="page">服裝</li>
                 <li class="breadcrumb-item active" aria-current="page">詳細資料</li>
             </ol>
         </nav>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <b-button variant="info" class="text-light" href="/game/character/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
+                        <b-button variant="info" class="text-light" href="/game/costume/list"><i class="fa fa-arrow-left mr-1"></i>返回列表</b-button>
                         <b-form-checkbox v-model="editMode" name="check-button" class="col-form-label" switch>
                             <b v-if="editMode != true">編輯模式：關</b>
                             <b class="text-primary" v-else>編輯模式：開</b>
@@ -23,16 +23,16 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-2 col-form-label">名稱</label>
+                            <label for="title" class="col-2 col-form-label">名稱</label>
                             <div class="col-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.name != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="name" v-model="dataList.formList.name">
+                                <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.name" :key="index">{{msg}}</span>
+                                    <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">性別</label>
+                            <label class="col-2 col-form-label">適用性別</label>
                             <div class="col-sm-10" v-if="editMode != true">
                                 <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.gender_text">
                             </div>
@@ -48,45 +48,103 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-2 col-form-label">情報公開狀態</label>
+                            <label class="col-2 col-form-label">適用部位</label>
+                            <div class="col-sm-10" v-if="editMode != true">
+                                <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.part_text">
+                            </div>
+                            <div class="col-10" v-else>
+                                <div class="d-flex py-1" :class="{'is-invalid': validateMsg.gender != ''}">
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="0">頭</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="1">脖子</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="2">肩膀</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="3">手腕</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="4">手</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="5">上身</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="6">下身</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="7">全身</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="8">腳</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.part" name="part" class="mr-4" value="9">飾品</b-form-radio>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.part" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>使用材料</label>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="form-group col-3 py-1">
+                                        <label class="col-12 text-center"><i class="fas fa-bug"></i></label>
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.bug">
+                                        <div class="invalid-feedback">
+                                            <span v-for="(msg,index) in validateMsg.bug" :key="index">{{msg}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-3 py-1">
+                                        <label class="col-12 text-center"><i class="fas fa-feather"></i></label>
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.feather">
+                                        <div class="invalid-feedback">
+                                            <span v-for="(msg,index) in validateMsg.feather" :key="index">{{msg}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-3 py-1">
+                                        <label class="col-12 text-center"><i class="fas fa-cannabis"></i></label>
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.cannabis">
+                                        <div class="invalid-feedback">
+                                            <span v-for="(msg,index) in validateMsg.cannabis" :key="index">{{msg}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-3 py-1">
+                                        <label class="col-12 text-center"><i class="fas fa-gem"></i></label>
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.gem">
+                                        <div class="invalid-feedback">
+                                            <span v-for="(msg,index) in validateMsg.gem" :key="index">{{msg}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">消耗體力</label>
+                            <div class="col-10">
+                                <input type="number" min='0' :class="{'is-invalid': validateMsg.stamina != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.stamina">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.stamina" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">可獲得經驗值</label>
+                            <div class="col-10">
+                                <input type="number" min='0' :class="{'is-invalid': validateMsg.experience != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.experience">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.experience" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">販售價格</label>
+                            <div class="col-10">
+                                <input type="number" min='0' :class="{'is-invalid': validateMsg.price != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.price">
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.price" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">開放狀態</label>
                             <div class="col-sm-10" v-if="editMode != true">
                                 <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.enable_text">
                             </div>
                             <div class="col-10" v-else>
                                 <div class="d-flex py-1" :class="{'is-invalid': validateMsg.enable != ''}">
                                     <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="0">未開放</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">預告</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="2">開放</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">開放</b-form-radio>
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label">販賣狀態</label>
-                            <div class="col-sm-10" v-if="editMode != true">
-                                <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.shelf_text">
-                            </div>
-                            <div class="col-10" v-else>
-                                <div class="d-flex py-1" :class="{'is-invalid': validateMsg.shelf != ''}">
-                                    <b-form-radio v-model="dataList.formList.shelf" name="shelf" class="mr-4" value="0" >未上架</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.shelf" name="shelf" class="mr-4" value="1" :disabled="dataList.formList.enable != 2">已上架</b-form-radio>
-                                </div>
-                                <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.shelf" :key="index">{{msg}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label">可選職業</label>
-                            <div class="col-sm-10" v-if="editMode != true">
-                                <div class="form-control-plaintext">
-                                    <span class="badge badge-primary mr-1" v-for="(option, index) in dataList.selectList.job" :key="index" v-show="dataList.formList.job_no.indexOf(option.job_no) > -1">{{option.title}}</span>
-                                </div>
-                            </div>
-                            <div class="col-10" v-else>
-                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2 mt-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
                             </div>
                         </div>
                     </div>
@@ -111,7 +169,7 @@
             console.log('Component "'+this.$route.name+'" mounted.')
             this.$emit('updateCurrentPath', this.$route.path)
             console.log(this)
-            this.dataList.characterNo = this.$route.params.character_no
+            this.dataList.costumeNo = this.$route.params.costume_no
             this.initPage()
         },
         computed: {
