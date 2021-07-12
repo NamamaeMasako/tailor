@@ -53,6 +53,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <b-button variant="info" class="text-light" v-b-modal.warehouse>查看倉庫</b-button>
+                                <b-modal id="warehouse" title="倉庫" v-model="modalStatus.warehouse">
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">新增</label>
+                                        <div class="col-10">
+                                            <div class="d-flex py-1" :class="{'is-invalid': validateMsg.warehouse.costume != ''}">
+                                                <b-select></b-select>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>無庫存</p>
+                                    <template v-slot:modal-footer>
+                                        <div class="col-12">
+                                            <div class="row justify-content-center">
+                                                <div class="col-3">
+                                                    <b-button variant="secondary" class="btn-block" v-on:click="closeWarehouse">取消</b-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </b-modal>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12 accordion">
                                 <div class="card">
@@ -68,8 +96,8 @@
                                             <p v-else>尚未持有任何角色</p>
                                         </div>
                                         <div class="card-footer">
-                                            <b-button variant="success" v-b-modal.add-character>編輯</b-button>
-                                            <b-modal id="add-character" title="編輯持有角色" v-model="modalStatus.addCharacter">
+                                            <b-button variant="success" v-b-modal.add-character>新增</b-button>
+                                            <b-modal id="add-character" title="新增持有角色" v-model="modalStatus.addCharacter">
                                                 <b-form-group label="選取:已持有，未選取:未持有" v-if="selectList.characterList.length > 0">
                                                     <b-form-checkbox-group :options="selectList.characterList" buttons button-variant="outline-primary" name="characters" v-model="dataList.formList.member_character"></b-form-checkbox-group>
                                                 </b-form-group>
@@ -126,6 +154,7 @@
             ]),
             ...mapActions('detailData',[
                 'closeAddCharacter',
+                'closeWarehouse',
                 'initPage',
                 'submit',
                 'updateCharacter'

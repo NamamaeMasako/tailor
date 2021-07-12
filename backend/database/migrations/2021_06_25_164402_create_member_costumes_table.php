@@ -17,7 +17,7 @@ class CreateMemberCostumesTable extends Migration
             $table->id();
             $table->string('member_no')->comment('會員編號');
             $table->string('costumes_no')->comment('服裝編號');
-            $table->string('member_character_id')->nullable()->comment('使用角色id');
+            $table->string('amount')->nullable()->comment('庫存數量');
             $table->timestamps();
         });
     }

@@ -32,6 +32,11 @@ Route::namespace('v1')->group(function () {
                 Route::post('/', 'JobController@store');
                 Route::post('/edit/{job_no}', 'JobController@edit');
             });
+            Route::prefix('costume')->group(function () {
+                Route::get('/', 'CostumeController@index');
+                Route::post('/', 'CostumeController@store');
+                Route::post('/edit/{costume_no}', 'CostumeController@edit');
+            });
             Route::prefix('area')->group(function () {
                 Route::get('/', 'AreaController@index');
                 Route::post('/', 'AreaController@store');

@@ -30,7 +30,7 @@ class Costume extends Model
 
         });
     }
-    public function Stage()
+    public function MemberCostume()
     {
         return $this->hasMany('App\models\MemberCostume','costume_no');
     }

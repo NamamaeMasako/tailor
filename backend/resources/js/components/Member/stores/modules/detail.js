@@ -14,6 +14,7 @@ const state = {
     },
     selectList:{
         characterList: [],
+        costumeList: []
     },
     api: {
         active: null,
@@ -61,7 +62,8 @@ const state = {
         name: ''
     },
     modalStatus: {
-        addCharacter: false
+        addCharacter: false,
+        warwhouse: false
     }
 }
 
@@ -106,6 +108,9 @@ const actions = {
         context.state.dataList.formList.member_character = JSON.parse(JSON.stringify(context.state.dataList.copy_formList.member_character))
         context.state.modalStatus.addCharacter = false
     },
+    closeWarehouse: async (context) => {
+        context.state.modalStatus.warehouse = false
+    },
     getCharacterList: async (context) => {
         context.state.selectList.characterList = []
         context.commit('getApiSetting',{which:'getCharacterList',params:{'shelf': 1}})
@@ -124,6 +129,43 @@ const actions = {
                         }
                     }
                     context.state.selectList.characterList.push(option)
+                })
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
+    getCostumeList: async (context) => {
+        context.state.selectList.costumeList = []
+        context.commit('getApiSetting',{which:'getCostumeList',params:{'enable': 1}})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                Object.keys(response.data.result).map((key) => {
+                    let option = {
+                        text: response.data.result[key].title,
+                        value: {
+                            title: response.data.result[key].title,
+                            costume_no: response.data.result[key].costume_no
+                        }
+                    }
+                    context.state.selectList.costumeList.push(option)
                 })
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -221,6 +263,7 @@ const actions = {
         await context.dispatch('getLoginData')
         await context.dispatch('getData')
         await context.dispatch('getCharacterList')
+        await context.dispatch('getCostumeList')
     },
     updateCharacter: async (context) => {
         context.state.dataList.formList.update_character = true

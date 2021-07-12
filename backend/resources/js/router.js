@@ -11,6 +11,10 @@ import CharacterDetail from './components/Character/detail.vue';
 
 import ConstantList from './components/Constant/list.vue';
 
+import CostumeList from './components/Costume/list.vue';
+import CostumeCreate from './components/Costume/create.vue';
+import CostumeDetail from './components/Costume/detail.vue';
+
 import JobList from './components/Job/list.vue';
 import JobCreate from './components/Job/create.vue';
 import JobDetail from './components/Job/detail.vue';
@@ -60,6 +64,9 @@ export const routes = [
 	{ path: '/game/character/list', component: CharacterList, name:'character-list'},
 	{ path: '/game/character/create', component: CharacterCreate, name:'character-create'},
 	{ path: '/game/character/:character_no', component: CharacterDetail, name:'character-detail'},
+	{ path: '/game/costume/list', component: CostumeList, name:'costume-list'},
+	{ path: '/game/costume/create', component: CostumeCreate, name:'costume-create'},
+	{ path: '/game/costume/:costume_no', component: CostumeDetail, name:'costume-detail'},
 	{ path: '/game/job/list', component: JobList, name:'job-list'},
 	{ path: '/game/job/create', component: JobCreate, name:'job-create'},
 	{ path: '/game/job/:job_no', component: JobDetail, name:'job-detail'},
