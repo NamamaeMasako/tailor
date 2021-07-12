@@ -60,31 +60,26 @@ class CostumeController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.character.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.costume.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('新增失敗');
             }
-            $resquest_character_create = [
+            $resquest_costume_create = [
+                'title' => $request->title,
                 'gender' => $request->gender,
-                'name' => $request->name
+                'part' => $request->part,
+                'bug' => $request->bug,
+                'feather' => $request->feather,
+                'cannabis' => $request->cannabis,
+                'gem' => $request->gem,
+                'stamina' => $request->stamina,
+                'experience' => $request->experience,
+                'price' => $request->price,
+                'enable' => $request->enable
             ];
-            $resquestArr_character_job_create = [];
-            if(is_array($request->job_no) && count($request->job_no) > 0){
-                foreach($request->job_no as $job_no){
-                    $res = [
-                        'job_no' => $job_no
-                    ];
-                    array_push($resquestArr_character_job_create,$res);
-                }
-            }
-            $response_character_create = Character::create($resquest_character_create);
-            if(count($resquestArr_character_job_create) > 0){
-                foreach($resquestArr_character_job_create as $res){
-                    $res['character_no'] = Character::orderBy('updated_at','desc')->first()->character_no;
-                    CharacterJob::create($res);
-                }
-            }
+            Costume::create($resquest_costume_create);
+
             $result['status'] = true;
             $result['result'] = '新增成功';
             DB::commit();

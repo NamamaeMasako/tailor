@@ -16,16 +16,9 @@ const state = {
         active: null,
         host: localStorage.getItem('HOST'),
         list: {
-            getJobList: {
-                baseURL: null,
-                url: '/api/game/job',
-                method: 'get',
-                headers: { 'Content-Type': 'application/json' },
-                timeout: 5000,
-            },
             submit: {
                 baseURL: null,
-                url: '/api/game/character',
+                url: '/api/game/costume',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -40,8 +33,17 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
+        title: '',
         gender: '',
-        name: ''
+        part: '',
+        bug: '',
+        feather: '',
+        cannabis: '',
+        gem: '',
+        stamina: '',
+        experience: '',
+        price: '',
+        enable: ''
     }
 }
 
@@ -82,33 +84,6 @@ const mutations = {
 }
 
 const actions = {
-    getJobList: async (context) => {
-        context.commit('getApiSetting',{which:'getJobList',params:{'enable': '1'}})
-        if(context.state.api.active != undefined || context.state.api.active != null){
-            axios(context.state.api.active).then((response) => {
-                console.log(response.data)
-                if(response.data.status != true){
-                    throw response.data
-                }
-                context.state.dataList.selectList.job = response.data.result
-            }).catch((error) => { 
-                context.state.alert.variant = 'danger'
-                context.state.alert.message = '職業列表取得失敗'
-                Object.keys(context.state.validateMsg).map((key) => {
-                    if(error['message'][key] != undefined){
-                        context.state.validateMsg[key] = error['message'][key]
-                    }else{
-                        context.state.validateMsg[key] = ''
-                    }
-                })
-                context.commit('showAlert')
-            })
-        }else{
-            context.state.alert.variant = 'danger'
-            context.state.alert.message = '錯誤的API'
-            context.commit('showAlert')
-        }
-    },
     getLoginData: async (context) => {
         if(localStorage.getItem('login_data') != undefined){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
@@ -147,7 +122,6 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
-        await context.dispatch('getJobList')
     }
 }
  
