@@ -8,7 +8,10 @@ const state = {
         formList: {
             email: '',
             name: '',
-            member_character: []
+            member_character: [],
+            warehouse: {
+                costume_no: ''
+            }
         },
         copy_formList: {}
     },
@@ -23,6 +26,13 @@ const state = {
             getCharacterList: {
                 baseURL: null,
                 url: '/api/game/character',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getCostumeList: {
+                baseURL: null,
+                url: '/api/game/costume',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -59,7 +69,10 @@ const state = {
     },
     validateMsg: {
         email: '',
-        name: ''
+        name: '',
+        warehouse: {
+            costume: ''
+        }
     },
     modalStatus: {
         addCharacter: false,
@@ -149,7 +162,10 @@ const actions = {
         }
     },
     getCostumeList: async (context) => {
-        context.state.selectList.costumeList = []
+        context.state.selectList.costumeList = [{
+            text: '請選擇',
+            value: ''
+        }]
         context.commit('getApiSetting',{which:'getCostumeList',params:{'enable': 1}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {

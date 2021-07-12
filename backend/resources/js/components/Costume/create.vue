@@ -122,18 +122,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label">開放狀態</label>
-                            <div class="col-10">
-                                <div class="d-flex py-1" :class="{'is-invalid': validateMsg.enable != ''}">
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="0">未開放</b-form-radio>
-                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">開放</b-form-radio>
-                                </div>
-                                <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
                         <b-button variant="success" v-on:click="submit">送出</b-button>

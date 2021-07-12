@@ -4,12 +4,8 @@ const state = {
     },
     dataList: {
         formList: {
-            gender: '',
-            name: '',
-            job_no: []
         },
         selectList: {
-            job: []
         }
     },
     api: {
@@ -42,8 +38,7 @@ const state = {
         gem: '',
         stamina: '',
         experience: '',
-        price: '',
-        enable: ''
+        price: ''
     }
 }
 

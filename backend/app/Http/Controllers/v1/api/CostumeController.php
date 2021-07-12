@@ -75,8 +75,7 @@ class CostumeController extends Controller
                 'gem' => $request->gem,
                 'stamina' => $request->stamina,
                 'experience' => $request->experience,
-                'price' => $request->price,
-                'enable' => $request->enable
+                'price' => $request->price
             ];
             Costume::create($resquest_costume_create);
 

@@ -59,13 +59,16 @@
                                 <b-modal id="warehouse" title="倉庫" v-model="modalStatus.warehouse">
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">新增</label>
-                                        <div class="col-10">
+                                        <div class="col-7">
                                             <div class="d-flex py-1" :class="{'is-invalid': validateMsg.warehouse.costume != ''}">
-                                                <b-select></b-select>
+                                                <b-select :options="selectList.costumeList" v-model="dataList.formList.warehouse.costume_no"></b-select>
                                             </div>
                                             <div class="invalid-feedback">
-                                                <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
+                                                <span v-for="(msg,index) in validateMsg.warehouse.costume" :key="index">{{msg}}</span>
                                             </div>
+                                        </div>
+                                        <div class="col-3 my-auto">
+                                            <b-button variant="success" class="btn-block">送出</b-button>
                                         </div>
                                     </div>
                                     <p>無庫存</p>
