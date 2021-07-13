@@ -9,9 +9,11 @@ const state = {
             email: '',
             name: '',
             member_character: [],
-            warehouse: {
-                costume_no: ''
-            }
+            member_costume: []
+        },
+        addMemberCostume: {
+            costume: '',
+            amount: ''
         },
         copy_formList: {}
     },
@@ -50,13 +52,6 @@ const state = {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
-            },
-            updateCharacter: {
-                baseURL: null,
-                url: '/api/data/member/edit',
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                timeout: 5000,
             }
         }
     },
@@ -71,7 +66,8 @@ const state = {
         email: '',
         name: '',
         warehouse: {
-            costume: ''
+            costume_no: '',
+            amount: ''
         }
     },
     modalStatus: {
@@ -85,6 +81,22 @@ const getters = {
 }
  
 const mutations = {
+    addMemberCostume: (state, payload) => {
+        state.dataList.addMemberCostume.costume.amount = state.dataList.addMemberCostume.amount
+        let chk = true
+        state.dataList.formList.member_costume.forEach((el) => {
+            if(el.costume_no == state.dataList.addMemberCostume.costume.costume_no){
+                chk = false
+            }
+        })
+        if(chk == true){
+            state.dataList.formList.member_costume.push(state.dataList.addMemberCostume.costume)
+        }
+        state.dataList.addMemberCostume =  {
+            costume: '',
+            amount: ''
+        }
+    },
     countDownChanged: (state, payload) => {
         state.alert.dismissCountDown = payload
     },
@@ -111,12 +123,19 @@ const mutations = {
             })
         }
     },
+    removeMemberCostume: (context, payload) => {
+        state.dataList.formList.member_costume.splice(payload,1)
+    },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
 
 const actions = {
+    updateMemberCostume: async (context) => {
+        context.state.dataList.formList.update_membercostume = true
+        await context.dispatch('submit')
+    },
     closeAddCharacter: async (context) => {
         context.state.dataList.formList.member_character = JSON.parse(JSON.stringify(context.state.dataList.copy_formList.member_character))
         context.state.modalStatus.addCharacter = false

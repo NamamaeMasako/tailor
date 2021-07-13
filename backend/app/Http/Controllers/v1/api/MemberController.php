@@ -4,8 +4,10 @@ namespace App\Http\Controllers\v1\api;  //路徑
 use App\Http\Controllers\Controller;
 use App\Models\Character;
 use App\Models\Constant;
+use App\Models\Costume;
 use App\Models\Member;
 use App\Models\MemberCharacter;
+use App\Models\MemberCostume;
 use App\Models\Stage;
 use Carbon\Carbon;
 use DB;
@@ -46,6 +48,16 @@ class MemberController extends Controller
                                 throw new Exception('更新失敗');
                             }
                             $MemberCharacter->name = $tb_character->first()->name;
+                        }
+                    }
+                    if(count($row->MemberCostume) > 0){
+                        foreach($row->MemberCostume as $MemberCostume){
+                            $tb_costume = Costume::where('costume_no',$MemberCostume->costume_no);
+                            if(count($tb_costume->get()) > 1 || count($tb_costume->get()) <= 0){
+                                $result['message'] = ['資料異常'];
+                                throw new Exception('更新失敗');
+                            }
+                            $MemberCostume->title = $tb_costume->first()->title;
                         }
                     }
                 }
@@ -121,12 +133,30 @@ class MemberController extends Controller
                     array_push($resquestArr_member_character_update,$res);
                 }
             }
+            $resquestArr_member_costume_update = [];
+            if(is_array($request->member_costume) && count($request->member_costume) > 0){
+                foreach($request->member_costume as $member_costume){
+                    $res = [
+                        'member_no' => $member_no,
+                        'costume_no' => $member_costume['costume_no'],
+                        'amount' => $member_costume['amount']
+                    ];
+                    array_push($resquestArr_member_costume_update,$res);
+                }
+            }
 
             if($request->update_character){
                 MemberCharacter::where('member_no',$member_no)->delete();
                 if(count($resquestArr_member_character_update) > 0){
                     foreach($resquestArr_member_character_update as $res){
                         MemberCharacter::create($res);
+                    }
+                }
+            }else if($request->update_membercostume){
+                MemberCostume::where('member_no',$member_no)->delete();
+                if(count($resquestArr_member_costume_update) > 0){
+                    foreach($resquestArr_member_costume_update as $res){
+                        MemberCostume::create($res);
                     }
                 }
             }else{

@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-2 col-form-label">驗證狀態</label>
-                            <div class="col-sm-10" v-if="editMode != true">
+                            <div class="col-10" v-if="editMode != true">
                                 <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.enable_text">
                             </div>
                             <div class="col-10" v-else>
@@ -59,24 +59,48 @@
                                 <b-modal id="warehouse" title="倉庫" v-model="modalStatus.warehouse">
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">新增</label>
-                                        <div class="col-7">
-                                            <div class="d-flex py-1" :class="{'is-invalid': validateMsg.warehouse.costume != ''}">
-                                                <b-select :options="selectList.costumeList" v-model="dataList.formList.warehouse.costume_no"></b-select>
+                                        <div class="col-5">
+                                            <div class="d-flex" :class="{'is-invalid': validateMsg.warehouse.costume != ''}">
+                                                <b-select :options="selectList.costumeList" v-model="dataList.addMemberCostume.costume"></b-select>
                                             </div>
                                             <div class="invalid-feedback">
-                                                <span v-for="(msg,index) in validateMsg.warehouse.costume" :key="index">{{msg}}</span>
+                                                <span v-for="(msg,index) in validateMsg.warehouse.costume_no" :key="index">{{msg}}</span>
                                             </div>
                                         </div>
-                                        <div class="col-3 my-auto">
-                                            <b-button variant="success" class="btn-block">送出</b-button>
+                                        <div class="col-3">
+                                            <div class="d-flex" :class="{'is-invalid': validateMsg.warehouse.amount != ''}">
+                                                <input type="number" min="1" class="form-control" placeholder="數量" v-model="dataList.addMemberCostume.amount">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.warehouse.amount" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <b-button variant="success" class="btn-block" v-on:click="addMemberCostume"><i class="fas fa-plus"></i></b-button>
                                         </div>
                                     </div>
-                                    <p>無庫存</p>
+                                    <ul class="list-group" v-if="dataList.formList.member_costume.length > 0">
+                                        <li class="list-group-item" v-for="(costume, index) in dataList.formList.member_costume" :key="index">
+                                            <div class="row">
+                                                <label class="col-7 col-form-label">{{costume.title}}</label>
+                                                <div class="col-3"><input type="number" min="1" class="form-control" placeholder="數量" v-model="costume.amount"></div>
+                                                <div class="col-2">
+                                                    <b-button variant="danger" class="btn-block" v-on:click="removeMemberCostume(index)"><i class="fas fa-minus"></i></b-button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-group" v-else>
+                                        <li class="list-group-item">無庫存</li>
+                                    </ul>
                                     <template v-slot:modal-footer>
                                         <div class="col-12">
                                             <div class="row justify-content-center">
                                                 <div class="col-3">
                                                     <b-button variant="secondary" class="btn-block" v-on:click="closeWarehouse">取消</b-button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <b-button variant="success" class="btn-block" v-on:click="updateMemberCostume">確認</b-button>
                                                 </div>
                                             </div>
                                         </div>
@@ -152,15 +176,18 @@
 
         },
         methods: {
-            ...mapMutations('createData',[
-                'countDownChanged'
+            ...mapMutations('detailData',[
+                'addMemberCostume',
+                'countDownChanged',
+                'removeMemberCostume'
             ]),
             ...mapActions('detailData',[
                 'closeAddCharacter',
                 'closeWarehouse',
                 'initPage',
                 'submit',
-                'updateCharacter'
+                'updateCharacter',
+                'updateMemberCostume'
             ])   
         }
     }

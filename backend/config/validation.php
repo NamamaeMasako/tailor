@@ -52,6 +52,10 @@ return [
             ],
             'updatestage' => [
                 'character_no' => 'required'
+            ],
+            'addcostume' => [
+                'costume_no' => 'required',
+                'amount' => 'required|integer|max:0'
             ]
         ]
     ],
