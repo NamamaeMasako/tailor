@@ -66,28 +66,28 @@
                                 <div class="row">
                                     <div class="form-group col-3 py-1">
                                         <label class="col-12 text-center"><i class="fas fa-bug"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" v-model="dataList.formList.bug">
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.bug != ''}" v-model="dataList.formList.bug">
                                         <div class="invalid-feedback">
                                             <span v-for="(msg,index) in validateMsg.bug" :key="index">{{msg}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-3 py-1">
                                         <label class="col-12 text-center"><i class="fas fa-feather"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" v-model="dataList.formList.feather">
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.feather != ''}" v-model="dataList.formList.feather">
                                         <div class="invalid-feedback">
                                             <span v-for="(msg,index) in validateMsg.feather" :key="index">{{msg}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-3 py-1">
                                         <label class="col-12 text-center"><i class="fas fa-cannabis"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" v-model="dataList.formList.cannabis">
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.cannabis != ''}" v-model="dataList.formList.cannabis">
                                         <div class="invalid-feedback">
                                             <span v-for="(msg,index) in validateMsg.cannabis" :key="index">{{msg}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-3 py-1">
                                         <label class="col-12 text-center"><i class="fas fa-gem"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.enable != ''}" v-model="dataList.formList.gem">
+                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.gem != ''}" v-model="dataList.formList.gem">
                                         <div class="invalid-feedback">
                                             <span v-for="(msg,index) in validateMsg.gem" :key="index">{{msg}}</span>
                                         </div>

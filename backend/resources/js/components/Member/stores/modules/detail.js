@@ -65,6 +65,14 @@ const state = {
     validateMsg: {
         email: '',
         name: '',
+        bug: '',
+        feather: '',
+        cannabis: '',
+        gem: '',
+        coins: '',
+        stamina: '',
+        level: '',
+        experience: '',
         warehouse: {
             costume_no: '',
             amount: ''
