@@ -72,7 +72,7 @@ export default {
     },
     mounted() {
         console.log('Component "'+this.$route.name+'" mounted.')
-        console.log(HeaderNav)
+        this.$emit('updateCurrentPath', this.$route.path)
         this.initPage()
     },
     components: {

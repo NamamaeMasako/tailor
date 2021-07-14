@@ -6,6 +6,25 @@
 // Variables
 @import 'variables';
 
+nav#footer{
+    .nav-link{
+        &:hover{
+            color: $green;
+        }
+        &.action{
+            background-color: $green;
+            border-color: $green;
+            color: white;
+        }
+        border-color: white;
+        color: black;
+    }
+    #bottom-bar{
+        background-color: $green;
+        height: 25px;
+    }
+}
+
 #login{
     max-width: 100vw;
     min-height: 100vh;

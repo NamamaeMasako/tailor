@@ -47,7 +47,11 @@ const state = {
         enable: '',
         stamina: '',
         experience: '',
-        price: ''
+        price: '',
+        bug: '',
+        feather: '',
+        cannabis: '',
+        gem: ''
     }
 }
 
