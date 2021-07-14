@@ -58,6 +58,17 @@ class MemberController extends Controller
                                 throw new Exception('更新失敗');
                             }
                             $MemberCostume->title = $tb_costume->first()->title;
+                            $MemberCostume->gender = $tb_costume->first()->gender;
+                            $MemberCostume->gender_text = Lang::get('status.costume.gender')[$tb_costume->first()->gender];
+                            $MemberCostume->part = $tb_costume->first()->part;
+                            $MemberCostume->part_text = Lang::get('status.costume.part')[$tb_costume->first()->part];
+                            $MemberCostume->bug = $tb_costume->first()->bug;
+                            $MemberCostume->feather = $tb_costume->first()->feather;
+                            $MemberCostume->cannabis = $tb_costume->first()->cannabis;
+                            $MemberCostume->gem = $tb_costume->first()->gem;
+                            $MemberCostume->stamina = $tb_costume->first()->stamina;
+                            $MemberCostume->experience = $tb_costume->first()->experience;
+                            $MemberCostume->price = $tb_costume->first()->price;
                         }
                     }
                 }

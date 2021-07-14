@@ -16,7 +16,7 @@
             </li>
         </ul>
     </div>
-    <div id="bottom-bar" class="row">{{currentPath}}<br>{{$route.path}}</div>
+    <div id="bottom-bar" class="row"></div>
 </nav>
 </template>
 <script>

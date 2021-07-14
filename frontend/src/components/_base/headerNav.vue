@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
-                                        <div class="col-6 font-weight-light"><i class="fas fa-heart"></i></div>
+                                        <div class="col-6 font-weight-light"><i class="fas fa-bolt"></i></div>
                                         <div class="col-6 font-weight-light text-right">88/1000</div>
                                     </div>
                                     <div class="progress" style="height: 5px">
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
-                                        <div class="col-6 font-weight-light"><i class="fas fa-tshirt"></i></div>
+                                        <div class="col-6 font-weight-light"><i class="fas fa-archive"></i></div>
                                         <div class="col-6 font-weight-light text-right">88/1000</div>
                                     </div>
                                     <div class="progress" style="height: 5px">
