@@ -15,10 +15,9 @@
                                 <template #cell(costume_no)="data">
                                     <b-button variant="success" v-on:click="getCostumeData(data.item)">製作</b-button>
                                     <b-modal :title="'製作'+data.item.title" v-model="modalStatus.getCostume">
-
                                         <div class="form-group">
                                             <label>製作數量 {{dataList.formList.amount}}</label>
-                                            <input type="range" min="1" class="form-control-range" v-model="dataList.formList.amount">
+                                            <input type="range" min="1" class="form-control-range" v-model="dataList.formList.amount" v-on:change="updateCost">
                                         </div>
                                         <div class="form-group">
                                             <label>消耗資源</label>
@@ -28,7 +27,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-bug"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" v-model="dataList.formList.bug" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.bug > dataList.memberData.bug}" v-model="dataList.formList.bug" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -36,7 +35,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-feather"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" v-model="dataList.formList.feather" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.feather > dataList.memberData.feather}" v-model="dataList.formList.feather" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -44,7 +43,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" v-model="dataList.formList.cannabis" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.cannabis > dataList.memberData.cannabis}" v-model="dataList.formList.cannabis" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -52,11 +51,28 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-gem"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" v-model="dataList.formList.gem" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.gem > dataList.memberData.gem}" v-model="dataList.formList.gem" disabled>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-3 col-form-label">花費體力</label>
+                                            <div class="col-3">
+                                                <input type="text" class="form-control" :class="{'is-invalid': dataList.formList.stamina > dataList.memberData.stamina}" v-model="dataList.formList.stamina" disabled>
+                                                <div class="invalid-feedback">
+                                                    <span>體力不足!</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <template v-slot:modal-footer>
+                                            <div class="col-6">
+                                                <b-button class="btn-block" v-on:click="modalStatus.getCostume = false">取消</b-button>
+                                            </div>
+                                            <div class="col-6">
+                                                <b-button variant="success" class="btn-block" :disabled="!amountCheck">開始</b-button>
+                                            </div>
+                                        </template>
                                     </b-modal>
                                 </template>
                             </b-table>
@@ -71,7 +87,7 @@
 <script>
 import store from './_stores/app.js'
 import HeaderNav from '../_base/headerNav.vue'
-import { mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
     store,
@@ -87,7 +103,15 @@ export default {
     components: {
         'header-nav': HeaderNav
     },
+    computed: {
+        ...mapGetters('indexData',[
+            'amountCheck'
+        ])
+    },
     methods: {
+        ...mapMutations('indexData',[
+            'updateCost'
+        ]),
         ...mapActions('indexData',[
             'initPage',
             'getCostumeData'

@@ -14,8 +14,8 @@ const state = {
         host: localStorage.getItem('HOST'),
         list: {
             submit: {
-                baseURL: null,
-                url: '/api/register',
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/member/register',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,

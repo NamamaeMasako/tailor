@@ -1,29 +1,33 @@
 import axios from 'axios';
 
 const state = {
-    loginData: {
-        access_token: null
-    },
     dataList: {
+        loginData: {
+            name: '',
+            levle: '',
+            coins: '',
+            experience: '',
+            stamina: ''
+        },
         formList: {
-            email: '',
-            password: ''
+            access_token: '',
+            email: ''
         }
     },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list:{
-            logout: {
+            getMemberData: {
                 baseURL: localStorage.getItem('HOST'),
-                url: '/api/member/logout',
-                method: 'post',
+                url: '/api/data/member',
+                method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
-            submit: {
+            logout: {
                 baseURL: localStorage.getItem('HOST'),
-                url: '/api/member/login',
+                url: '/api/member/logout',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -38,13 +42,21 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        email: '',
-        password: ''
+        email: ''
     }
 }
 
 const getters = {
-
+    resourceTotalAmount: (state) => {
+        let targerArr = ['bug', 'feather', 'cannabis', 'gem']
+        let result = 0
+        Object.keys(state.dataList.loginData).forEach((el) => {
+            if(targerArr.indexOf(el) > -1){
+                result += state.dataList.loginData[el]
+            }
+        })
+        return result
+    }
 }
  
 const mutations = {
@@ -57,7 +69,14 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = Object.assign({},state.api.list[payload.which])
                 if(state.api.active.method == 'post'){
+                    // state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
+                }else if(state.api.active.method == 'get'){
+                    if(payload.params == undefined){
+                        payload.params = {}
+                    }
+                    // payload.params.access_token = state.loginData.access_token
+                    state.api.active.params = payload.params
                 }
             }
         }
@@ -73,36 +92,27 @@ const mutations = {
 }
 
 const actions = {
-    checkLogin: async (context) => {
-        if(context.state.loginData != null){
-            context.state.dataList.formList.email = context.state.loginData.email
-            context.state.dataList.formList.access_token = context.state.loginData.access_token
-            await context.dispatch('submit')
-        }
-    },
     getLoginData: async (context) => {
         if(localStorage.getItem('login_data') != null){
-            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
+            context.state.dataList.formList = JSON.parse(localStorage.getItem('login_data'))
+            await context.dispatch('getMemberData')
         }else{
             window.location = '/login'
         }
     },
-    logout: async (context) => {
-        context.state.dataList.formList = context.state.loginData
-        context.commit('getApiSetting',{which:'logout'})
+    getMemberData: async (context) => {
+        let params = {
+            'access_token': context.state.dataList.formList.access_token,
+            'member_no': context.state.dataList.formList.member_no
+        }
+        context.commit('getApiSetting',{which:'getMemberData',params: params})
         if(context.state.api.active != undefined || context.state.api.active != null){
-            axios(context.state.api.active).then((response) => {
+            axios(context.state.api.active).then(response => {
                 console.log(response.data)
                 if(response.data.status != true){
-                    throw response.data
+                    throw response.data 
                 }
-                localStorage.removeItem('login_data');
-                context.state.alert.variant = 'success'
-                context.state.alert.message = '登出成功'
-                context.commit('showAlert')
-                setTimeout(()=>{
-                    window.location = '/'
-                },context.state.alert.dismissSecs*1000)
+                context.state.dataList.loginData = Object.values(response.data.result)[0]
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -115,22 +125,19 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
-        }else{
-            context.state.alert.message = '錯誤的API'
-            context.commit('showAlert')
         }
     },
-    submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit'})
+    logout: async (context) => {
+        context.commit('getApiSetting',{which:'logout'})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
                 if(response.data.status != true){
                     throw response.data
                 }
-                localStorage.setItem('login_data', JSON.stringify(response.data['result']));
+                localStorage.removeItem('login_data');
                 context.state.alert.variant = 'success'
-                context.state.alert.message = '登入成功'
+                context.state.alert.message = '登出成功'
                 context.commit('showAlert')
                 setTimeout(()=>{
                     window.location = '/'

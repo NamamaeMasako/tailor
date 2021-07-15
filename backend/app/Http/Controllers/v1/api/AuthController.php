@@ -101,7 +101,11 @@ class AuthController extends Controller
             $tb['member_character'] = $tb->MemberCharacter;
 
             $result['status'] = true;
-            $result['result'] = $tb;
+            $result['result'] = [
+                'access_token' => $tb->access_token,
+                'member_no' => $tb->member_no,
+                'email' => $tb->email
+            ];
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
         }

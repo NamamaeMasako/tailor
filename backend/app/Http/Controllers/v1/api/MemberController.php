@@ -40,6 +40,7 @@ class MemberController extends Controller
             if(count($tb) > 0){
                 foreach($tb as $row){
                     $row->enable_text = Lang::get('status.member.enable')[$row->enable];
+                    $row->costume_totalAmount = 0;
                     if(count($row->MemberCharacter) > 0){
                         foreach($row->MemberCharacter as $MemberCharacter){
                             $tb_character = Character::where('character_no',$MemberCharacter->character_no);
@@ -69,6 +70,7 @@ class MemberController extends Controller
                             $MemberCostume->stamina = $tb_costume->first()->stamina;
                             $MemberCostume->experience = $tb_costume->first()->experience;
                             $MemberCostume->price = $tb_costume->first()->price;
+                            $row->costume_totalAmount += $MemberCostume->amount;
                         }
                     }
                 }

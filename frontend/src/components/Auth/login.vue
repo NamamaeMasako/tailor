@@ -14,11 +14,17 @@
                     </b-alert>
                     <div class="form-group">
                         <label for="email">電子郵件</label>
-                        <input type="text" id="email" class="form-control" v-model="dataList.formList.email">
+                        <input type="text" id="email" class="form-control" :class="{'is-invalid': validateMsg.email != ''}" v-model="dataList.formList.email">
+                        <div class="invalid-feedback">
+                            <span v-for="(msg,index) in validateMsg.email" :key="index">{{msg}}</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="password">密碼</label>
-                        <input type="text" id="password" class="form-control" v-model="dataList.formList.password">
+                        <input type="text" id="password" class="form-control" :class="{'is-invalid': validateMsg.password != ''}" v-model="dataList.formList.password">
+                        <div class="invalid-feedback">
+                            <span v-for="(msg,index) in validateMsg.password" :key="index">{{msg}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

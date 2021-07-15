@@ -21,6 +21,7 @@ Route::namespace('v1')->group(function () {
         Route::post('/logout', 'AuthController@logout');
         Route::post('/member/logout', 'AuthController@memberLogout');
         Route::post('/register', 'AuthController@register');
+        Route::post('/member/register', 'AuthController@memberRegister');
         Route::prefix('game')->middleware('auth')->group(function () {
             Route::prefix('character')->group(function () {
                 Route::get('/', 'CharacterController@index');

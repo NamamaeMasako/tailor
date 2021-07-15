@@ -3,6 +3,7 @@ import axios from 'axios'
 const state = {
     loginData: null,
     dataList: {
+        memberData: null,
         fields: [
             { key: 'title', label: '服裝', sortable: false },
             { key: 'gender_text', label: '性別', sortable: false },
@@ -10,7 +11,13 @@ const state = {
             { key: 'amount', label: '庫存', sortable: false },
             { key: 'costume_no', label: '', sortable: false },
         ],
-        formList: {},
+        formList: {
+            bug: 0,
+            feather: 0,
+            cannabis: 0,
+            gem: 0,
+            amount: 1
+        },
         selectList:{
             costumeList:[]
         },
@@ -46,13 +53,20 @@ const state = {
     },
     validateMsg: {},
     modalStatus:{
+        error: false,
         getCostume: false
     }
 }
 
 const getters = {
-    itemsCount: (state) => {
-        return state.dataList.items.length
+    amountCheck: (state) => {
+        let formList = state.dataList.formList
+        let memberData = state.dataList.memberData
+        if(formList.bug > memberData.bug || formList.feather > memberData.feather || formList.cannabis > memberData.cannabis || formList.gem > memberData.gem || formList.stamina > memberData.stamina){
+            return false
+        }else{
+            return true
+        }
     }
 }
  
@@ -86,6 +100,12 @@ const mutations = {
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
+    updateCost: (state) => {
+        state.dataList.formList.bug = parseInt(state.dataList.formList.origin.bug)*parseInt(state.dataList.formList.amount)
+        state.dataList.formList.feather = parseInt(state.dataList.formList.origin.feather)*parseInt(state.dataList.formList.amount)
+        state.dataList.formList.cannabis = parseInt(state.dataList.formList.origin.cannabis)*parseInt(state.dataList.formList.amount)
+        state.dataList.formList.gem = parseInt(state.dataList.formList.origin.gem)*parseInt(state.dataList.formList.amount)
+    }
 }
 
 const actions = {
@@ -98,6 +118,7 @@ const actions = {
     },
     getMemberData: async (context) => {
         let params = {
+            'access_token': context.state.loginData.access_token,
             'member_no': context.state.loginData.member_no
         }
         context.commit('getApiSetting',{which:'getMemberData',params: params})
@@ -105,11 +126,12 @@ const actions = {
             axios(context.state.api.active).then(response => {
                 console.log(response.data)
                 if(response.data.status != true){
-                    throw response.data 
+                    throw response.data
                 }
+                context.state.dataList.memberData = Object.values(response.data.result)[0]
                 context.state.dataList.selectList.costumeList = []
-                if(response.data.result[0].member_costume.length > 0){
-                    response.data.result[0].member_costume.forEach((el) => {
+                if(Object.values(response.data.result)[0].member_costume.length > 0){
+                    Object.values(response.data.result)[0].member_costume.forEach((el) => {
                         context.state.dataList.selectList.costumeList.push(el)
                     })
                 }
@@ -133,10 +155,12 @@ const actions = {
     },
     getCostumeData: async (context, payload) => {
         let formList = {
+            origin: payload,
             bug: payload.bug,
             feather: payload.feather,
             cannabis: payload.cannabis,
             gem: payload.gem,
+            stamina: payload.stamina,
             amount: 1
         }
         context.state.dataList.formList = formList
