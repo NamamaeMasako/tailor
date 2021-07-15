@@ -38,6 +38,7 @@ class ConstantController extends Controller
             foreach($res as $i => $item_i){
                 $res[$i] = collect($item_i)->groupBy('function');
             }
+            $res['function_title_arr'] = Lang::get('status.constant.title');
 
             $result['status'] = true;
             $result['result'] = $res;

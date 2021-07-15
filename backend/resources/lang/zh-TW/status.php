@@ -45,6 +45,16 @@ return [
             '9' => '飾品'
         ]
     ],
+    'constant' => [
+        'title' => [
+            'stage' => [
+                'resouce' => '可獲得資源數量設定'
+            ],
+            'member' => [
+                'experience' => '升級所需經驗值'
+            ]
+        ]
+    ],
     'job' => [
         'enable' => [
             '0' => '不可選用',

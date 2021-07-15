@@ -92,8 +92,9 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data 
                 }
+                context.state.dataList.selectList.functionTitleList = response.data.result.function_title_arr
+                delete response.data.result.function_title_arr
                 context.state.dataList.items = response.data.result
-                context.state.dataList.tabTitleList = {}
                 Object.keys(context.state.dataList.items).forEach((index) => {
                     Object.keys(context.state.dataList.items[index]).forEach((index_i) => {
                         if(index_i == 'resource'){

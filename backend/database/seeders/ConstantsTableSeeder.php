@@ -55,6 +55,27 @@ class ConstantsTableSeeder extends Seeder
                 'value' => '5',
                 'text' => '豐',
                 'usage' => '80|100',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'experience',
+                'value' => '0',
+                'text' => '升級所需經驗值(1~10)',
+                'usage' => '5',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'experience',
+                'value' => '1',
+                'text' => '升級所需經驗值(11~20)',
+                'usage' => '10',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'experience',
+                'value' => '2',
+                'text' => '升級所需經驗值(21~)',
+                'usage' => '20',
             ]
         ];
         foreach($insertDatas as $data){
