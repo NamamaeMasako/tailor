@@ -58,7 +58,7 @@ Route::namespace('v1')->group(function () {
             });
             Route::prefix('constant')->group(function () {
                 Route::get('/', 'ConstantController@index');
-                Route::post('/edit/{page}', 'ConstantController@edit');
+                Route::post('/edit/{page}/{function}', 'ConstantController@edit');
             });
         });
         Route::prefix('system')->middleware('auth')->group(function () {

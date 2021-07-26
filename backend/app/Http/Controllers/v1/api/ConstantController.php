@@ -48,7 +48,7 @@ class ConstantController extends Controller
         return $result;
     }
 
-    public function store(Request $request) {
+    public function edit(Request $request,$page,$function) {
         $result = [
             'status' => false,
             'result' => null,
@@ -56,57 +56,29 @@ class ConstantController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $isMember = false;
-            if($request->isMember == true){
-                $isMember = true;
+            if(count($request->dataArr) < 1){
+                throw new Exception('無更新資料');
+            }else{
+                foreach($request->dataArr as $req){
+                    $validator = Validator::make($req,config('validation.constant.rules.edit'),Lang::get('validation'));
+                    if($validator->fails()){
+                        $result['message'] = $validator->errors();
+                        throw new Exception('更新失敗');
+                    }
+                    $resquest_update = [
+                        'usage' => $req['usage']
+                    ];
+                    $tb = Constant::where('page',$page)->where('function',$function)->where('value',$req['value']);
+                    if(count($tb->get()) > 1 || count($tb->get()) <= 0){
+                        $result['message'] = ['資料異常'];
+                        throw new Exception('更新失敗');
+                    }
+                    $tb->update($resquest_update);
+                }
+                $result['status'] = true;
+                $result['result'] = '更新成功';
+                DB::commit();
             }
-            $request->request->remove('isMember');
-
-            $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
-            if($validator->fails()){
-                $result['message'] = $validator->errors();
-                throw new Exception('新增失敗');
-            }
-            Area::create($request->all());
-            $result['status'] = true;
-            $result['result'] = '新增成功';
-            DB::commit();
-        }catch(Exception $e){
-            $result['result'] = $e->getMessage();
-            DB::rollBack();
-        }
-
-        return $result;
-    }
-
-    public function edit(Request $request,$area_no) {
-        $result = [
-            'status' => false,
-            'result' => null,
-            'message' => []
-        ];
-        DB::beginTransaction();
-        try{
-            $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
-            if($validator->fails()){
-                $result['message'] = $validator->errors();
-                throw new Exception('更新失敗');
-            }
-            $resquest_job_update = [
-                'title' => $request->title,
-                'order' => $request->order,
-                'enable' => $request->enable
-            ];
-            $tb = Area::where('area_no',$area_no);
-            if(count($tb->get()) > 1 || count($tb->get()) <= 0){
-                $result['message'] = ['資料異常'];
-                throw new Exception('更新失敗');
-            }
-            $tb->update($resquest_job_update);
-
-            $result['status'] = true;
-            $result['result'] = '更新成功';
-            DB::commit();
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
             DB::rollBack();

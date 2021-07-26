@@ -1,6 +1,9 @@
 const state = {
     loginData: null,
     dataList: {
+        formList: {
+            dataArr: []
+        },
         selectList: {
             url: {}
         },
@@ -23,6 +26,13 @@ const state = {
                 baseURL: null,
                 url: '/api/system/url',
                 method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            updateConstant: {
+                baseURL: null,
+                url: '/api/data/constant/edit',
+                method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
@@ -156,6 +166,49 @@ const actions = {
         await context.dispatch('getLoginData')
         await context.dispatch('getUrlList')
         await context.dispatch('getItems')
+    },
+    updateConstant: async (context, payload) => {
+        context.state.dataList.formList.dataArr = []
+        if(Array.isArray(payload)){            
+            context.state.dataList.items[payload[0]][payload[1]].forEach((el) => {
+                let data = Object.assign({},el)
+                context.state.dataList.formList.dataArr.push(data)
+            })
+            if(payload[0] == 'stage'){
+                if(payload[1] == 'resource'){
+                    context.state.dataList.formList.dataArr.forEach((el) => {
+                        el.usage = el.usage.join('|')
+                    })
+                }
+            }
+        }
+        context.commit('getApiSetting',{which:'updateConstant',paraArr:payload})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            console.log(context.state.api.active)
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.alert.variant = 'success'
+                context.state.alert.message = response.data['result']
+                context.commit('showAlert')
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.variant = 'danger'
+            context.state.alert.message = '錯誤的API'
+        }
     }
 }
  

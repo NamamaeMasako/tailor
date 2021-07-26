@@ -25,6 +25,15 @@ return [
             ]
         ]
     ],
+    'constant' => [
+        'rules' => [
+            'edit' => [
+                'value' => 'required',
+                'text' => 'required',
+                'usage' => 'required'
+            ]
+        ]
+    ],
     'costume' => [
         'rules' => [
             'store' => [

@@ -13,30 +13,52 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <b-card no-body>
-                    {{dataList.items}}
                     <b-tabs pills card vertical nav-wrapper-class="col-3">
                         <b-tab :title="dataList.selectList.url[index]" v-for="(pageList, index) in dataList.items" :key="index" :active="index == 'stage'">
-                            {{pageList}}
-                            <ul class="list-group">
+                            <ul class="list-group" v-if="index == 'stage'">
                                 <li class="list-group-item" v-for="(constantList, i) in pageList" :key="i">
-                                    <b-card-text>可獲得資源數量設定</b-card-text>
-                                    <div class="row">
-                                        <div class="col-4" v-for="(constant, j) in constantList" :key="j">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">{{constant.text}}</span>
+                                    <b-card-text>{{dataList.selectList.functionTitleList[index][i]}}</b-card-text>
+                                    <div class="col-12" v-if="i == 'resource'">
+                                        <div class="row">
+                                            <div class="col-4" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">{{constant.text}}</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" v-model="constant.usage[0]">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">~</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" v-model="constant.usage[1]">
                                                 </div>
-                                                <input type="text" class="form-control" v-model="constant.usage[0]">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="basic-addon1">~</span>
-                                                </div>
-                                                <input type="text" class="form-control" v-model="constant.usage[1]">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <b-button variant="success" v-on:click="updateConstant([index,i])">更新</b-button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12 text-right">
-                                            <b-button variant="success">變更</b-button>
+                                </li>
+                            </ul>
+                            <ul class="list-group" v-if="index == 'member'">
+                                <li class="list-group-item" v-for="(constantList, i) in pageList" :key="i">
+                                    <b-card-text>{{dataList.selectList.functionTitleList[index][i]}}</b-card-text>
+                                    <div class="col-12" v-if="i == 'experience'">
+                                        <div class="row">
+                                            <div class="col-4" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">{{constant.text}}</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" v-model="constant.usage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <b-button variant="success" v-on:click="updateConstant([index,i])">更新</b-button>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -63,17 +85,13 @@
             console.log(this)
             this.initPage()
         },
-        computed: {
-            ...mapGetters('listData',[
-                'itemsCount'
-            ])
-        },
         methods: {
             ...mapMutations('listData',[
                 'countDownChanged'
             ]),
             ...mapActions('listData',[
-                'initPage'
+                'initPage',
+                'updateConstant'
             ])   
         }
     }

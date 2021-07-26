@@ -48,7 +48,7 @@ return [
     'constant' => [
         'title' => [
             'stage' => [
-                'resouce' => '可獲得資源數量設定'
+                'resource' => '可獲得資源數量設定'
             ],
             'member' => [
                 'experience' => '升級所需經驗值'
