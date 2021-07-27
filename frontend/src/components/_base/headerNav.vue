@@ -18,12 +18,12 @@
                                 <div class="col-4">
                                     <div class="row">
                                         <div class="col-6 font-weight-light"><i class="fas fa-book"></i></div>
-                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.experience}}/1000</div>
+                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.experience}}/{{dataList.constantSetting.inUsed.experience}}</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="progress" style="height: 5px">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 28%"></div>
+                                                <div class="progress-bar bg-warning" role="progressbar" :style="'width:'+ experienceBar +'%'"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -31,19 +31,19 @@
                                 <div class="col-4">
                                     <div class="row">
                                         <div class="col-6 font-weight-light"><i class="fas fa-bolt"></i></div>
-                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.stamina}}/1000</div>
+                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.stamina}}/{{dataList.constantSetting.inUsed.staminaLimit}}</div>
                                     </div>
                                     <div class="progress" style="height: 5px">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 68%"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" :style="'width:'+ staminaBar +'%'"></div>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="row">
                                         <div class="col-6 font-weight-light"><i class="fas fa-archive"></i></div>
-                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.costume_totalAmount}}/1000</div>
+                                        <div class="col-6 font-weight-light text-right">{{dataList.loginData.costume_totalAmount}}/{{dataList.constantSetting.inUsed.warehouse}}</div>
                                     </div>
                                     <div class="progress" style="height: 5px">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 68%"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" :style="'width:'+ warehouseBar +'%'"></div>
                                     </div>
                                 </div>
                             </div>
@@ -57,12 +57,12 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-6 font-weight-light">原料存量</div>
-                                        <div class="col-6 text-right">{{resourceTotalAmount}}/1000</div>
+                                        <div class="col-6 text-right">{{resourceTotalAmount}}/{{dataList.constantSetting.inUsed.resourceLimit}}</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="progress" style="height: 5px">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 28%"></div>
+                                                <div class="progress-bar bg-warning" role="progressbar" :style="'width:'+ resourceBar +'%'"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +108,11 @@ export default {
     },
     computed: {
         ...mapGetters('headerNavData',[
-            'resourceTotalAmount'
+            'resourceBar',
+            'resourceTotalAmount',
+            'experienceBar',
+            'staminaBar',
+            'warehouseBar'
         ])
     },
     methods: {

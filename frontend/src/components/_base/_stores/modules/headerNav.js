@@ -4,7 +4,7 @@ const state = {
     dataList: {
         loginData: {
             name: '',
-            levle: '',
+            level: '',
             coins: '',
             experience: '',
             stamina: ''
@@ -12,6 +12,15 @@ const state = {
         formList: {
             access_token: '',
             email: ''
+        },
+        constantSetting: {
+            list: {},
+            inUsed: {
+                experience: 0,
+                staminaLimit: 0,
+                wrarehouse: 0,
+                resourceLimit: 0
+            }
         }
     },
     api: {
@@ -21,6 +30,13 @@ const state = {
             getMemberData: {
                 baseURL: localStorage.getItem('HOST'),
                 url: '/api/data/member',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            getConstantList: {
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/data/constant',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -47,6 +63,12 @@ const state = {
 }
 
 const getters = {
+    experienceBar: (state) => {
+        return (state.dataList.loginData.experience/state.dataList.constantSetting.inUsed.experience)*100
+    },
+    resourceBar: (state, getters) => {
+        return (getters.resourceTotalAmount/state.dataList.constantSetting.inUsed.resourceLimit)*100
+    },
     resourceTotalAmount: (state) => {
         let targerArr = ['bug', 'feather', 'cannabis', 'gem']
         let result = 0
@@ -56,6 +78,12 @@ const getters = {
             }
         })
         return result
+    },
+    staminaBar: (state) => {
+        return (state.dataList.loginData.stamina/state.dataList.constantSetting.inUsed.staminaLimit)*100
+    },
+    warehouseBar: (state) => {
+        return (state.dataList.loginData.costume_totalAmount/state.dataList.constantSetting.inUsed.warehouse)*100
     }
 }
  
@@ -86,7 +114,22 @@ const mutations = {
             })
         }
     },
-    showAlert(state) {
+    setConstants: (state) => {
+        let levelRangeArr = []
+        state.dataList.constantSetting.list.experience.forEach((el) => {
+            let lavelRange = el.text.split('|')
+            levelRangeArr.push(lavelRange)
+        })
+        levelRangeArr.forEach((el,i) => {
+            if(state.dataList.loginData.level >= el[0] && state.dataList.loginData.level <= el[1]){
+                state.dataList.constantSetting.inUsed.experience = state.dataList.constantSetting.list.experience[i].usage
+            }
+        })
+        state.dataList.constantSetting.inUsed.staminaLimit = parseInt(state.dataList.constantSetting.list.staminalimit[0].text) + parseInt(state.dataList.loginData.level) * parseInt(state.dataList.constantSetting.list.staminalimit[0].usage)
+        state.dataList.constantSetting.inUsed.warehouse = parseInt(state.dataList.constantSetting.list.warehouse[0].usage)
+        state.dataList.constantSetting.inUsed.resourceLimit = parseInt(state.dataList.constantSetting.list.resourcelimit[0].usage)
+    },
+    showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
@@ -113,6 +156,34 @@ const actions = {
                     throw response.data 
                 }
                 context.state.dataList.loginData = Object.values(response.data.result)[0]
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }
+    },
+    getConstantList: async (context) => {
+        let params = {
+            'access_token': context.state.dataList.formList.access_token,
+            'page': 'member'
+        }
+        context.commit('getApiSetting',{which:'getConstantList',params: params})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data 
+                }
+                context.state.dataList.constantSetting.list = response.data.result.member
+                context.commit('setConstants')
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -161,6 +232,7 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
+        await context.dispatch('getConstantList')
     }
 }
  
