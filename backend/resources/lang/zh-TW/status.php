@@ -51,7 +51,10 @@ return [
                 'resource' => '可獲得資源數量設定'
             ],
             'member' => [
-                'experience' => '升級所需經驗值'
+                'experience' => '升級所需經驗值',
+                'staminalimit' => '各等級體力上限',
+                'warehouse' => '產品倉庫上限',
+                'resourcelimit' => '原料總量上限',
             ]
         ]
     ],

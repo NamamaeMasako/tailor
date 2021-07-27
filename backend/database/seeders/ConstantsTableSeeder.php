@@ -76,6 +76,27 @@ class ConstantsTableSeeder extends Seeder
                 'value' => '2',
                 'text' => '21',
                 'usage' => '20',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'staminalimit',
+                'value' => '0',
+                'text' => '40',
+                'usage' => '10',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'warehouse',
+                'value' => '0',
+                'text' => '預設',
+                'usage' => '100',
+            ],
+            [
+                'page' => 'member',
+                'function' => 'resourcelimit',
+                'value' => '0',
+                'text' => '預設',
+                'usage' => '800',
             ]
         ];
         foreach($insertDatas as $data){

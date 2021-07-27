@@ -78,6 +78,70 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-12" v-if="i == 'staminalimit'">
+                                        <div class="row">
+                                            <div class="col-6 mb-3" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="w-100">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" v-model="constant.text">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fas fa-plus"></i></span>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">Lv.值</span>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fas fa-times"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.usage">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <b-button variant="success" v-on:click="updateConstant([index,i])">更新</b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" v-if="i == 'warehouse'">
+                                        <div class="row">
+                                            <div class="col-6 mb-3" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="w-100">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">{{constant.text}}</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.usage">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <b-button variant="success" v-on:click="updateConstant([index,i])">更新</b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" v-if="i == 'resourcelimit'">
+                                        <div class="row">
+                                            <div class="col-6 mb-3" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="w-100">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">{{constant.text}}</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.usage">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <b-button variant="success" v-on:click="updateConstant([index,i])">更新</b-button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </b-tab>
