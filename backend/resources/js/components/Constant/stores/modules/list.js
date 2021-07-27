@@ -5,9 +5,10 @@ const state = {
             dataArr: []
         },
         selectList: {
+            continue: false,
             url: {}
         },
-        items: [],
+        items: {},
         perPage: 10,
         currentPage: 1
     },
@@ -81,7 +82,21 @@ const mutations = {
             })
         }
     },
-    showAlert(state, payload) {
+    memberExpCheck: (state, payload) => {
+        state.dataList.selectList.continue = false
+        console.log(state.dataList.items.member.experience[payload].text[1] == '' || state.dataList.items.member.experience[payload].text[1] == undefined)
+        if(state.dataList.items.member.experience[payload+1] != undefined){
+            if(state.dataList.items.member.experience[payload].text[1] == null || state.dataList.items.member.experience[payload].text[1] == '' || state.dataList.items.member.experience[payload].text[1] == undefined){
+                state.dataList.items.member.experience[payload].text[1] = state.dataList.items.member.experience[payload].text[0]
+            }
+            Vue.set(state.dataList.items.member.experience[payload+1].text, 0, parseInt(state.dataList.items.member.experience[payload].text[1])+1)
+            if(state.dataList.items.member.experience[payload+1].text[1] < state.dataList.items.member.experience[payload+1].text[0]){
+                Vue.set(state.dataList.items.member.experience[payload+1].text, 1, parseInt(state.dataList.items.member.experience[payload+1].text[0]))
+            }
+            state.dataList.selectList.continue = true
+        }
+    },
+    showAlert: (state, payload) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
 }
@@ -107,9 +122,14 @@ const actions = {
                 context.state.dataList.items = response.data.result
                 Object.keys(context.state.dataList.items).forEach((index) => {
                     Object.keys(context.state.dataList.items[index]).forEach((index_i) => {
-                        if(index_i == 'resource'){
+                        if(index == 'stage' && index_i == 'resource'){
                             context.state.dataList.items[index][index_i].forEach((el) => {
                                 el.usage = el.usage.split('|')
+                            })
+                        }
+                        if(index == 'member' && index_i == 'experience'){
+                            context.state.dataList.items[index][index_i].forEach((el) => {
+                                el.text = el.text.split('|')
                             })
                         }
                     })
@@ -167,6 +187,12 @@ const actions = {
         await context.dispatch('getUrlList')
         await context.dispatch('getItems')
     },
+    renewMemberExp:  async (context, payload) => {
+        context.commit('memberExpCheck',payload)
+        if(context.state.dataList.selectList.continue == true){
+            await context.dispatch('renewMemberExp', payload+1)
+        }
+    },
     updateConstant: async (context, payload) => {
         context.state.dataList.formList.dataArr = []
         if(Array.isArray(payload)){            
@@ -180,11 +206,16 @@ const actions = {
                         el.usage = el.usage.join('|')
                     })
                 }
+            }else if(payload[0] == 'member'){
+                if(payload[1] == 'experience'){
+                    context.state.dataList.formList.dataArr.forEach((el) => {
+                        el.text = el.text.join('|')
+                    })
+                }
             }
         }
         context.commit('getApiSetting',{which:'updateConstant',paraArr:payload})
         if(context.state.api.active != undefined || context.state.api.active != null){
-            console.log(context.state.api.active)
             axios(context.state.api.active).then(response => {
                 console.log(response.data)
                 if(response.data.status != true){

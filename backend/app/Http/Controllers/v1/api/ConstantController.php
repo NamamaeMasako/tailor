@@ -66,7 +66,8 @@ class ConstantController extends Controller
                         throw new Exception('更新失敗');
                     }
                     $resquest_update = [
-                        'usage' => $req['usage']
+                        'usage' => $req['usage'],
+                        'text' => $req['text']
                     ];
                     $tb = Constant::where('page',$page)->where('function',$function)->where('value',$req['value']);
                     if(count($tb->get()) > 1 || count($tb->get()) <= 0){

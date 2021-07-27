@@ -46,12 +46,29 @@
                                     <b-card-text>{{dataList.selectList.functionTitleList[index][i]}}</b-card-text>
                                     <div class="col-12" v-if="i == 'experience'">
                                         <div class="row">
-                                            <div class="col-4" v-for="(constant, j) in constantList" :key="j">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">{{constant.text}}</span>
+                                            <div class="col-6 mb-3" v-for="(constant, j) in constantList" :key="j">
+                                                <div class="w-100">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Lv.</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.text[0]" disabled>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">~</span>
+                                                        </div>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">Lv.</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.text[1]" v-on:change="renewMemberExp(j)" :disabled="j==2">
                                                     </div>
-                                                    <input type="text" class="form-control" v-model="constant.usage">
+                                                </div>
+                                                <div class="w-100">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">exp.</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" v-model="constant.usage">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,6 +108,7 @@
             ]),
             ...mapActions('listData',[
                 'initPage',
+                'renewMemberExp',
                 'updateConstant'
             ])   
         }

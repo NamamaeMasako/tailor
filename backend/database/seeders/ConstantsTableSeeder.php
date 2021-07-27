@@ -60,21 +60,21 @@ class ConstantsTableSeeder extends Seeder
                 'page' => 'member',
                 'function' => 'experience',
                 'value' => '0',
-                'text' => 'Lv.1~Lv.10',
+                'text' => '1|10',
                 'usage' => '5',
             ],
             [
                 'page' => 'member',
                 'function' => 'experience',
                 'value' => '1',
-                'text' => 'Lv.11~Lv.20',
+                'text' => '11|20',
                 'usage' => '10',
             ],
             [
                 'page' => 'member',
                 'function' => 'experience',
                 'value' => '2',
-                'text' => 'Lv.21~',
+                'text' => '21',
                 'usage' => '20',
             ]
         ];
