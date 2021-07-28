@@ -97,13 +97,11 @@ const mutations = {
             if(state.api.list[payload.which] != undefined || state.api.list[payload.which] != null){
                 state.api.active = Object.assign({},state.api.list[payload.which])
                 if(state.api.active.method == 'post'){
-                    // state.dataList.formList.access_token = state.loginData.access_token
                     state.api.active.data = state.dataList.formList
                 }else if(state.api.active.method == 'get'){
                     if(payload.params == undefined){
                         payload.params = {}
                     }
-                    // payload.params.access_token = state.loginData.access_token
                     state.api.active.params = payload.params
                 }
             }
@@ -112,6 +110,13 @@ const mutations = {
             payload.paraArr.forEach((el) => {
                 state.api.active.url += '/'+el
             })
+        }
+    },
+    getLoginData: (state) => {
+        if(localStorage.getItem('login_data') != null){
+            state.dataList.formList = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
         }
     },
     setConstants: (state) => {
@@ -135,14 +140,6 @@ const mutations = {
 }
 
 const actions = {
-    getLoginData: async (context) => {
-        if(localStorage.getItem('login_data') != null){
-            context.state.dataList.formList = JSON.parse(localStorage.getItem('login_data'))
-            await context.dispatch('getMemberData')
-        }else{
-            window.location = '/login'
-        }
-    },
     getMemberData: async (context) => {
         let params = {
             'access_token': context.state.dataList.formList.access_token,
@@ -168,6 +165,9 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
         }
     },
     getConstantList: async (context) => {
@@ -183,7 +183,9 @@ const actions = {
                     throw response.data 
                 }
                 context.state.dataList.constantSetting.list = response.data.result.member
-                context.commit('setConstants')
+                setTimeout(()=>{
+                    context.commit('setConstants')
+                },200)
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -196,6 +198,9 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
         }
     },
     logout: async (context) => {
@@ -231,7 +236,8 @@ const actions = {
         }
     },
     initPage: async (context) => {
-        await context.dispatch('getLoginData')
+        context.commit('getLoginData')
+        await context.dispatch('getMemberData')
         await context.dispatch('getConstantList')
     }
 }

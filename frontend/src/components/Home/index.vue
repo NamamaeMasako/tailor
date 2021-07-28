@@ -9,7 +9,7 @@
             <b-tab title="工作室">
                 <b-card-text>
                     <div class="card">
-                        <div class="card-header">商品列表</div>
+                        <div class="card-header">可製作商品列表</div>
                         <div class="card-body">
                             <b-table :items="dataList.selectList.costumeList" :fields="dataList.fields" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
                                 <template #cell(costume_no)="data">

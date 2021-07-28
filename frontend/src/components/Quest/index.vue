@@ -50,11 +50,56 @@
         <ul class="list-group">
             <li class="list-group-item list-group-item-action" v-for="(quest, index) in dataList.selectList.finishedQuestList" :key="index">
                 恭喜，{{quest.executor.name}}執行{{quest.title}}完成!
+                <div class="w-100">
+                    <label>獲得以下戰利品</label>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-bug"></i></span>
+                                </div>
+                                <input type="text" class="form-control" v-model="quest.getResource.bug" disabled>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-feather"></i></span>
+                                </div>
+                                <input type="text" class="form-control" v-model="quest.getResource.feather" disabled>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
+                                </div>
+                                <input type="text" class="form-control" v-model="quest.getResource.cannabis" disabled>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-gem"></i></span>
+                                </div>
+                                <input type="text" class="form-control" v-model="quest.getResource.gem" disabled>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-coins"></i></span>
+                                </div>
+                                <input type="text" class="form-control" v-model="quest.getResource.coins" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
         <template v-slot:modal-footer>
             <div class="col-6">
-                <b-button class="btn-block" v-on:click="modalStatus.finishedQuest = false">知道了</b-button>
+                <b-button class="btn-block" v-on:click="closeFinishedQuestModal">知道了</b-button>
             </div>
         </template>
     </b-modal>
@@ -63,7 +108,7 @@
 <script>
 import store from './_stores/app.js'
 import HeaderNav from '../_base/headerNav.vue'
-import { mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
     store,
@@ -85,10 +130,13 @@ export default {
             }
         },
         '$store.state.indexData.loginData': () => {
-            HeaderNav.store.dispatch('headerNavData/getLoginData')
+            HeaderNav.store.dispatch('headerNavData/getMemberData')
         },
     },
     methods: {
+        ...mapMutations('indexData',[
+            'closeFinishedQuestModal'
+        ]),
         ...mapActions('indexData',[
             'cancelQuest',
             'doQuest',

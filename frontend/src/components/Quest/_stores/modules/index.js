@@ -12,7 +12,8 @@ const state = {
         selectList: {
             areaList: [],
             ownedCharacterList: [],
-            finishedQuestList: []
+            finishedQuestList: [],
+            getResourceList: {}
         }
     },
     modalStatus:{
@@ -61,6 +62,21 @@ const getters = {
 }
  
 const mutations = {
+    closeFinishedQuestModal: (state) => {
+        console.log(state.dataList.selectList.finishedQuestList)
+        state.dataList.selectList.finishedQuestList.forEach((el) => {
+            state.dataList.selectList.areaList.forEach((area_el) => {
+                if(area_el.enable_stage.length > 0){
+                    area_el.enable_stage.forEach((stage_el) => {
+                        if(stage_el.stage_no == el.stage_no){
+                            delete stage_el.executor
+                        }
+                    })
+                }
+            })
+        })
+        state.modalStatus.finishedQuest = false
+    },
     getApiSetting: (state, payload) => {
         state.api.active = null
         if(typeof payload.which == 'string'){
@@ -84,6 +100,13 @@ const mutations = {
             })
         }
     },
+    getLoginData: (state) => {
+        if(localStorage.getItem('login_data') != null){
+            state.loginData = JSON.parse(localStorage.getItem('login_data'))
+        }else{
+            window.location = '/login'
+        }
+    },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
@@ -96,6 +119,7 @@ const actions = {
         await context.dispatch('doQuest')
     },
     doQuest: async (context) => {
+        context.state.dataList.selectList.getResourceList = {}
         context.commit('getApiSetting',{which:'doQuest',paraArr:[context.state.loginData.member_no]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(async response => {
@@ -104,7 +128,9 @@ const actions = {
                     throw response.data 
                 }
                 context.state.modalStatus.characterSelect = false
-                await context.dispatch('getAreaList')
+                if(response.data.result != null){
+                    context.state.dataList.selectList.getResourceList = response.data.result
+                }
                 await context.dispatch('getMemberData')
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -144,15 +170,6 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
-        }else{
-            return []
-        }
-    },
-    getLoginData: async (context) => {
-        if(localStorage.getItem('login_data') != undefined){
-            context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
-        }else{
-            window.location = '/login'
         }
     },
     getMemberData: async (context) => {
@@ -167,7 +184,7 @@ const actions = {
                     throw response.data 
                 }
                 localStorage.setItem('login_data', JSON.stringify(response.data.result[0]));
-                context.dispatch('getLoginData')
+                context.commit('getLoginData')
                 context.state.dataList.selectList.ownedCharacterList = response.data.result[0].member_character
                 if(response.data.result[0].member_character.length > 0){
                     response.data.result[0].member_character.forEach((el) => {
@@ -191,6 +208,14 @@ const actions = {
                                             }
                                         }
                                     })
+                                    if(context.state.dataList.selectList.finishedQuestList.length > 0){
+                                        context.state.dataList.selectList.finishedQuestList.forEach((quest_el) => {
+                                            quest_el.getResource = []
+                                            if(context.state.dataList.selectList.getResourceList[quest_el.stage_no] != undefined){
+                                                quest_el.getResource = context.state.dataList.selectList.getResourceList[quest_el.stage_no]
+                                            }
+                                        })
+                                    }
                                 }
                             })
                         }
@@ -208,12 +233,10 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
-        }else{
-            return []
         }
     },
     initPage: async (context) => {
-        await context.dispatch('getLoginData')
+        context.commit('getLoginData')
         await context.dispatch('getAreaList')
         await context.dispatch('getMemberData')
     },

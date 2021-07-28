@@ -226,21 +226,28 @@ class MemberController extends Controller
                 $stage_no = $tb_MemberCharacter->first()->stage_no;
                 $tb_Stage = Stage::where('stage_no',$stage_no);
                 if($request->stage_no == null){
+                    $result['result'] = [
+                        $stage_no => []
+                    ];
                     $tb_Member = $tb_Member->first();
                     $tb_Stage = $tb_Stage->first();
                     foreach($tb_Constant as $constant){
                         $constant->usage = explode('|',$constant->usage);
                         if($tb_Stage->bug_value == $constant->value){
                             $bug = rand($constant->usage[0],$constant->usage[1]);
+                            $result['result'][$stage_no]['bug'] = $bug;
                         }
                         if($tb_Stage->feather_value == $constant->value){
                             $feather = rand($constant->usage[0],$constant->usage[1]);
+                            $result['result'][$stage_no]['feather'] = $feather;
                         }
                         if($tb_Stage->cannabis_value == $constant->value){
                             $cannabis = rand($constant->usage[0],$constant->usage[1]);
+                            $result['result'][$stage_no]['cannabis'] = $cannabis;
                         }
                         if($tb_Stage->gem_value == $constant->value){
                             $gem = rand($constant->usage[0],$constant->usage[1]);
+                            $result['result'][$stage_no]['gem'] = $gem;
                         }
                     }
                     $request_member = [
@@ -250,6 +257,7 @@ class MemberController extends Controller
                         'gem' => $tb_Member->gem+$gem,
                         'coins' => $tb_Member->coins+$tb_Stage->coins
                     ];
+                    $result['result'][$stage_no]['coins'] = $tb_Stage->coins;
                     $tb_Member->update($request_member);
                 }
                 $tb_MemberCharacter->update($request_member_character);
@@ -257,7 +265,7 @@ class MemberController extends Controller
 
 
             $result['status'] = true;
-            $result['result'] = '更新成功';
+            $result['message'] = ['更新成功'];
             DB::commit();
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
