@@ -17,7 +17,7 @@ class MemberCharacter extends Model
         parent::boot();
         static::creating(function($model)
         {
-            
+
         });
         static::updating(function($model)
         {

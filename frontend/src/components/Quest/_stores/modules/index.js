@@ -63,7 +63,6 @@ const getters = {
  
 const mutations = {
     closeFinishedQuestModal: (state) => {
-        console.log(state.dataList.selectList.finishedQuestList)
         state.dataList.selectList.finishedQuestList.forEach((el) => {
             state.dataList.selectList.areaList.forEach((area_el) => {
                 if(area_el.enable_stage.length > 0){
@@ -76,6 +75,7 @@ const mutations = {
             })
         })
         state.modalStatus.finishedQuest = false
+        state.dataList.selectList.finishedQuestList = []
     },
     getApiSetting: (state, payload) => {
         state.api.active = null

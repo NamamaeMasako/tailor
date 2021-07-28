@@ -26,6 +26,7 @@ class Member extends Model
             $model->level = 1;
             $model->experience = 0;
             $model->stamina = 1;
+            $model->stamina_updated_at = Carbon::now();
             $model->enable = 0;
             $model->bug = 10;
             $model->feather = 10;

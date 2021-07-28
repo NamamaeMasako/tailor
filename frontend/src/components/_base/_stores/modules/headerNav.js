@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment'
 
 const state = {
     dataList: {
@@ -78,6 +79,10 @@ const getters = {
             }
         })
         return result
+    },
+    stamina: (state) => {
+        
+        return moment().diff(moment(state.dataList.loginData.stamina_updated_at))
     },
     staminaBar: (state) => {
         return (state.dataList.loginData.stamina/state.dataList.constantSetting.inUsed.staminaLimit)*100
@@ -185,6 +190,7 @@ const actions = {
                 context.state.dataList.constantSetting.list = response.data.result.member
                 setTimeout(()=>{
                     context.commit('setConstants')
+                    context.dispatch('staminaRecover')
                 },200)
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -239,6 +245,14 @@ const actions = {
         context.commit('getLoginData')
         await context.dispatch('getMemberData')
         await context.dispatch('getConstantList')
+    },
+    staminaRecover: async (context) => {
+        setTimeout(async () => {
+            if(context.state.dataList.loginData.stamina < context.state.dataList.constantSetting.inUsed.staminaLimit){
+                context.state.dataList.loginData.stamina += 1
+                await context.dispatch('staminaRecover')
+            }
+        },144000)
     }
 }
  

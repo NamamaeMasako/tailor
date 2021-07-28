@@ -124,11 +124,6 @@ export default {
         'header-nav': HeaderNav
     },
     watch: {
-        '$store.state.indexData.modalStatus.finishedQuest': (newVal) => {
-            if(newVal == false) {
-                store.state.indexData.dataList.selectList.finishedQuestList = []
-            }
-        },
         '$store.state.indexData.loginData': () => {
             HeaderNav.store.dispatch('headerNavData/getMemberData')
         },

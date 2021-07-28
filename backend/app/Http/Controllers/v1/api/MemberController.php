@@ -39,6 +39,18 @@ class MemberController extends Controller
             }
             if(count($tb) > 0){
                 foreach($tb as $row){
+                    $stamina_updated_past_sec = Carbon::now()->diffInSeconds(Carbon::create($row->stamina_updated_at));
+                    $stamina = $row->stamina + floor($stamina_updated_past_sec/144);
+                    $stamina_constant = Constant::where('page','member')->where('function','staminalimit')->first();
+                    $stamina_limit = $stamina_constant->text + $row->level*$stamina_constant->usage;
+                    if($stamina > $stamina_limit){
+                        $stamina = $stamina_limit;
+                    }
+                    $row->update([
+                        'stamina' => $stamina,
+                        'stamina_updated_at' => Carbon::now()
+                    ]);
+                    
                     $row->enable_text = Lang::get('status.member.enable')[$row->enable];
                     $row->costume_totalAmount = 0;
                     if(count($row->MemberCharacter) > 0){
