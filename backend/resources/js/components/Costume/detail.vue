@@ -70,59 +70,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>使用材料</label>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="form-group col-3 py-1">
-                                        <label class="col-12 text-center"><i class="fas fa-bug"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.bug != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.bug">
-                                        <div class="invalid-feedback">
-                                            <span v-for="(msg,index) in validateMsg.bug" :key="index">{{msg}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-3 py-1">
-                                        <label class="col-12 text-center"><i class="fas fa-feather"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.feather != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.feather">
-                                        <div class="invalid-feedback">
-                                            <span v-for="(msg,index) in validateMsg.feather" :key="index">{{msg}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-3 py-1">
-                                        <label class="col-12 text-center"><i class="fas fa-cannabis"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.cannabis != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.cannabis">
-                                        <div class="invalid-feedback">
-                                            <span v-for="(msg,index) in validateMsg.cannabis" :key="index">{{msg}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-3 py-1">
-                                        <label class="col-12 text-center"><i class="fas fa-gem"></i></label>
-                                        <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.gem != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.gem">
-                                        <div class="invalid-feedback">
-                                            <span v-for="(msg,index) in validateMsg.gem" :key="index">{{msg}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label">消耗體力</label>
-                            <div class="col-10">
-                                <input type="number" min='0' :class="{'is-invalid': validateMsg.stamina != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.stamina">
-                                <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.stamina" :key="index">{{msg}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label">可獲得經驗值</label>
-                            <div class="col-10">
-                                <input type="number" min='0' :class="{'is-invalid': validateMsg.experience != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.experience">
-                                <div class="invalid-feedback">
-                                    <span v-for="(msg,index) in validateMsg.experience" :key="index">{{msg}}</span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label class="col-2 col-form-label">販售價格</label>
                             <div class="col-10">
@@ -144,6 +91,91 @@
                                 </div>
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">製作資訊(每次)</div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>使用材料</label>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="form-group col-3 py-1">
+                                                <label class="col-12 text-center"><i class="fas fa-bug"></i></label>
+                                                <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.bug != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.bug">
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.bug" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3 py-1">
+                                                <label class="col-12 text-center"><i class="fas fa-feather"></i></label>
+                                                <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.feather != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.feather">
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.feather" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3 py-1">
+                                                <label class="col-12 text-center"><i class="fas fa-cannabis"></i></label>
+                                                <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.cannabis != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.cannabis">
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.cannabis" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3 py-1">
+                                                <label class="col-12 text-center"><i class="fas fa-gem"></i></label>
+                                                <input type="number" min='0' class="form-control" :class="{'is-invalid': validateMsg.gem != ''}" :disabled="editMode != true" :readonly="editMode != true" v-model="dataList.formList.gem">
+                                                <div class="invalid-feedback">
+                                                    <span v-for="(msg,index) in validateMsg.gem" :key="index">{{msg}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">消耗體力</label>
+                                        <div class="col-4">
+                                            <input type="number" min='0' :class="{'is-invalid': validateMsg.stamina != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.stamina">
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.stamina" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                        <label class="col-2 col-form-label">生產數量</label>
+                                        <div class="col-4">
+                                            <input type="number" min='0' :class="{'is-invalid': validateMsg.amount != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.amount">
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.amount" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">花費時間</label>
+                                        <div class="col-4" v-if="editMode != true">
+                                            <input type="text" class="form-control-plaintext" disabled v-model="dataList.formList.time">
+                                        </div>
+                                        <div class="col-4" v-else>
+                                            <div class="input-group" :class="{'is-invalid': validateMsg.time != ''}">
+                                                <input type="text" class="form-control" v-model="dataList.showHour" placeholder="時">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                                </div>
+                                                <input type="text" class="form-control" v-model="dataList.showMinute" placeholder="分">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="inputGroupPrepend2">：</span>
+                                                </div>
+                                                <input type="text" class="form-control" v-model="dataList.showSecond" placeholder="秒">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.time" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                        <label class="col-2 col-form-label">可獲得經驗值</label>
+                                        <div class="col-4">
+                                            <input type="number" min='0' :class="{'is-invalid': validateMsg.experience != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.experience">
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.experience" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -172,11 +204,37 @@
             this.dataList.costumeNo = this.$route.params.costume_no
             this.initPage()
         },
-        computed: {
-
+        watch: {
+            'dataList.showHour': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = v+':'+store.state.detailData.dataList.showMinute+':'+store.state.detailData.dataList.showSecond
+            },
+            'dataList.showMinute': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = store.state.detailData.dataList.showHour+':'+v+':'+store.state.detailData.dataList.showSecond
+            },
+            'dataList.showSecond': (newVal) => {
+                let v = newVal;
+                if(parseInt(newVal) == NaN){
+                    v = '00'
+                }else if(parseInt(newVal) < 10){
+                    v = '0' + v
+                }
+                store.state.detailData.dataList.formList.time = store.state.detailData.dataList.showHour+':'+store.state.detailData.dataList.showMinute+':'+v
+            }
         },
         methods: {
-            ...mapMutations('createData',[
+            ...mapMutations('detailData',[
                 'countDownChanged'
             ]),
             ...mapActions('detailData',[

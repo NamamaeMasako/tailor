@@ -3,6 +3,9 @@ const state = {
         access_token: null
     },
     dataList: {
+        showHour: '',
+        showMinute: '',
+        showSecond: '',
         formList: {
         },
         selectList: {
@@ -37,6 +40,8 @@ const state = {
         cannabis: '',
         gem: '',
         stamina: '',
+        amount: '',
+        time: '',
         experience: '',
         price: ''
     }
@@ -87,6 +92,19 @@ const actions = {
         }
     },
     submit: async (context) => {
+        let hour = context.state.dataList.showHour
+        let minute = context.state.dataList.showMinute
+        let second = context.state.dataList.showSecond
+        if(hour < 10){
+            hour = '0'+hour
+        }
+        if(minute < 10){
+            minute = '0'+minute
+        }
+        if(second < 10){
+            second = '0'+second
+        }
+        context.state.dataList.formList.time = hour+':'+minute+':'+second
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {

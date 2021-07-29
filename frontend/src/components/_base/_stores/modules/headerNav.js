@@ -217,10 +217,10 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data
                 }
-                localStorage.removeItem('login_data');
                 context.state.alert.variant = 'success'
                 context.state.alert.message = '登出成功'
                 context.commit('showAlert')
+                localStorage.removeItem('login_data');
                 setTimeout(()=>{
                     window.location = '/'
                 },context.state.alert.dismissSecs*1000)
@@ -235,6 +235,10 @@ const actions = {
                     }
                 })
                 context.commit('showAlert')
+                localStorage.removeItem('login_data');
+                setTimeout(()=>{
+                    window.location = '/'
+                },context.state.alert.dismissSecs*1000)
             })
         }else{
             context.state.alert.message = '錯誤的API'

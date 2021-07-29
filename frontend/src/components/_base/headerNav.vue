@@ -111,7 +111,6 @@ export default {
             'resourceBar',
             'resourceTotalAmount',
             'experienceBar',
-            'stamina',
             'staminaBar',
             'warehouseBar'
         ])

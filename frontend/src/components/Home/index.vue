@@ -3,11 +3,31 @@
     <header-nav />
     <b-card no-body>
         <b-tabs card>
-            <b-tab title="Tab 1" active>
+            <!-- <b-tab title="Tab 1">
                 <b-card-text>Tab contents 1</b-card-text>
-            </b-tab>
-            <b-tab title="工作室">
+            </b-tab> -->
+            <b-tab title="工作室" active>
                 <b-card-text>
+                    <div class="card mb-3">
+                        <div class="card-header">新商品發想</div>
+                        <div class="card-body">
+                            <label>發想時間</label>
+                            <div class="row">
+                                <div class="col-3">
+                                    <b-button variant="success" class="btn-block">1小時</b-button>
+                                </div>
+                                <div class="col-3">
+                                    <b-button variant="success" class="btn-block">3小時</b-button>
+                                </div>
+                                <div class="col-3">
+                                    <b-button variant="success" class="btn-block">5小時</b-button>
+                                </div>
+                                <div class="col-3">
+                                    <b-button variant="success" class="btn-block">7小時</b-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-header">可製作商品列表</div>
                         <div class="card-body">

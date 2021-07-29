@@ -74,6 +74,8 @@ class CostumeController extends Controller
                 'cannabis' => $request->cannabis,
                 'gem' => $request->gem,
                 'stamina' => $request->stamina,
+                'time' => $request->time,
+                'amount' => $request->amount,
                 'experience' => $request->experience,
                 'price' => $request->price
             ];
@@ -111,6 +113,10 @@ class CostumeController extends Controller
                 'feather' => $request->feather,
                 'cannabis' => $request->cannabis,
                 'gem' => $request->gem,
+                'stamina' => $request->stamina,
+                'time' => $request->time,
+                'amount' => $request->amount,
+                'experience' => $request->experience,
                 'enable' => $request->enable,
             ];
             $tb = Costume::where('costume_no',$costume_no);

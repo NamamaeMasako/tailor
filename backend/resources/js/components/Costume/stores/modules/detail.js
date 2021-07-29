@@ -5,6 +5,9 @@ const state = {
     editMode: false,
     dataList: {
         costumeNo: null,
+        showHour: '00',
+        showMinute: '00',
+        showSecond: '00',
         formList: {
             gender: '',
             title: ''
@@ -45,6 +48,8 @@ const state = {
         gender: '',
         part: '',
         enable: '',
+        time: '',
+        amount: '',
         stamina: '',
         experience: '',
         price: '',
@@ -101,6 +106,9 @@ const actions = {
                     throw response.data
                 }
                 context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
+                context.state.dataList.showHour = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[0]
+                context.state.dataList.showMinute = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[1]
+                context.state.dataList.showSecond = response.data.result[Object.keys(response.data.result)[0]].time.split(':')[2]
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -128,6 +136,7 @@ const actions = {
     },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.costumeNo]})
+        console.log(context.state.api.active)
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
