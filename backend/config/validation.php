@@ -37,7 +37,7 @@ return [
                 'cannabis' => 'required|integer|min:0',
                 'gem' => 'required|integer|min:0',
                 'stamina' => 'required|integer|min:0',
-                'amount' => 'required|integer|min:0',
+                'quantity' => 'required|integer|min:0',
                 'time' => 'required',
                 'experience' => 'required|integer|min:0',
                 'price' => 'required|integer|min:0',

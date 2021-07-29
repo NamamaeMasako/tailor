@@ -40,7 +40,7 @@ const state = {
         cannabis: '',
         gem: '',
         stamina: '',
-        amount: '',
+        quantity: '',
         time: '',
         experience: '',
         price: ''

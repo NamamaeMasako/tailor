@@ -49,7 +49,7 @@ const state = {
         part: '',
         enable: '',
         time: '',
-        amount: '',
+        quantity: '',
         stamina: '',
         experience: '',
         price: '',

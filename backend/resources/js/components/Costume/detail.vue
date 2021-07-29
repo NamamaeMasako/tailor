@@ -141,9 +141,9 @@
                                         </div>
                                         <label class="col-2 col-form-label">生產數量</label>
                                         <div class="col-4">
-                                            <input type="number" min='0' :class="{'is-invalid': validateMsg.amount != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.amount">
+                                            <input type="number" min='0' :class="{'is-invalid': validateMsg.quantity != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.quantity">
                                             <div class="invalid-feedback">
-                                                <span v-for="(msg,index) in validateMsg.amount" :key="index">{{msg}}</span>
+                                                <span v-for="(msg,index) in validateMsg.quantity" :key="index">{{msg}}</span>
                                             </div>
                                         </div>
                                     </div>

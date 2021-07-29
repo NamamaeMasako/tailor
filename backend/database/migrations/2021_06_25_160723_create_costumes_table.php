@@ -24,7 +24,7 @@ class CreateCostumesTable extends Migration
             $table->integer('cannabis')->comment('所需資源量-葉');
             $table->integer('gem')->comment('所需資源量-寶石');
             $table->integer('stamina')->comment('每次製作耗費體力');
-            $table->integer('amount')->comment('每次製作生產數量');
+            $table->integer('quantity')->comment('每次製作生產數量');
             $table->time('time')->comment('每次製作時間');
             $table->integer('experience')->comment('每次製作可獲得經驗值');
             $table->integer('price')->comment('單價');

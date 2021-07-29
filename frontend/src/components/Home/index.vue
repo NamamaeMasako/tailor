@@ -35,9 +35,19 @@
                                 <template #cell(costume_no)="data">
                                     <b-button variant="success" v-on:click="getCostumeData(data.item)">製作</b-button>
                                     <b-modal :title="'製作'+data.item.title" v-model="modalStatus.getCostume">
-                                        <div class="form-group">
-                                            <label>製作數量 {{dataList.formList.amount}}</label>
-                                            <input type="range" min="1" class="form-control-range" v-model="dataList.formList.amount" v-on:change="updateCost">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>製作次數 {{dataList.formList.count}}</label>
+                                                    <input type="range" min="1" class="form-control-range my-2" v-model="dataList.formList.count" v-on:change="updateCost">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>預計獲得產品數量</label>
+                                                    <input type="number" min="1" class="form-control" v-model="dataList.formList.amount" disabled>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>消耗資源</label>
@@ -76,15 +86,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-3 col-form-label">花費體力</label>
-                                            <div class="col-3">
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label>花費體力</label>
                                                 <input type="text" class="form-control" :class="{'is-invalid': dataList.formList.stamina > dataList.memberData.stamina}" v-model="dataList.formList.stamina" disabled>
                                                 <div class="invalid-feedback">
                                                     <span>體力不足!</span>
                                                 </div>
                                             </div>
+                                            <div class="form-group col-6">
+                                                <label>花費時間</label>
+                                                <input type="text" class="form-control" v-model="dataList.formList.time" disabled>
+                                            </div>
                                         </div>
+                                        
                                         <template v-slot:modal-footer>
                                             <div class="col-6">
                                                 <b-button class="btn-block" v-on:click="modalStatus.getCostume = false">取消</b-button>

@@ -80,6 +80,8 @@ class MemberController extends Controller
                             $MemberCostume->cannabis = $tb_costume->first()->cannabis;
                             $MemberCostume->gem = $tb_costume->first()->gem;
                             $MemberCostume->stamina = $tb_costume->first()->stamina;
+                            $MemberCostume->time = $tb_costume->first()->time;
+                            $MemberCostume->quantity = $tb_costume->first()->quantity;
                             $MemberCostume->experience = $tb_costume->first()->experience;
                             $MemberCostume->price = $tb_costume->first()->price;
                             $row->costume_totalAmount += $MemberCostume->amount;

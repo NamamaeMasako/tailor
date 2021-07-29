@@ -75,7 +75,7 @@ class CostumeController extends Controller
                 'gem' => $request->gem,
                 'stamina' => $request->stamina,
                 'time' => $request->time,
-                'amount' => $request->amount,
+                'quantity' => $request->quantity,
                 'experience' => $request->experience,
                 'price' => $request->price
             ];
@@ -115,7 +115,7 @@ class CostumeController extends Controller
                 'gem' => $request->gem,
                 'stamina' => $request->stamina,
                 'time' => $request->time,
-                'amount' => $request->amount,
+                'quantity' => $request->quantity,
                 'experience' => $request->experience,
                 'enable' => $request->enable,
             ];

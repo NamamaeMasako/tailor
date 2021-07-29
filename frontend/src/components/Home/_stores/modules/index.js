@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 const state = {
     loginData: null,
@@ -101,10 +102,26 @@ const mutations = {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
     updateCost: (state) => {
-        state.dataList.formList.bug = parseInt(state.dataList.formList.origin.bug)*parseInt(state.dataList.formList.amount)
-        state.dataList.formList.feather = parseInt(state.dataList.formList.origin.feather)*parseInt(state.dataList.formList.amount)
-        state.dataList.formList.cannabis = parseInt(state.dataList.formList.origin.cannabis)*parseInt(state.dataList.formList.amount)
-        state.dataList.formList.gem = parseInt(state.dataList.formList.origin.gem)*parseInt(state.dataList.formList.amount)
+        state.dataList.formList.bug = parseInt(state.dataList.formList.origin.bug)*parseInt(state.dataList.formList.count)
+        state.dataList.formList.feather = parseInt(state.dataList.formList.origin.feather)*parseInt(state.dataList.formList.count)
+        state.dataList.formList.cannabis = parseInt(state.dataList.formList.origin.cannabis)*parseInt(state.dataList.formList.count)
+        state.dataList.formList.gem = parseInt(state.dataList.formList.origin.gem)*parseInt(state.dataList.formList.count)
+        state.dataList.formList.stamina = parseInt(state.dataList.formList.origin.stamina)*parseInt(state.dataList.formList.count)
+        state.dataList.formList.amount = parseInt(state.dataList.formList.origin.quantity)*parseInt(state.dataList.formList.count)
+        let time = moment.duration(state.dataList.formList.origin.time)*parseInt(state.dataList.formList.count)
+        let h = moment.duration(time).get('h')
+        if(h<10){
+            h = '0'+h
+        }
+        let m = moment.duration(time).get('m')
+        if(m<10){
+            m = '0'+m
+        }
+        let s = moment.duration(time).get('s')
+        if(s<10){
+            s = '0'+s
+        }
+        state.dataList.formList.time = h+':'+m+':'+s
     }
 }
 
@@ -161,7 +178,10 @@ const actions = {
             cannabis: payload.cannabis,
             gem: payload.gem,
             stamina: payload.stamina,
-            amount: 1
+            quantity: payload.quantity,
+            amount: payload.quantity,
+            time: payload.time,
+            count: 1
         }
         context.state.dataList.formList = formList
         context.state.modalStatus.getCostume = true

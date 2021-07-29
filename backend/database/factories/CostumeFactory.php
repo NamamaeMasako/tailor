@@ -33,7 +33,7 @@ class CostumeFactory extends Factory
             'cannabis' => rand(1,10),
             'gem' => rand(1,10),
             'stamina' => rand(1,5),
-            'amount' => rand(1,10),
+            'quantity' => rand(1,10),
             'time' => $this->faker->time($format = 'H:i:s'),
             'experience' => rand(1,5),
             'price' => rand(1,10),
