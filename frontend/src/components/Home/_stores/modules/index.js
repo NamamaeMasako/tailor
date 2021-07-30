@@ -110,6 +110,7 @@ const mutations = {
     getCostumeData: (state, payload) => {
         let formList = {
             origin: payload,
+            costume_no: payload.costume_no,
             bug: payload.bug,
             feather: payload.feather,
             cannabis: payload.cannabis,

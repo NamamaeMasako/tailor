@@ -43,12 +43,22 @@ class MemberController extends Controller
                     $stamina = $row->stamina + floor($stamina_updated_past_sec/144);
                     $stamina_constant = Constant::where('page','member')->where('function','staminalimit')->first();
                     $stamina_limit = $stamina_constant->text + $row->level*$stamina_constant->usage;
+                    $work = $row->costume_no;
+                    $work_time = $row->work_finished_at;
+                    if($row->work_finished_at != null){
+                        if(Carbon::now()->gte(Carbon::create($row->work_finished_at))){
+                            $work = null;
+                            $work_time = null;
+                        }
+                    }
                     if($stamina > $stamina_limit){
                         $stamina = $stamina_limit;
                     }
                     $row->update([
                         'stamina' => $stamina,
-                        'stamina_updated_at' => Carbon::now()
+                        'stamina_updated_at' => Carbon::now(),
+                        'costume_no' => $work,
+                        'work_finished_at' => $work_time
                     ]);
                     
                     $row->enable_text = Lang::get('status.member.enable')[$row->enable];
@@ -86,6 +96,10 @@ class MemberController extends Controller
                             $MemberCostume->price = $tb_costume->first()->price;
                             $row->costume_totalAmount += $MemberCostume->amount;
                         }
+                    }
+                    $row->work = null;
+                    if($row->costume_no != null){
+                        $row->work = Costume::where('costume_no', $row->costume_no);
                     }
                 }
             }else{
@@ -152,6 +166,10 @@ class MemberController extends Controller
                 'feather' => $request->feather,
                 'cannabis' => $request->cannabis,
                 'gem' => $request->gem,
+                'coins' => $request->coins,
+                'level' => $request->level,
+                'experience' => $request->experience,
+                'stamina' => $request->stamina,
                 'enable' => $request->enable
             ];
             $resquestArr_member_character_update = [];
@@ -228,6 +246,7 @@ class MemberController extends Controller
             if($request->time != null){
                 $addTimeArr = explode(":",$request->time);
                 $request_update_member = [
+                    'costume_no' => $request->costume_no,
                     'stamina' => $tb_Member->stamina - $request->stamina,
                     'stamina_updated_at' => Carbon::now(),
                     'work_finished_at' => Carbon::now()->addHours($addTimeArr[0])->addMinute($addTimeArr[1])->addSeconds($addTimeArr[2]),
@@ -238,6 +257,7 @@ class MemberController extends Controller
                 ];
             }else{
                 $request_update_member = [
+                    'costume_no' => null,
                     'work_finished_at' => null,
                     'experience' => $tb_Member->experience + $request->experience,
                 ];

@@ -98,6 +98,9 @@ const mutations = {
             }
         })
         if(chk == true){
+            if(state.dataList.addMemberCostume.costume.amount == ''){
+                state.dataList.addMemberCostume.costume.amount = 0
+            }
             state.dataList.formList.member_costume.push(state.dataList.addMemberCostume.costume)
         }
         state.dataList.addMemberCostume =  {
