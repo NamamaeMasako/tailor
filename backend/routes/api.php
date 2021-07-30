@@ -54,6 +54,7 @@ Route::namespace('v1')->group(function () {
                 Route::get('/', 'MemberController@index');
                 Route::post('/', 'MemberController@store');
                 Route::post('/edit/{member_no}', 'MemberController@edit');
+                Route::post('/dowork/{member_no}', 'MemberController@dowork');
                 Route::post('/updatestage/{member_no}', 'MemberController@updatestage');
             });
             Route::prefix('constant')->group(function () {

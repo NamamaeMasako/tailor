@@ -58,8 +58,15 @@ return [
                 'email' => 'required|email|unique:members',
                 'password' => 'required'
             ],
+            'dowork' => [
+                
+            ],
             'edit' => [
-                'name' => 'required'
+                'name' => 'required',
+                'bug' => 'required',
+                'feather' => 'required',
+                'cannabis' => 'required',
+                'gem' => 'required'
             ],
             'updatestage' => [
                 'character_no' => 'required'

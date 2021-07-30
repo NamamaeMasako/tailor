@@ -7,7 +7,11 @@
                 <b-card-text>Tab contents 1</b-card-text>
             </b-tab> -->
             <b-tab title="工作室" active>
-                <b-card-text>
+                <b-card-text v-if="workStatus == true">
+                    <h4>努力工作中...</h4>
+                    預計將於 {{workCountDown}} 後完成工作
+                </b-card-text>
+                <b-card-text v-else>
                     <div class="card mb-3">
                         <div class="card-header">新商品發想</div>
                         <div class="card-body">
@@ -105,7 +109,7 @@
                                                 <b-button class="btn-block" v-on:click="modalStatus.getCostume = false">取消</b-button>
                                             </div>
                                             <div class="col-6">
-                                                <b-button variant="success" class="btn-block" :disabled="!amountCheck">開始</b-button>
+                                                <b-button variant="success" class="btn-block" :disabled="!amountCheck" v-on:click="submit">開始</b-button>
                                             </div>
                                         </template>
                                     </b-modal>
@@ -138,6 +142,13 @@ export default {
     components: {
         'header-nav': HeaderNav
     },
+    watch: {
+        '$store.state.indexData.workStatus': (val) => {
+            if(val == true){
+                store.dispatch('indexData/checkWorkStatus')
+            }
+        }
+    },
     computed: {
         ...mapGetters('indexData',[
             'amountCheck'
@@ -145,11 +156,13 @@ export default {
     },
     methods: {
         ...mapMutations('indexData',[
-            'updateCost'
+            'updateCost',
+            'getCostumeData'
         ]),
         ...mapActions('indexData',[
+            'checkWorkStatus',
             'initPage',
-            'getCostumeData'
+            'submit'
         ])
     },
 }

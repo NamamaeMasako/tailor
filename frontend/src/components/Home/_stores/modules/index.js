@@ -2,6 +2,8 @@ import axios from 'axios'
 import moment from 'moment'
 
 const state = {
+    workStatus: false,
+    workCountDown: null,
     loginData: null,
     dataList: {
         memberData: null,
@@ -40,6 +42,13 @@ const state = {
                 baseURL: localStorage.getItem('HOST'),
                 url: '/api/data/member',
                 method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
+            submit: {
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/data/member/dowork',
+                method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             }
@@ -98,6 +107,22 @@ const mutations = {
             })
         }
     },
+    getCostumeData: (state, payload) => {
+        let formList = {
+            origin: payload,
+            bug: payload.bug,
+            feather: payload.feather,
+            cannabis: payload.cannabis,
+            gem: payload.gem,
+            stamina: payload.stamina,
+            quantity: payload.quantity,
+            amount: payload.quantity,
+            time: payload.time,
+            count: 1
+        }
+        state.dataList.formList = formList
+        state.modalStatus.getCostume = true
+    },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
@@ -126,6 +151,30 @@ const mutations = {
 }
 
 const actions = {
+    checkWorkStatus: async (context) => {
+        console.log(moment(context.state.dataList.memberData.work_finished_at))
+        if(moment(context.state.dataList.memberData.work_finished_at) <= moment()){
+            context.state.workStatus = false
+        }else{
+            setTimeout(() => {
+                let duration = moment.duration(moment(context.state.dataList.memberData.work_finished_at).diff(moment()))
+                let h = duration.hours();
+                if(h<10){
+                    h = '0'+h
+                }
+                let m = duration.minutes();
+                if(m<10){
+                    m = '0'+m
+                }
+                let s = duration.seconds();
+                if(s<10){
+                    s = '0'+s
+                }
+                context.state.workCountDown = h+':'+m+':'+s
+                context.dispatch('checkWorkStatus')
+            },1000)
+        }
+    },
     getLoginData: async (context) => {
         if(localStorage.getItem('login_data') != undefined){
             context.state.loginData = JSON.parse(localStorage.getItem('login_data'))
@@ -146,6 +195,11 @@ const actions = {
                     throw response.data
                 }
                 context.state.dataList.memberData = Object.values(response.data.result)[0]
+                if(context.state.dataList.memberData.work_finished_at != null){
+                    context.state.workStatus = true
+                }else{
+                    context.state.workStatus = false
+                }
                 context.state.dataList.selectList.costumeList = []
                 if(Object.values(response.data.result)[0].member_costume.length > 0){
                     Object.values(response.data.result)[0].member_costume.forEach((el) => {
@@ -170,21 +224,29 @@ const actions = {
         await context.dispatch('getLoginData')
         await context.dispatch('getMemberData')
     },
-    getCostumeData: async (context, payload) => {
-        let formList = {
-            origin: payload,
-            bug: payload.bug,
-            feather: payload.feather,
-            cannabis: payload.cannabis,
-            gem: payload.gem,
-            stamina: payload.stamina,
-            quantity: payload.quantity,
-            amount: payload.quantity,
-            time: payload.time,
-            count: 1
+    submit: async (context) => {
+        context.commit('getApiSetting',{which:'submit',paraArr: [context.state.dataList.memberData.member_no]})
+        console.log(context.state.api.active)
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then(response => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                location.reload()
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
         }
-        context.state.dataList.formList = formList
-        context.state.modalStatus.getCostume = true
     }
 }
  

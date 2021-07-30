@@ -24,6 +24,7 @@ class CreateMembersTable extends Migration
             $table->integer('experience')->comment('獲得經驗值');
             $table->integer('stamina')->comment('目前體力');
             $table->timestamp('stamina_updated_at')->comment('上次更新體力時間');
+            $table->timestamp('work_finished_at')->nullable()->comment('工作結束時間');
             $table->integer('bug')->comment('材料數量-蟲');
             $table->integer('feather')->comment('材料數量-羽毛');
             $table->integer('cannabis')->comment('材料數量-葉');

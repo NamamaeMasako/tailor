@@ -148,6 +148,10 @@ class MemberController extends Controller
 
             $resquest_member_update = [
                 'name' => $request->name,
+                'bug' => $request->bug,
+                'feather' => $request->feather,
+                'cannabis' => $request->cannabis,
+                'gem' => $request->gem,
                 'enable' => $request->enable
             ];
             $resquestArr_member_character_update = [];
@@ -197,6 +201,51 @@ class MemberController extends Controller
 
             $result['status'] = true;
             $result['result'] = '更新成功';
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
+
+        return $result;
+    }
+
+    public function dowork(Request $request,$member_no) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.member.rules.dowork'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('更新失敗');
+            }
+
+            $tb_Member = Member::where('member_no',$member_no)->first();
+            if($request->time != null){
+                $addTimeArr = explode(":",$request->time);
+                $request_update_member = [
+                    'stamina' => $tb_Member->stamina - $request->stamina,
+                    'stamina_updated_at' => Carbon::now(),
+                    'work_finished_at' => Carbon::now()->addHours($addTimeArr[0])->addMinute($addTimeArr[1])->addSeconds($addTimeArr[2]),
+                    'bug' => $tb_Member->bug - $request->bug,
+                    'feather' => $tb_Member->feather - $request->feather,
+                    'cannabis' => $tb_Member->cannabis - $request->cannabis,
+                    'gem' => $tb_Member->gem - $request->gem,
+                ];
+            }else{
+                $request_update_member = [
+                    'work_finished_at' => null,
+                    'experience' => $tb_Member->experience + $request->experience,
+                ];
+            }
+            $tb_Member->update($request_update_member);
+
+            $result['status'] = true;
+            $result['message'] = ['更新成功'];
             DB::commit();
         }catch(Exception $e){
             $result['result'] = $e->getMessage();
