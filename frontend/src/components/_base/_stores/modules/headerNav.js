@@ -19,7 +19,7 @@ const state = {
             inUsed: {
                 experience: 0,
                 staminaLimit: 0,
-                wrarehouse: 0,
+                warehouse: 0,
                 resourceLimit: 0
             }
         }
@@ -88,6 +88,7 @@ const getters = {
         return (state.dataList.loginData.stamina/state.dataList.constantSetting.inUsed.staminaLimit)*100
     },
     warehouseBar: (state) => {
+        console.log(state.dataList.constantSetting.inUsed.warehouse)
         return (state.dataList.loginData.costume_totalAmount/state.dataList.constantSetting.inUsed.warehouse)*100
     }
 }
