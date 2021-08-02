@@ -4,6 +4,7 @@ import moment from 'moment'
 const state = {
     workStatus: false,
     workCountDown: null,
+    workTitle: null,
     loginData: null,
     dataList: {
         memberData: null,
@@ -133,6 +134,16 @@ const mutations = {
         }
         state.dataList.formList = formList
     },
+    getWorkTitle: (state) => {
+        state.workTitle = null
+        if(state.dataList.memberData.costume_no != null){
+            state.dataList.memberData.member_costume.forEach((el) => {
+                if(el.costume_no == state.dataList.memberData.costume_no){
+                    state.workTitle = el.title
+                }
+            })
+        }
+    },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
@@ -209,6 +220,7 @@ const actions = {
                 }
                 context.state.dataList.memberData = Object.values(response.data.result)[0]
                 if(context.state.dataList.memberData.work_finished_at != null){
+                    context.commit('getWorkTitle')
                     context.state.workStatus = true
                 }else{
                     context.state.workStatus = false

@@ -9,10 +9,10 @@
             <b-tab title="工作室" active>
                 <b-card-text v-if="workStatus == true">
                     <h4>努力工作中...</h4>
-                    預計將於 {{workCountDown}} 後完成工作
+                    正在製作{{dataList.memberData.work_count}}次的{{workTitle}}，預計將於 {{workCountDown}} 後完成工作
                 </b-card-text>
                 <b-card-text v-else>
-                    <div class="card mb-3">
+                    <!-- <div class="card mb-3">
                         <div class="card-header">新商品發想</div>
                         <div class="card-body">
                             <label>發想時間</label>
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card">
                         <div class="card-header">可製作商品列表</div>
                         <div class="card-body">
