@@ -49,7 +49,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>預計獲得產品數量</label>
-                                                    <input type="number" min="1" class="form-control" v-model="dataList.formList.amount" disabled>
+                                                    <input type="number" min="1" class="form-control" v-model="dataList.modalData.amount" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-bug"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.bug > dataList.memberData.bug}" v-model="dataList.formList.bug" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.modalData.bug > dataList.memberData.bug}" v-model="dataList.modalData.bug" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -69,7 +69,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-feather"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.feather > dataList.memberData.feather}" v-model="dataList.formList.feather" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.modalData.feather > dataList.memberData.feather}" v-model="dataList.modalData.feather" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -77,7 +77,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.cannabis > dataList.memberData.cannabis}" v-model="dataList.formList.cannabis" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.modalData.cannabis > dataList.memberData.cannabis}" v-model="dataList.modalData.cannabis" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-3">
@@ -85,7 +85,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-gem"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.formList.gem > dataList.memberData.gem}" v-model="dataList.formList.gem" disabled>
+                                                        <input type="text" class="form-control text-center" :class="{'text-danger': dataList.modalData.gem > dataList.memberData.gem}" v-model="dataList.modalData.gem" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,14 +93,14 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label>花費體力</label>
-                                                <input type="text" class="form-control" :class="{'is-invalid': dataList.formList.stamina > dataList.memberData.stamina}" v-model="dataList.formList.stamina" disabled>
+                                                <input type="text" class="form-control" :class="{'is-invalid': dataList.modalData.stamina > dataList.memberData.stamina}" v-model="dataList.modalData.stamina" disabled>
                                                 <div class="invalid-feedback">
                                                     <span>體力不足!</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-6">
                                                 <label>花費時間</label>
-                                                <input type="text" class="form-control" v-model="dataList.formList.time" disabled>
+                                                <input type="text" class="form-control" v-model="dataList.modalData.time" disabled>
                                             </div>
                                         </div>
                                         

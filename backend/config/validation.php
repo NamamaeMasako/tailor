@@ -59,7 +59,7 @@ return [
                 'password' => 'required'
             ],
             'dowork' => [
-                
+                'count' => 'min:0'
             ],
             'edit' => [
                 'name' => 'required',

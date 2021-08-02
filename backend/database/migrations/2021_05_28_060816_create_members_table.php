@@ -25,6 +25,7 @@ class CreateMembersTable extends Migration
             $table->integer('stamina')->comment('目前體力');
             $table->timestamp('stamina_updated_at')->comment('上次更新體力時間');
             $table->string('costume_no')->nullable()->comment('正在製作的服裝編號');
+            $table->integer('work_count')->comment('當前工作的執行次數');
             $table->timestamp('work_finished_at')->nullable()->comment('工作結束時間');
             $table->integer('bug')->comment('材料數量-蟲');
             $table->integer('feather')->comment('材料數量-羽毛');

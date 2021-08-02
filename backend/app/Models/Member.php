@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
+use App\Models\Constant;
 
 class Member extends Model
 {
@@ -28,6 +29,7 @@ class Member extends Model
             $model->stamina = 1;
             $model->stamina_updated_at = Carbon::now();
             $model->enable = 0;
+            $model->work_count = 0;
             $model->bug = 10;
             $model->feather = 10;
             $model->cannabis = 10;
@@ -39,6 +41,25 @@ class Member extends Model
 
         });
     }
+
+    public function scopeupdateStamina($query)
+    {
+        $getQuery = $query->first();
+        $stamina_updated_past_sec = Carbon::now()->diffInSeconds(Carbon::create($getQuery->stamina_updated_at));
+        $stamina = $getQuery->stamina + floor($stamina_updated_past_sec/144);
+        $stamina_constant = Constant::where('page','member')->where('function','staminalimit')->first();
+        $stamina_limit = $stamina_constant->text + $getQuery->level*$stamina_constant->usage;
+        if($stamina > $stamina_limit){
+            $stamina = $stamina_limit;
+        }
+        $query->update([
+            'stamina' => $stamina,
+            'stamina_updated_at' => Carbon::now(),
+        ]);
+
+        return $getQuery;
+    }
+
     public function MemberCharacter()
     {
         return $this->hasMany('App\models\MemberCharacter','member_no');

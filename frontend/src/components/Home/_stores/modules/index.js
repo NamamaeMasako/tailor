@@ -14,7 +14,10 @@ const state = {
             { key: 'amount', label: '庫存', sortable: false },
             { key: 'costume_no', label: '', sortable: false },
         ],
-        formList: {
+        formList:{
+            count: 1
+        },
+        modalData: {
             bug: 0,
             feather: 0,
             cannabis: 0,
@@ -70,9 +73,9 @@ const state = {
 
 const getters = {
     amountCheck: (state) => {
-        let formList = state.dataList.formList
+        let modalData = state.dataList.modalData
         let memberData = state.dataList.memberData
-        if(formList.bug > memberData.bug || formList.feather > memberData.feather || formList.cannabis > memberData.cannabis || formList.gem > memberData.gem || formList.stamina > memberData.stamina){
+        if(modalData.bug > memberData.bug || modalData.feather > memberData.feather || modalData.cannabis > memberData.cannabis || modalData.gem > memberData.gem || modalData.stamina > memberData.stamina){
             return false
         }else{
             return true
@@ -109,32 +112,38 @@ const mutations = {
     },
     getCostumeData: (state, payload) => {
         let formList = {
-            origin: payload,
-            costume_no: payload.costume_no,
-            bug: payload.bug,
-            feather: payload.feather,
-            cannabis: payload.cannabis,
-            gem: payload.gem,
-            stamina: payload.stamina,
-            quantity: payload.quantity,
-            amount: payload.quantity,
-            time: payload.time,
-            count: 1
+            costume_no: null,
+            count: 0
+        }
+        if(payload != null){        
+            state.dataList.modalData = {
+                origin: payload,
+                bug: payload.bug,
+                feather: payload.feather,
+                cannabis: payload.cannabis,
+                gem: payload.gem,
+                stamina: payload.stamina,
+                quantity: payload.quantity,
+                amount: payload.quantity,
+                time: payload.time
+            }
+            formList.costume_no = payload.costume_no
+            formList.count = 1
+            state.modalStatus.getCostume = true
         }
         state.dataList.formList = formList
-        state.modalStatus.getCostume = true
     },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
     },
     updateCost: (state) => {
-        state.dataList.formList.bug = parseInt(state.dataList.formList.origin.bug)*parseInt(state.dataList.formList.count)
-        state.dataList.formList.feather = parseInt(state.dataList.formList.origin.feather)*parseInt(state.dataList.formList.count)
-        state.dataList.formList.cannabis = parseInt(state.dataList.formList.origin.cannabis)*parseInt(state.dataList.formList.count)
-        state.dataList.formList.gem = parseInt(state.dataList.formList.origin.gem)*parseInt(state.dataList.formList.count)
-        state.dataList.formList.stamina = parseInt(state.dataList.formList.origin.stamina)*parseInt(state.dataList.formList.count)
-        state.dataList.formList.amount = parseInt(state.dataList.formList.origin.quantity)*parseInt(state.dataList.formList.count)
-        let time = moment.duration(state.dataList.formList.origin.time)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.bug = parseInt(state.dataList.modalData.origin.bug)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.feather = parseInt(state.dataList.modalData.origin.feather)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.cannabis = parseInt(state.dataList.modalData.origin.cannabis)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.gem = parseInt(state.dataList.modalData.origin.gem)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.stamina = parseInt(state.dataList.modalData.origin.stamina)*parseInt(state.dataList.formList.count)
+        state.dataList.modalData.amount = parseInt(state.dataList.modalData.origin.quantity)*parseInt(state.dataList.formList.count)
+        let time = moment.duration(state.dataList.modalData.origin.time)*parseInt(state.dataList.formList.count)
         let h = moment.duration(time).get('h')
         if(h<10){
             h = '0'+h
@@ -147,14 +156,17 @@ const mutations = {
         if(s<10){
             s = '0'+s
         }
-        state.dataList.formList.time = h+':'+m+':'+s
+        state.dataList.modalData.time = h+':'+m+':'+s
     }
 }
 
 const actions = {
     checkWorkStatus: async (context) => {
-        console.log(moment(context.state.dataList.memberData.work_finished_at))
         if(moment(context.state.dataList.memberData.work_finished_at) <= moment()){
+            if(context.state.workStatus != false){
+                context.commit('getCostumeData',null)
+                await context.dispatch('submit')
+            }
             context.state.workStatus = false
         }else{
             setTimeout(() => {
@@ -227,7 +239,6 @@ const actions = {
     },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit',paraArr: [context.state.dataList.memberData.member_no]})
-        console.log(context.state.api.active)
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
                 console.log(response.data)

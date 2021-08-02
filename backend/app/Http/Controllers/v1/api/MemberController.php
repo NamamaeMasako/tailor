@@ -39,10 +39,7 @@ class MemberController extends Controller
             }
             if(count($tb) > 0){
                 foreach($tb as $row){
-                    $stamina_updated_past_sec = Carbon::now()->diffInSeconds(Carbon::create($row->stamina_updated_at));
-                    $stamina = $row->stamina + floor($stamina_updated_past_sec/144);
-                    $stamina_constant = Constant::where('page','member')->where('function','staminalimit')->first();
-                    $stamina_limit = $stamina_constant->text + $row->level*$stamina_constant->usage;
+                    $row->updateStamina();
                     $work = $row->costume_no;
                     $work_time = $row->work_finished_at;
                     if($row->work_finished_at != null){
@@ -51,12 +48,7 @@ class MemberController extends Controller
                             $work_time = null;
                         }
                     }
-                    if($stamina > $stamina_limit){
-                        $stamina = $stamina_limit;
-                    }
                     $row->update([
-                        'stamina' => $stamina,
-                        'stamina_updated_at' => Carbon::now(),
                         'costume_no' => $work,
                         'work_finished_at' => $work_time
                     ]);
@@ -241,29 +233,50 @@ class MemberController extends Controller
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
-
-            $tb_Member = Member::where('member_no',$member_no)->first();
-            if($request->time != null){
-                $addTimeArr = explode(":",$request->time);
+            $tb_Member = Member::where('member_no',$member_no)->updateStamina();
+            if($request->costume_no != null){
+                $tb_Costume = Costume::where('costume_no',$request->costume_no)->first();
+                if($request->work_finished_at == null){
+                    $addTimeArr = explode(":",$tb_Costume->time);
+                    foreach($addTimeArr as $t){
+                        $t = $t*$request->count;
+                    }
+                    $work_finished_at = Carbon::now()->addHours($addTimeArr[0])->addMinute($addTimeArr[1])->addSeconds($addTimeArr[2]);
+                }else{
+                    $work_finished_at = $request->work_finished_at;
+                }
+                
+                $request_update_member_costumer = null;
                 $request_update_member = [
                     'costume_no' => $request->costume_no,
-                    'stamina' => $tb_Member->stamina - $request->stamina,
+                    'stamina' => $tb_Member->stamina - $tb_Costume->stamina*$request->count,
                     'stamina_updated_at' => Carbon::now(),
-                    'work_finished_at' => Carbon::now()->addHours($addTimeArr[0])->addMinute($addTimeArr[1])->addSeconds($addTimeArr[2]),
-                    'bug' => $tb_Member->bug - $request->bug,
-                    'feather' => $tb_Member->feather - $request->feather,
-                    'cannabis' => $tb_Member->cannabis - $request->cannabis,
-                    'gem' => $tb_Member->gem - $request->gem,
+                    'work_count' => $request->count,
+                    'work_finished_at' => $work_finished_at,
+                    'bug' => $tb_Member->bug - $tb_Costume->bug*$request->count,
+                    'feather' => $tb_Member->feather - $tb_Costume->feather*$request->count,
+                    'cannabis' => $tb_Member->cannabis - $tb_Costume->cannabis*$request->count,
+                    'gem' => $tb_Member->gem - $tb_Costume->gem*$request->count
                 ];
             }else{
+                $tb_Costume = Costume::where('costume_no',$tb_Member->costume_no)->first();
                 $request_update_member = [
                     'costume_no' => null,
+                    'work_count' => 0,
                     'work_finished_at' => null,
-                    'experience' => $tb_Member->experience + $request->experience,
+                    'experience' => $tb_Member->experience + $tb_Costume->experience,
+                ];
+                $amount = $tb_Member->work_count*$tb_Costume->quantity;
+                $request_update_member_costumer = [
+                    'amount' => $amount
                 ];
             }
+            if($request_update_member_costumer != null){
+                $tb_MemberCostume = MemberCostume::where('member_no',$member_no)->where('costume_no',$tb_Member->costume_no)->first();
+                $tb_MemberCostume->update($request_update_member_costumer);
+            }
             $tb_Member->update($request_update_member);
-
+            
             $result['status'] = true;
             $result['message'] = ['更新成功'];
             DB::commit();
