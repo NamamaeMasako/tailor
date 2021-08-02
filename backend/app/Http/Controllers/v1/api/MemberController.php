@@ -246,7 +246,7 @@ class MemberController extends Controller
                     $work_finished_at = $request->work_finished_at;
                 }
                 
-                $request_update_member_costumer = null;
+                $amount = null;
                 $request_update_member = [
                     'costume_no' => $request->costume_no,
                     'stamina' => $tb_Member->stamina - $tb_Costume->stamina*$request->count,
@@ -267,12 +267,12 @@ class MemberController extends Controller
                     'experience' => $tb_Member->experience + $tb_Costume->experience,
                 ];
                 $amount = $tb_Member->work_count*$tb_Costume->quantity;
-                $request_update_member_costumer = [
-                    'amount' => $amount
-                ];
             }
-            if($request_update_member_costumer != null){
+            if($amount != null){
                 $tb_MemberCostume = MemberCostume::where('member_no',$member_no)->where('costume_no',$tb_Member->costume_no)->first();
+                $request_update_member_costumer = [
+                    'amount' => $tb_MemberCostume->amount + $amount
+                ];
                 $tb_MemberCostume->update($request_update_member_costumer);
             }
             $tb_Member->update($request_update_member);
