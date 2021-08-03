@@ -48,6 +48,16 @@ Route::namespace('v1')->group(function () {
                 Route::post('/', 'StageController@store');
                 Route::post('/edit/{stage_no}', 'StageController@edit');
             });
+            Route::prefix('furnishing')->group(function () {
+                Route::get('/', 'FurnishingController@index');
+                Route::post('/', 'FurnishingController@store');
+                Route::post('/edit/{furnishing_no}', 'FurnishingController@edit');
+            });
+            Route::prefix('shopspace')->group(function () {
+                Route::get('/', 'ShopspaceController@index');
+                Route::post('/', 'ShopspaceController@store');
+                Route::post('/edit/{shopspace_no}', 'ShopspaceController@edit');
+            });
         });
         Route::prefix('data')->middleware('auth')->group(function () {
             Route::prefix('member')->group(function () {

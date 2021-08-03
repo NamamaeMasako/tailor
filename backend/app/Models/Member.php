@@ -68,4 +68,8 @@ class Member extends Model
     {
         return $this->hasMany('App\models\MemberCostume','member_no');
     }
+    public function MemberFurnishing()
+    {
+        return $this->hasMany('App\models\MemberFurnishing','member_no');
+    }
 }

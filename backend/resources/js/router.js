@@ -39,6 +39,10 @@ import UrlList from './components/Url/list.vue';
 import UrlCreate from './components/Url/create.vue';
 import UrlDetail from './components/Url/detail.vue';
 
+import FurnishingList from './components/Furnishing/list.vue';
+import FurnishingCreate from './components/Furnishing/create.vue';
+import FurnishingDetail from './components/Furnishing/detail.vue';
+
 
 // 使用 Vue Router
 Vue.use(Router);
@@ -76,6 +80,9 @@ export const routes = [
 	{ path: '/game/stage/list', component: StageList, name:'stage-list'},
 	{ path: '/game/stage/create', component: StageCreate, name:'stage-create'},
 	{ path: '/game/stage/:stage_no', component: StageDetail, name:'stage-detail'},
+	{ path: '/game/furnishing/list', component: FurnishingList, name:'furnishing-list'},
+	{ path: '/game/furnishing/create', component: FurnishingCreate, name:'furnishing-create'},
+	{ path: '/game/furnishing/:furnishing_no', component: FurnishingDetail, name:'furnishing-detail'},
 
 	{ path: '/system', redirect: '/system/manager' },
 	{ path: '/system/manager', redirect: '/system/manager/list' },

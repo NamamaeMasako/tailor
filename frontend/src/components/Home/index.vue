@@ -3,9 +3,9 @@
     <header-nav />
     <b-card no-body>
         <b-tabs card>
-            <!-- <b-tab title="Tab 1">
+            <b-tab title="店內規劃">
                 <b-card-text>Tab contents 1</b-card-text>
-            </b-tab> -->
+            </b-tab>
             <b-tab title="工作室" active>
                 <b-card-text v-if="workStatus == true">
                     <h4>努力工作中...</h4>

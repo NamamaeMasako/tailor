@@ -41,5 +41,13 @@ class DatabaseSeeder extends Seeder
             \App\Models\Costume::factory()->create();
             sleep(1);
         }
+        for ( $i=0 ; $i<5 ; $i++ ) {
+            \App\Models\Furnishing::factory()->create();
+            sleep(1);
+        }
+        for ( $i=0 ; $i<5 ; $i++ ) {
+            \App\Models\Shopspace::factory()->create();
+            sleep(1);
+        }
     }
 }
