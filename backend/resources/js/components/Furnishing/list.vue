@@ -3,7 +3,7 @@
         <nav class="my-3" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page">遊戲管理</li>
-                <li class="breadcrumb-item active" aria-current="page">職業</li>
+                <li class="breadcrumb-item active" aria-current="page">家具</li>
             </ol>
         </nav>
         <b-alert :variant="alert.variant" dismissible :show="alert.dismissCountDown" v-on:dismissed="alert.dismissCountDown=0" v-on:dismiss-count-down="countDownChanged">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <span class="mt-2">共{{itemsCount}}筆</span>
-                        <b-button variant="primary" href="/game/job/create">新增</b-button>
+                        <b-button variant="primary" href="/game/frunishing/create">新增</b-button>
                     </div>
                     <div class="card-body">
                         <b-table :items="dataList.items" :fields="dataList.fields" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">

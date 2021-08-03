@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1\api;  //路徑
 use App\Http\Controllers\Controller;
-use App\Models\Stage;
+use App\Models\Furnishing;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,24 +24,24 @@ class FurnishingController extends Controller
             }
             $request->request->remove('isMember');
             
-            $tb = Stage::all();
+            $tb = Furnishing::all();
             if(count($request->all()) > 0){
                 foreach($request->all() as $key => $res){
                     $tb = $tb->where($key,$request[$key]);
                 }
             }
-            if(count($tb) > 0){
-                foreach($tb as $row){
-                    $row->enable_text = Lang::get('status.stage.enable')[$row->enable];
-                    if($row->Area == null){
-                        $row->area_title = '無所屬';
-                    }else{
-                        $row->area_title = $row->Area->title;
-                    }
-                }
-            }else{
-                $result['message'] = ['無對應資料'];
-            }
+            // if(count($tb) > 0){
+            //     foreach($tb as $row){
+            //         $row->enable_text = Lang::get('status.stage.enable')[$row->enable];
+            //         if($row->Area == null){
+            //             $row->area_title = '無所屬';
+            //         }else{
+            //             $row->area_title = $row->Area->title;
+            //         }
+            //     }
+            // }else{
+            //     $result['message'] = ['無對應資料'];
+            // }
 
             $result['status'] = true;
             $result['result'] = $tb->toArray();

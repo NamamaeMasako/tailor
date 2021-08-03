@@ -4,9 +4,9 @@ const state = {
     },
     dataList: {
         fields: [
-            { key: 'job_no', label: '職業編號', sortable: false },
+            { key: 'furnishing_no', label: '家具編號', sortable: false },
             { key: 'title', label: '名稱', sortable: false },
-            { key: 'enable_text', label: '選用狀態', sortable: false },
+            { key: 'type_text', label: '適用類型', sortable: false },
             { key: 'created_at', label: '建立時間', sortable: false },
             { key: 'detailLink', label: '詳細資料', sortable: false },
         ],
@@ -20,7 +20,7 @@ const state = {
         list:{
             getItems: {
                 baseURL: null,
-                url: '/api/game/job',
+                url: '/api/game/furnishing',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
