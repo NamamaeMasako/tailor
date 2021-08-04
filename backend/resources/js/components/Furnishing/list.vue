@@ -19,6 +19,9 @@
                     </div>
                     <div class="card-body">
                         <b-table :items="dataList.items" :fields="dataList.fields" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
+                            <template #cell(type_text)="data">
+                                <span class="badge badge-secondary" v-for="(type_text, index) in data.item.type_text" :key="index">{{type_text}}</span>
+                            </template>
                             <template #cell(detailLink)="data">
                                 <b-button variant="info" class="text-light" :href="data.item.detailLink"><i class="fas fa-file-alt"></i></b-button>
                             </template>

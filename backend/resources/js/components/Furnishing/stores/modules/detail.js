@@ -4,7 +4,7 @@ const state = {
     },
     editMode: false,
     dataList: {
-        jobNo: null,
+        furnishingNo: null,
         formList: {
             title: ''
         }
@@ -15,14 +15,14 @@ const state = {
         list: {
             getData: {
                 baseURL: null,
-                url: '/api/game/job',
+                url: '/api/game/furnishing',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
             },
             submit: {
                 baseURL: null,
-                url: '/api/game/job/edit',
+                url: '/api/game/furnishing/edit',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -79,7 +79,7 @@ const mutations = {
 
 const actions = {
     getData: async (context) => {
-        context.commit('getApiSetting',{which:'getData',params:{'job_no': context.state.dataList.jobNo}})
+        context.commit('getApiSetting',{which:'getData',params:{'furnishing_no': context.state.dataList.furnishingNo}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
@@ -113,7 +113,7 @@ const actions = {
         }
     },
     submit: async (context) => {
-        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.jobNo]})
+        context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.furnishingNo]})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)

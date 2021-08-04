@@ -30,18 +30,23 @@ class FurnishingController extends Controller
                     $tb = $tb->where($key,$request[$key]);
                 }
             }
-            // if(count($tb) > 0){
-            //     foreach($tb as $row){
-            //         $row->enable_text = Lang::get('status.stage.enable')[$row->enable];
-            //         if($row->Area == null){
-            //             $row->area_title = '無所屬';
-            //         }else{
-            //             $row->area_title = $row->Area->title;
-            //         }
-            //     }
-            // }else{
-            //     $result['message'] = ['無對應資料'];
-            // }
+            if(count($tb) > 0){
+                foreach($tb as $row){
+                    $type_text = [];
+                    if($row->type == null){
+                        array_push($type_text,'無');
+                    }else{
+                        $typeArr = explode("|",$row->type);
+                        foreach($typeArr as $t){
+                            $t_text = Lang::get('status.costume.part')[$t];
+                            array_push($type_text,$t_text);
+                        }
+                    }
+                    $row->type_text = $type_text;
+                }
+            }else{
+                $result['message'] = ['無對應資料'];
+            }
 
             $result['status'] = true;
             $result['result'] = $tb->toArray();
