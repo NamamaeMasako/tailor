@@ -44,6 +44,14 @@ return [
             ]
         ]
     ],
+    'furnishing' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required',
+                'space' => 'min:0'
+            ]
+        ]
+    ],
     'job' => [
         'rules' => [
             'store' => [

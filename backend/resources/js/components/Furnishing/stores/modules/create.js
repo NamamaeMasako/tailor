@@ -4,16 +4,27 @@ const state = {
     },
     dataList: {
         formList: {
-            title: ''
+            title: '',
+            type: []
+        },
+        selectList: {
+            type: []
         }
     },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list: {
+            getTypeList: {
+                baseURL: null,
+                url: '/api/game/furnishing/gettypelist',
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
             submit: {
                 baseURL: null,
-                url: '/api/game/job',
+                url: '/api/game/furnishing',
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -28,7 +39,8 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        title: '',
+        space: ''
     }
 }
 
@@ -76,6 +88,32 @@ const actions = {
             window.location = '/login'
         }
     },
+    getTypeList: async (context) => {
+        context.commit('getApiSetting',{which:'getTypeList'})
+        if(context.state.api.active != undefined || context.state.api.active != null){
+            axios(context.state.api.active).then((response) => {
+                console.log(response.data)
+                if(response.data.status != true){
+                    throw response.data
+                }
+                context.state.dataList.selectList.type = response.data.result
+            }).catch((error) => { 
+                context.state.alert.variant = 'danger'
+                context.state.alert.message = error['result']
+                Object.keys(context.state.validateMsg).map((key) => {
+                    if(error['message'][key] != undefined){
+                        context.state.validateMsg[key] = error['message'][key]
+                    }else{
+                        context.state.validateMsg[key] = ''
+                    }
+                })
+                context.commit('showAlert')
+            })
+        }else{
+            context.state.alert.message = '錯誤的API'
+            context.commit('showAlert')
+        }
+    },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit'})
         if(context.state.api.active != undefined || context.state.api.active != null){
@@ -106,6 +144,7 @@ const actions = {
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
+        await context.dispatch('getTypeList')
     }
 }
  

@@ -34,16 +34,16 @@
                         <div class="form-group row">
                             <label class="col-2 col-form-label">適用類型</label>
                             <div class="col-sm-10" v-if="editMode != true">
-                                <input type="text" class='form-control-plaintext' disabled v-model="dataList.formList.type_text">
+                                <span class="badge badge-secondary mr-1" v-for="(type_text, index) in dataList.formList.type_text" :key="index">{{type_text}}</span>
                             </div>
                             <div class="col-10" v-else>
-                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.job" :key="index" v-model="dataList.formList.job_no" name="job_no" class="mr-2 mt-2" :value="option.job_no">{{option.title}}</b-form-checkbox>
+                                <b-form-checkbox button button-variant="outline-primary" v-for="(option, index) in dataList.selectList.type" :key="index" v-model="dataList.formList.type" name="type" class="mr-2 mt-2" :value="index">{{option}}</b-form-checkbox>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">空間數量</label>
+                            <label for="space" class="col-sm-2 col-form-label">空間數量</label>
                             <div class="col-sm-10">
-                                <input type="text" :class="{'is-invalid': validateMsg.space != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.space">
+                                <input type="text" :class="{'is-invalid': validateMsg.space != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="space" v-model="dataList.formList.space">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.space" :key="index">{{msg}}</span>
                                 </div>

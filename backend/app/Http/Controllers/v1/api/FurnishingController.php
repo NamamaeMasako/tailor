@@ -34,14 +34,17 @@ class FurnishingController extends Controller
                 foreach($tb as $row){
                     $type_text = [];
                     if($row->type == null){
+                        $row->type = [];
                         array_push($type_text,'無');
                     }else{
                         $typeArr = explode("|",$row->type);
                         foreach($typeArr as $t){
-                            $t_text = Lang::get('status.costume.part')[$t];
+                            $t_text = Lang::get('status.costume.part')[(int)$t];
                             array_push($type_text,$t_text);
                         }
+                        $row->type = $typeArr;
                     }
+                    $row->all_type = Lang::get('status.costume.part');
                     $row->type_text = $type_text;
                 }
             }else{
@@ -64,12 +67,27 @@ class FurnishingController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.area.rules.store'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.furnishing.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('新增失敗');
             }
-            Stage::create($request->all());
+            $type = null;
+            if(count($request->type) > 0){
+                foreach($request->type as $i => $t){
+                    $type = $type.$t;
+                    if($i < count($request->type)-1){
+                        $type = $type.'|';
+                    }
+                }
+            }
+            
+            $resquest_stage_create = [
+                'title' => $request->title,
+                'type' => $type,
+                'space' => $request->space,
+            ];
+            Furnishing::create($resquest_stage_create);
             $result['status'] = true;
             $result['result'] = '新增成功';
             DB::commit();
@@ -81,7 +99,7 @@ class FurnishingController extends Controller
         return $result;
     }
 
-    public function edit(Request $request,$stage_no) {
+    public function edit(Request $request,$furnishing_no) {
         $result = [
             'status' => false,
             'result' => null,
@@ -89,24 +107,24 @@ class FurnishingController extends Controller
         ];
         DB::beginTransaction();
         try{
-            $validator = Validator::make($request->all(),config('validation.stage.rules.edit'),Lang::get('validation'));
+            $validator = Validator::make($request->all(),config('validation.furnishing.rules.store'),Lang::get('validation'));
             if($validator->fails()){
                 $result['message'] = $validator->errors();
                 throw new Exception('更新失敗');
             }
+            $type = '';
+            foreach($request->type as $i => $t){
+                $type = $type.$t;
+                if($i < count($request->type)-1){
+                    $type = $type.'|';
+                }
+            }
             $resquest_stage_update = [
-                'area_no' => $request->area_no,
                 'title' => $request->title,
-                'order' => $request->order,
-                'enable' => $request->enable,
-                'time' => $request->time,
-                'bug_value' => $request->bug_value,
-                'feather_value' => $request->feather_value,
-                'cannabis_value' => $request->cannabis_value,
-                'gem_value' => $request->gem_value,
-                'coins' => $request->coins
+                'type' => $type,
+                'space' => $request->space,
             ];
-            $tb = Stage::where('stage_no',$stage_no);
+            $tb = Furnishing::where('furnishing_no',$furnishing_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
                 $result['message'] = ['資料異常'];
                 throw new Exception('更新失敗');
@@ -121,6 +139,23 @@ class FurnishingController extends Controller
             DB::rollBack();
         }
 
+        return $result;
+    }
+
+    public function getTypeList(){
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        try{
+            $res = Lang::get('status.costume.part');
+
+            $result['status'] = true;
+            $result['result'] = $res;
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+        }
         return $result;
     }
 }

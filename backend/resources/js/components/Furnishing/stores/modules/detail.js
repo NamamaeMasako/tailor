@@ -6,7 +6,11 @@ const state = {
     dataList: {
         furnishingNo: null,
         formList: {
-            title: ''
+            title: '',
+            type: []
+        },
+        selectList: {
+            type: {}
         }
     },
     api: {
@@ -37,7 +41,8 @@ const state = {
         showDismissibleAlert: false
     },
     validateMsg: {
-        title: ''
+        title: '',
+        space: ''
     }
 }
 
@@ -86,6 +91,8 @@ const actions = {
                 if(response.data.status != true){
                     throw response.data
                 }              
+                context.state.dataList.selectList.type = response.data.result[Object.keys(response.data.result)[0]].all_type
+                delete response.data.result[Object.keys(response.data.result)[0]].all_type
                 context.state.dataList.formList = response.data.result[Object.keys(response.data.result)[0]]
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -114,6 +121,7 @@ const actions = {
     },
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.furnishingNo]})
+        console.log(context.state.api.active)
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)

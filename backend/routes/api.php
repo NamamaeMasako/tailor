@@ -52,6 +52,7 @@ Route::namespace('v1')->group(function () {
                 Route::get('/', 'FurnishingController@index');
                 Route::post('/', 'FurnishingController@store');
                 Route::post('/edit/{furnishing_no}', 'FurnishingController@edit');
+                Route::get('/gettypelist', 'FurnishingController@getTypeList');
             });
             Route::prefix('shopspace')->group(function () {
                 Route::get('/', 'ShopspaceController@index');
