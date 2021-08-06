@@ -85,6 +85,13 @@ return [
             ]
         ]
     ],
+    'shopspace' => [
+        'rules' => [
+            'store' => [
+                'title' => 'required'
+            ]
+        ]
+    ],
     'stage'=> [
         'rules' => [
             'store' => [

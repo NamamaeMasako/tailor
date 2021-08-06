@@ -43,6 +43,9 @@ import FurnishingList from './components/Furnishing/list.vue';
 import FurnishingCreate from './components/Furnishing/create.vue';
 import FurnishingDetail from './components/Furnishing/detail.vue';
 
+import ShopspaceList from './components/Shopspace/list.vue';
+import ShopspaceCreate from './components/Shopspace/create.vue';
+import ShopspaceDetail from './components/Shopspace/detail.vue';
 
 // 使用 Vue Router
 Vue.use(Router);
@@ -83,6 +86,9 @@ export const routes = [
 	{ path: '/game/furnishing/list', component: FurnishingList, name:'furnishing-list'},
 	{ path: '/game/furnishing/create', component: FurnishingCreate, name:'furnishing-create'},
 	{ path: '/game/furnishing/:furnishing_no', component: FurnishingDetail, name:'furnishing-detail'},
+	{ path: '/game/shopspace/list', component: ShopspaceList, name:'shopspace-list'},
+	{ path: '/game/shopspace/create', component: ShopspaceCreate, name:'shopspace-create'},
+	{ path: '/game/shopspace/:shopspace_no', component: ShopspaceDetail, name:'shopspace-detail'},
 
 	{ path: '/system', redirect: '/system/manager' },
 	{ path: '/system/manager', redirect: '/system/manager/list' },
