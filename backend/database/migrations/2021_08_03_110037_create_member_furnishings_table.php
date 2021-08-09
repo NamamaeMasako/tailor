@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMemberShopspacesTable extends Migration
+class CreateMemberFurnishingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMemberShopspacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_shopspaces', function (Blueprint $table) {
+        Schema::create('member_furnishings', function (Blueprint $table) {
             $table->id();
             $table->string('member_no')->comment('會員編號');
-            $table->string('shopspace_no')->comment('店內空間編號');
-            $table->string('furnishing_no')->nullable()->comment('已擺設家具編號');
-            $table->string('costume_no')->nullable()->comment('架上服飾編號');
+            $table->string('furnishing_no')->comment('家具編號');
+            $table->string('shopspace_no')->nullable()->comment('店內位置編號');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateMemberShopspacesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_shopspaces');
+        Schema::dropIfExists('member_furnishings');
     }
 }

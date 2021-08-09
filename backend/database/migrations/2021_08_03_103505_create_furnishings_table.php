@@ -19,6 +19,7 @@ class CreateFurnishingsTable extends Migration
             $table->string('title')->comment('名稱');
             $table->string('type')->nullable()->comment('適用類型');
             $table->integer('space')->comment('空間數量');
+            $table->integer('enable')->comment('開放狀態');
             $table->timestamps();
         });
     }

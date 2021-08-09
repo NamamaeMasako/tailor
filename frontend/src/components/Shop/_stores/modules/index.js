@@ -5,17 +5,24 @@ const state = {
     dataList: {
         formList: []
     },
+    fieldList:{
+        furnishing: [
+            { key: 'title', label: '名稱', sortable: false },
+            { key: 'type_text', label: '適用類型', sortable: false },
+            { key: 'space', label: '空間數量', sortable: false },
+            { key: 'buyBtn', label: '', sortable: false },
+        ],
+    },
     selectList:{
-        characterList:[],
-        ownedCharacterList:[]
+        furnishingList:[]
     },
     api: {
         active: null,
         host: localStorage.getItem('HOST'),
         list:{
-            getCharacterList: {
+            getFurnishingList: {
                 baseURL: localStorage.getItem('HOST'),
-                url: '/api/game/character',
+                url: '/api/game/furnishing',
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
@@ -26,7 +33,14 @@ const state = {
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 5000,
-            }
+            },
+            updateMemberFurnishing: {
+                baseURL: localStorage.getItem('HOST'),
+                url: '/api/data/member/updatefurnishing',
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 5000,
+            },
         }
     },
     alert: {
@@ -78,21 +92,18 @@ const mutations = {
 }
 
 const actions = {
-    getCharacterList: async (context) => {
+    getFurnishingList: async (context) => {
         let params = {
-            'enable': 2,
-            'shelf': 1
+            'enable': 1
         }
-        context.commit('getApiSetting',{which:'getCharacterList',params: params})
+        context.commit('getApiSetting',{which:'getFurnishingList',params: params})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then(response => {
                 console.log(response.data)
                 if(response.data.status != true){
                     throw response.data 
                 }
-                context.state.selectList.characterList = response.data.result
-                console.log(context.state.selectList.characterList)
-
+                context.state.selectList.furnishingList = response.data.result
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -132,6 +143,11 @@ const actions = {
                         context.state.selectList.ownedCharacterList.push(el.character_no)
                     })
                 }
+                if(response.data.result[0].member_shopspace.length > 0){
+                    response.data.result[0].member_shopspace.forEach((el) => {
+                        context.state.selectList.ownedShopspaceList.push(el)
+                    })
+                }
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
                 context.state.alert.message = error['result']
@@ -144,14 +160,45 @@ const actions = {
                 })
                 context.commit('showAlert')
             })
-        }else{
-            return []
         }
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')
-        await context.dispatch('getCharacterList')
+        await context.dispatch('getFurnishingList')
         await context.dispatch('getMemberData')
+    },
+    updateMemberFurnishing: async (context, payload) => {
+        console.log(payload)
+        // context.commit('getApiSetting',{which:'updateMemberFurnishing',params: params})
+        // if(context.state.api.active != undefined || context.state.api.active != null){
+        //     axios(context.state.api.active).then(response => {
+        //         console.log(response.data)
+        //         if(response.data.status != true){
+        //             throw response.data 
+        //         }
+        //         if(response.data.result[0].member_character.length > 0){
+        //             response.data.result[0].member_character.forEach((el) => {
+        //                 context.state.selectList.ownedCharacterList.push(el.character_no)
+        //             })
+        //         }
+        //         if(response.data.result[0].member_shopspace.length > 0){
+        //             response.data.result[0].member_shopspace.forEach((el) => {
+        //                 context.state.selectList.ownedShopspaceList.push(el)
+        //             })
+        //         }
+        //     }).catch((error) => { 
+        //         context.state.alert.variant = 'danger'
+        //         context.state.alert.message = error['result']
+        //         Object.keys(context.state.validateMsg).map((key) => {
+        //             if(error['message'][key] != undefined){
+        //                 context.state.validateMsg[key] = error['message'][key]
+        //             }else{
+        //                 context.state.validateMsg[key] = ''
+        //             }
+        //         })
+        //         context.commit('showAlert')
+        //     })
+        // }
     }
 }
  

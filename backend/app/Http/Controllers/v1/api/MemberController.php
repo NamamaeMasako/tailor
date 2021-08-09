@@ -8,6 +8,7 @@ use App\Models\Costume;
 use App\Models\Member;
 use App\Models\MemberCharacter;
 use App\Models\MemberCostume;
+use App\Models\MemberShopspace;
 use App\Models\Stage;
 use Carbon\Carbon;
 use DB;
@@ -93,6 +94,7 @@ class MemberController extends Controller
                     if($row->costume_no != null){
                         $row->work = Costume::where('costume_no', $row->costume_no);
                     }
+                    $row->MemberShopspace;
                 }
             }else{
                 $result['message'] = ['無對應資料'];
@@ -369,6 +371,29 @@ class MemberController extends Controller
         }
 
         return $result;
+    }
+
+    public function updatefurnishing(Request $request,$member_no) {
+        $result = [
+            'status' => false,
+            'result' => null,
+            'message' => []
+        ];
+        DB::beginTransaction();
+        try{
+            $validator = Validator::make($request->all(),config('validation.member.rules.updatefurnishing'),Lang::get('validation'));
+            if($validator->fails()){
+                $result['message'] = $validator->errors();
+                throw new Exception('更新失敗');
+            }
+
+            $result['status'] = true;
+            $result['message'] = ['更新成功'];
+            DB::commit();
+        }catch(Exception $e){
+            $result['result'] = $e->getMessage();
+            DB::rollBack();
+        }
     }
 
 }

@@ -79,6 +79,10 @@ return [
             'updatestage' => [
                 'character_no' => 'required'
             ],
+            'updatefurnishing' => [
+                'member_no' => 'required',
+                'furnishing' => 'required'
+            ],
             'addcostume' => [
                 'costume_no' => 'required',
                 'amount' => 'required|integer|max:0'

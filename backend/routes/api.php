@@ -67,6 +67,7 @@ Route::namespace('v1')->group(function () {
                 Route::post('/edit/{member_no}', 'MemberController@edit');
                 Route::post('/dowork/{member_no}', 'MemberController@dowork');
                 Route::post('/updatestage/{member_no}', 'MemberController@updatestage');
+                Route::post('/updatefurnishing/{member_no}', 'MemberController@updatefurnishing');
             });
             Route::prefix('constant')->group(function () {
                 Route::get('/', 'ConstantController@index');

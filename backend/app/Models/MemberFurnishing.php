@@ -6,13 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
-class Furnishing extends Model
+class MemberFurnishing extends Model
 {
-    use HasFactory;
-
-    protected $table = 'furnishings';
-    protected $primaryKey = 'furnishing_no';
-    protected $keyType = 'string';
+    protected $table = 'member_furnishings';
     protected $fillabled = ['*'];
     protected $guarded = ['id'];
     public $timestamps = true;
@@ -22,16 +18,19 @@ class Furnishing extends Model
         parent::boot();
         static::creating(function($model)
         {
-            $model->furnishing_no = 'FU_'.Carbon::now()->timestamp;
-            $model->enable = 0;
+            $model->count = 0;
         });
         static::updating(function($model)
         {
 
         });
     }
-    public function MemberFurnishing()
+    public function Member()
     {
-        return $this->hasMany('App\models\MemberFurnishing','furnishing_no');
+        return $this->belongsTo('App\models\Member','member_no');
+    }
+    public function Furnishing()
+    {
+        return $this->belongsTo('App\models\Furnishing','furnishing_no');
     }
 }

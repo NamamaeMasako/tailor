@@ -26,7 +26,8 @@ class FurnishingFactory extends Factory
     {
         return [
             'title' => $this->faker->word(),
-            'space' => 0
+            'space' => 0,
+            'enable' => 0
         ];
     }
 

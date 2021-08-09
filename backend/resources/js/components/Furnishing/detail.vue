@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">名稱</label>
-                            <div class="col-sm-10">
+                            <div class="col-10">
                                 <input type="text" :class="{'is-invalid': validateMsg.title != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="title" v-model="dataList.formList.title">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.title" :key="index">{{msg}}</span>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-2 col-form-label">適用類型</label>
-                            <div class="col-sm-10" v-if="editMode != true">
+                            <div class="col-10" v-if="editMode != true">
                                 <span class="badge badge-secondary mr-1" v-for="(type_text, index) in dataList.formList.type_text" :key="index">{{type_text}}</span>
                             </div>
                             <div class="col-10" v-else>
@@ -42,10 +42,25 @@
                         </div>
                         <div class="form-group row">
                             <label for="space" class="col-sm-2 col-form-label">空間數量</label>
-                            <div class="col-sm-10">
+                            <div class="col-10">
                                 <input type="text" :class="{'is-invalid': validateMsg.space != '','form-control': editMode == true, 'form-control-plaintext': editMode != true}" :disabled="editMode != true" id="space" v-model="dataList.formList.space">
                                 <div class="invalid-feedback">
                                     <span v-for="(msg,index) in validateMsg.space" :key="index">{{msg}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="enable" class="col-sm-2 col-form-label">開放狀態</label>
+                            <div class="col-10" v-if="editMode != true">
+                                <input type="text" class="form-control-plaintext" disabled id="enable" v-model="dataList.formList.enable_text">
+                            </div>
+                            <div class="col-10" v-else>
+                                <div class="d-flex py-1" :class="{'is-invalid': validateMsg.enable != ''}">
+                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="0">未開放</b-form-radio>
+                                    <b-form-radio v-model="dataList.formList.enable" name="enable" class="mr-4" value="1">開放</b-form-radio>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-for="(msg,index) in validateMsg.enable" :key="index">{{msg}}</span>
                                 </div>
                             </div>
                         </div>

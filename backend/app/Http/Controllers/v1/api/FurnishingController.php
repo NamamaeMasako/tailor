@@ -32,6 +32,7 @@ class FurnishingController extends Controller
             }
             if(count($tb) > 0){
                 foreach($tb as $row){
+                    $row->enable_text = Lang::get('status.furnishing.enable')[$row->enable];
                     $type_text = [];
                     if($row->type == null){
                         $row->type = [];
@@ -86,6 +87,7 @@ class FurnishingController extends Controller
                 'title' => $request->title,
                 'type' => $type,
                 'space' => $request->space,
+                'enable' => $request->enable,
             ];
             Furnishing::create($resquest_stage_create);
             $result['status'] = true;
@@ -123,6 +125,7 @@ class FurnishingController extends Controller
                 'title' => $request->title,
                 'type' => $type,
                 'space' => $request->space,
+                'enable' => $request->enable,
             ];
             $tb = Furnishing::where('furnishing_no',$furnishing_no);
             if(count($tb->get()) > 1 || count($tb->get()) <= 0){
