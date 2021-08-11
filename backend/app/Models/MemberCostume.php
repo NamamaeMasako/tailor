@@ -33,4 +33,8 @@ class MemberCostume extends Model
     {
         return $this->belongsTo('App\models\Costume','costume_no');
     }
+    public function MemberShopspace()
+    {
+        return $this->hasMany('App\models\MemberShopspace','id');
+    }
 }

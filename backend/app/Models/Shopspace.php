@@ -29,4 +29,8 @@ class Shopspace extends Model
 
         });
     }
+    public function MemberShopspace()
+    {
+        return $this->hasMany('App\models\MemberShopspace','shopspace_no');
+    }
 }

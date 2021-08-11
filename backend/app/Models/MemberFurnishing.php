@@ -18,7 +18,7 @@ class MemberFurnishing extends Model
         parent::boot();
         static::creating(function($model)
         {
-            $model->count = 0;
+
         });
         static::updating(function($model)
         {
@@ -32,5 +32,9 @@ class MemberFurnishing extends Model
     public function Furnishing()
     {
         return $this->belongsTo('App\models\Furnishing','furnishing_no');
+    }
+    public function MemberShopspace()
+    {
+        return $this->hasMany('App\models\MemberShopspace','id');
     }
 }

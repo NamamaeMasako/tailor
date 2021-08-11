@@ -72,4 +72,8 @@ class Member extends Model
     {
         return $this->hasMany('App\models\MemberFurnishing','member_no');
     }
+    public function MemberShopspace()
+    {
+        return $this->hasMany('App\models\MemberShopspace','member_no');
+    }
 }

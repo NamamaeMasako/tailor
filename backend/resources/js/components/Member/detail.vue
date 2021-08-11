@@ -126,7 +126,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2">
-                                <b-button variant="info" class="text-light" v-b-modal.warehouse>查看倉庫</b-button>
+                                <b-button variant="info" class="btn-block text-light" v-b-modal.warehouse>查看倉庫</b-button>
                                 <b-modal id="warehouse" title="倉庫" v-model="modalStatus.warehouse">
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">新增</label>
@@ -178,8 +178,52 @@
                                     </template>
                                 </b-modal>
                             </div>
+                            <div class="col-2">
+                                <b-button variant="info" class="btn-block text-light" v-b-modal.furnishing>可用家具</b-button>
+                                <b-modal id="furnishing" title="可用家具" v-model="modalStatus.furnishing">
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">新增</label>
+                                        <div class="col-8">
+                                            <div class="d-flex" :class="{'is-invalid': validateMsg.furnishing.furnishing != ''}">
+                                                <b-select :options="selectList.furnishingList" v-model="dataList.addMemberFurnishing.furnishing"></b-select>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <span v-for="(msg,index) in validateMsg.furnishing.furnishing" :key="index">{{msg}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <b-button variant="success" class="btn-block" v-on:click="addMemberFurnishing"><i class="fas fa-plus"></i></b-button>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" v-if="dataList.formList.member_furnishing.length > 0">
+                                        <li class="list-group-item" v-for="(furnishing, index) in dataList.formList.member_furnishing" :key="index">
+                                            <div class="row">
+                                                <label class="col-10 col-form-label">{{furnishing.title}}</label>
+                                                <div class="col-2">
+                                                    <b-button variant="danger" class="btn-block" v-on:click="removeMemberFurnishing(index)"><i class="fas fa-minus"></i></b-button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-group" v-else>
+                                        <li class="list-group-item">無可用家具</li>
+                                    </ul>
+                                    <template v-slot:modal-footer>
+                                        <div class="col-12">
+                                            <div class="row justify-content-center">
+                                                <div class="col-3">
+                                                    <b-button variant="secondary" class="btn-block" v-on:click="closeFurnishing">取消</b-button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <b-button variant="success" class="btn-block" v-on:click="updateMemberFurnishing">確認</b-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </b-modal>
+                            </div>
                         </div>
-                        <div class="row">
+                        <div class="form-group row">
                             <div class="col-12 accordion">
                                 <div class="card">
                                     <div class="card-header bg-info btn text-light text-left" data-toggle="collapse" data-target="#characters">
@@ -218,6 +262,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12 accordion">
+                                <div class="card">
+                                    <div class="card-header bg-info btn text-light text-left" data-toggle="collapse" data-target="#shopspace">
+                                        店內擺設
+                                        <span class="close text-light"><i class="fa fa-angle-down"></i></span>
+                                    </div>
+                                    <div class="collapse" id="shopspace">
+                                        <div class="card-body">
+                                            <b-table :items="dataList.formList.member_shopspace" :fields="fieldList.member_shopspace" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
+                                                <template #cell(furnishing_no)="data">
+                                                    <b-form-select v-model="data.item.furnishing_no" :options="selectList.memberfurnishingList" v-on:change="setFurnishingCostumeInput()"></b-form-select>
+                                                </template>
+                                            </b-table>
+                                        </div>
+                                        <div class="card-footer">
+                                            <b-button variant="success">更新</b-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center" v-if="editMode == true">
                         <b-button variant="success" v-on:click="submit">送出</b-button>
@@ -249,16 +315,21 @@
         methods: {
             ...mapMutations('detailData',[
                 'addMemberCostume',
+                'addMemberFurnishing',
                 'countDownChanged',
-                'removeMemberCostume'
+                'removeMemberCostume',
+                'removeMemberFurnishing',
+                'setFurnishingCostumeInput'
             ]),
             ...mapActions('detailData',[
                 'closeAddCharacter',
+                'closeFurnishing',
                 'closeWarehouse',
                 'initPage',
                 'submit',
                 'updateCharacter',
-                'updateMemberCostume'
+                'updateMemberCostume',
+                'updateMemberFurnishing'
             ])   
         }
     }

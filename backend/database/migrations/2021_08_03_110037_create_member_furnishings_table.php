@@ -17,7 +17,6 @@ class CreateMemberFurnishingsTable extends Migration
             $table->id();
             $table->string('member_no')->comment('會員編號');
             $table->string('furnishing_no')->comment('家具編號');
-            $table->string('shopspace_no')->nullable()->comment('店內位置編號');
             $table->timestamps();
         });
     }

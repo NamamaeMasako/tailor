@@ -5,10 +5,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Character;
 use App\Models\Constant;
 use App\Models\Costume;
+use App\Models\Furnishing;
 use App\Models\Member;
 use App\Models\MemberCharacter;
 use App\Models\MemberCostume;
-use App\Models\MemberShopspace;
+use App\Models\MemberFurnishing;
 use App\Models\Stage;
 use Carbon\Carbon;
 use DB;
@@ -93,6 +94,12 @@ class MemberController extends Controller
                     $row->work = null;
                     if($row->costume_no != null){
                         $row->work = Costume::where('costume_no', $row->costume_no);
+                    }
+                    if(count($row->MemberFurnishing) > 0){
+                        foreach($row->MemberFurnishing as $MemberFurnishing){
+                            $tb_furnishing = Furnishing::where('furnishing_no',$MemberFurnishing->furnishing_no);
+                            $MemberFurnishing->title = $tb_furnishing->first()->title;
+                        }
                     }
                     $row->MemberShopspace;
                 }
@@ -187,6 +194,16 @@ class MemberController extends Controller
                     array_push($resquestArr_member_costume_update,$res);
                 }
             }
+            $resquestArr_member_furnishing_update = [];
+            if(is_array($request->member_furnishing) && count($request->member_furnishing) > 0){
+                foreach($request->member_furnishing as $member_furnishing){
+                    $res = [
+                        'member_no' => $member_no,
+                        'furnishing_no' => $member_furnishing['furnishing_no'],
+                    ];
+                    array_push($resquestArr_member_furnishing_update,$res);
+                }
+            }
 
             if($request->update_character){
                 MemberCharacter::where('member_no',$member_no)->delete();
@@ -200,6 +217,13 @@ class MemberController extends Controller
                 if(count($resquestArr_member_costume_update) > 0){
                     foreach($resquestArr_member_costume_update as $res){
                         MemberCostume::create($res);
+                    }
+                }
+            }else if($request->update_memberfurnishing){
+                MemberFurnishing::where('member_no',$member_no)->delete();
+                if(count($resquestArr_member_furnishing_update) > 0){
+                    foreach($resquestArr_member_furnishing_update as $res){
+                        MemberFurnishing::create($res);
                     }
                 }
             }else{
