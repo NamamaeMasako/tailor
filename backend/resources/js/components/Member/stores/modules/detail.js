@@ -25,7 +25,7 @@ const state = {
         member_shopspace: [
             { key: 'title', label: '空間名稱', sortable: false },
             { key: 'furnishing_no', label: '擺設家具', sortable: false },
-            { key: 'costumeList', label: '架上服裝', sortable: false }
+            { key: 'costume_no', label: '架上服裝', sortable: false }
         ],
     },
     selectList:{
@@ -188,8 +188,16 @@ const mutations = {
     removeMemberFurnishing: (context, payload) => {
         state.dataList.formList.member_furnishing.splice(payload,1)
     },
-    setFurnishingCostumeInput: (state) => {
-        console.log(state.dataList.formList.member_shopspace)
+    setFurnishingCostumeInput: (state, payload) => {
+        state.dataList.formList.member_shopspace[payload].costume_no = []
+        let furnishing_no = state.dataList.formList.member_shopspace[payload].furnishing_no
+        state.selectList.furnishingList.forEach((el) => {
+            if(el.value.furnishing_no == furnishing_no){
+                for(let i = 0;i < el.value.space;i++){
+                    state.dataList.formList.member_shopspace[payload].costume_no[i] = ''
+                }
+            }
+        })
     },
     showAlert: (state) => {
         state.alert.dismissCountDown = state.alert.dismissSecs
@@ -310,8 +318,8 @@ const actions = {
                 context.state.selectList.shopspaceList.forEach((el) => {
                     let chk = false
                     if(context.state.dataList.formList.member_shopspace.length > 0){
-                        context.state.dataList.formList.member_shopspace.forEach((el_mf) => {
-                            if(el_mf.shopspace_no == el.shopspace_no){
+                        context.state.dataList.formList.member_shopspace.forEach((el_mss,i) => {
+                            if(el_mss.shopspace_no == el.shopspace_no){
                                 chk = true
                             }
                         })
@@ -322,7 +330,7 @@ const actions = {
                             title: el.title,
                             shopspace_no: el.shopspace_no,
                             furnishing_no: null,
-                            membercostume_id: null
+                            costume_no: []
                         }
                         resetMemberShopspaceArr.push(reset)
                     }
@@ -367,7 +375,7 @@ const actions = {
             text: '請選擇',
             value: ''
         }]
-        context.commit('getApiSetting',{which:'getFurnishingList'})
+        context.commit('getApiSetting',{which:'getFurnishingList',params:{'enable': 1}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log('FurnishingList',response.data)
@@ -377,10 +385,7 @@ const actions = {
                 Object.keys(response.data.result).map((key) => {
                     let option = {
                         text: response.data.result[key].title,
-                        value: {
-                            title: response.data.result[key].title,
-                            furnishing_no: response.data.result[key].furnishing_no
-                        }
+                        value: response.data.result[key]
                     }
                     context.state.selectList.furnishingList.push(option)
                 })
@@ -439,6 +444,7 @@ const actions = {
     submit: async (context) => {
         context.commit('getApiSetting',{which:'submit',paraArr:[context.state.dataList.memberNo]})
         if(context.state.api.active != undefined || context.state.api.active != null){
+            console.log(context.state.api.active)
             axios(context.state.api.active).then((response) => {
                 console.log(response.data)
                 if(response.data.status != true){
@@ -491,6 +497,10 @@ const actions = {
         context.state.dataList.formList.update_memberfurnishing = true
         await context.dispatch('submit')
     },
+    updateShopspace: async (context) => {
+        context.state.dataList.formList.update_membershopspace = true
+        await context.dispatch('submit')
+    }
 }
  
 const module = {

@@ -271,14 +271,23 @@
                                     </div>
                                     <div class="collapse" id="shopspace">
                                         <div class="card-body">
-                                            <b-table :items="dataList.formList.member_shopspace" :fields="fieldList.member_shopspace" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
+                                            <b-table fixed :items="dataList.formList.member_shopspace" :fields="fieldList.member_shopspace" :per-page="dataList.perPage" :current-page="dataList.currentPage" show-empty empty-text="抱歉，這裡沒有資料!">
                                                 <template #cell(furnishing_no)="data">
-                                                    <b-form-select v-model="data.item.furnishing_no" :options="selectList.memberfurnishingList" v-on:change="setFurnishingCostumeInput()"></b-form-select>
+                                                    <b-form-select v-model="data.item.furnishing_no" :options="selectList.memberfurnishingList" v-on:change="setFurnishingCostumeInput(data.index)"></b-form-select>
+                                                </template>
+                                                <template #cell(costume_no)="data">
+                                                    <div class="col-12">
+                                                        <div class="row">
+                                                            <div class="w-50 p-1" v-for="(costume,index) in data.item.costume_no" :key="index">
+                                                                <b-form-select v-model="data.item.costume_no[index]" :options="selectList.costumeList"></b-form-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </template>
                                             </b-table>
                                         </div>
                                         <div class="card-footer">
-                                            <b-button variant="success">更新</b-button>
+                                            <b-button variant="success" v-on:click="updateShopspace">更新</b-button>
                                         </div>
                                     </div>
                                 </div>
@@ -329,7 +338,8 @@
                 'submit',
                 'updateCharacter',
                 'updateMemberCostume',
-                'updateMemberFurnishing'
+                'updateMemberFurnishing',
+                'updateShopspace'
             ])   
         }
     }

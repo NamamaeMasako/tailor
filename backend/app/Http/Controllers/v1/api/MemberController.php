@@ -10,6 +10,8 @@ use App\Models\Member;
 use App\Models\MemberCharacter;
 use App\Models\MemberCostume;
 use App\Models\MemberFurnishing;
+use App\Models\MemberShopspace;
+use App\Models\Shopspace;
 use App\Models\Stage;
 use Carbon\Carbon;
 use DB;
@@ -99,9 +101,40 @@ class MemberController extends Controller
                         foreach($row->MemberFurnishing as $MemberFurnishing){
                             $tb_furnishing = Furnishing::where('furnishing_no',$MemberFurnishing->furnishing_no);
                             $MemberFurnishing->title = $tb_furnishing->first()->title;
+                            $MemberFurnishing->type = $tb_furnishing->first()->type;
+                            $MemberFurnishing->space = $tb_furnishing->first()->space;
                         }
                     }
-                    $row->MemberShopspace;
+                    if(count($row->MemberShopspace) > 0){
+                        foreach($row->MemberShopspace as $MemberShopspace){
+                            $tb_shopspace = Shopspace::where('shopspace_no',$MemberShopspace->shopspace_no);
+                            $MemberShopspace->title = $tb_shopspace->first()->title;
+                            if($MemberShopspace->memberfurnishing_id != null){
+                                $furnishing_no = MemberFurnishing::find($MemberShopspace->memberfurnishing_id)->furnishing_no;
+                                $tb_furnishing = Furnishing::where('furnishing_no',$furnishing_no);
+                                $MemberShopspace->furnishing_no = $tb_furnishing->first()->furnishing_no;
+                            }else{
+                                $MemberShopspace->furnishing_no = null;
+                            }
+                            $costume_no_arr = [];
+                            if($MemberShopspace->membercostume_id != null && $MemberShopspace->membercostume_id != ''){
+                                $mc_id_arr = explode('|',$MemberShopspace->membercostume_id);
+                                foreach($mc_id_arr as $mc_id){
+                                    $tb_membercostume = MemberCostume::find($mc_id);
+                                    if($tb_membercostume != null){
+                                        $obj = [
+                                            'title' => $tb_membercostume->Costume->title,
+                                            'costume_no' => $tb_membercostume->costume_no
+                                        ];
+                                        array_push($costume_no_arr,$obj);
+                                    }else{
+                                        array_push($costume_no_arr,'');
+                                    }
+                                }
+                            }
+                            $MemberShopspace->costume_no = $costume_no_arr;
+                        }
+                    }
                 }
             }else{
                 $result['message'] = ['無對應資料'];
@@ -204,6 +237,36 @@ class MemberController extends Controller
                     array_push($resquestArr_member_furnishing_update,$res);
                 }
             }
+            $resquestArr_member_shopspace_update = [];
+            if(is_array($request->member_shopspace) && count($request->member_shopspace) > 0){
+                foreach($request->member_shopspace as $member_shopspace){
+                    $res = [
+                        'member_no' => $member_no,
+                        'shopspace_no' => $member_shopspace['shopspace_no'],
+                        'memberfurnishing_id' => null,
+                        'membercostume_id' => null
+                    ];
+                    $tb_memberfurnishing = MemberFurnishing::where('member_no',$member_no)->where('furnishing_no',$member_shopspace['furnishing_no'])->first();
+                    if(!is_null($tb_memberfurnishing)){
+                        $res['memberfurnishing_id'] = $tb_memberfurnishing->id;
+                    }
+                    $membercostume_id = '';
+                    foreach($member_shopspace['costume_no'] as $i => $costume_no){
+                        if($costume_no != ''){
+                            $tb_membercostume = MemberCostume::where('member_no',$member_no)->where('costume_no',$costume_no['costume_no'])->first();
+                            if(!is_null($tb_membercostume)){
+                                $membercostume_id = $membercostume_id.$tb_membercostume->id;
+                            }
+                        }
+                        if($i+1 < count($member_shopspace['costume_no'])){
+                            $membercostume_id = $membercostume_id."|";
+                        }
+                    }
+                    $res['membercostume_id'] = $membercostume_id;
+                    
+                    array_push($resquestArr_member_shopspace_update,$res);
+                }
+            }
 
             if($request->update_character){
                 MemberCharacter::where('member_no',$member_no)->delete();
@@ -224,6 +287,13 @@ class MemberController extends Controller
                 if(count($resquestArr_member_furnishing_update) > 0){
                     foreach($resquestArr_member_furnishing_update as $res){
                         MemberFurnishing::create($res);
+                    }
+                }
+            }else if($request->update_membershopspace){
+                MemberShopspace::where('member_no',$member_no)->delete();
+                if(count($resquestArr_member_shopspace_update) > 0){
+                    foreach($resquestArr_member_shopspace_update as $res){
+                        MemberShopspace::create($res);
                     }
                 }
             }else{
