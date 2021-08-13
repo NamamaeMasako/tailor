@@ -44,6 +44,7 @@ class MemberController extends Controller
             if(count($tb) > 0){
                 foreach($tb as $row){
                     $row->updateStamina();
+                    $row->updateCoinsAndAmount();
                     $work = $row->costume_no;
                     $work_time = $row->work_finished_at;
                     if($row->work_finished_at != null){
@@ -118,7 +119,6 @@ class MemberController extends Controller
                                         $costume_no_arr[$i] = '';
                                     }
                                 }
-                                $now = Carbon::now();
                             }
                             $MemberShopspace->costume_no = $costume_no_arr;
                         }
