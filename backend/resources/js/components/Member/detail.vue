@@ -132,7 +132,7 @@
                                         <label class="col-2 col-form-label">新增</label>
                                         <div class="col-5">
                                             <div class="d-flex" :class="{'is-invalid': validateMsg.warehouse.costume != ''}">
-                                                <b-select :options="selectList.costumeList" v-model="dataList.addMemberCostume.costume"></b-select>
+                                                <b-select :options="selectList.allcostumeList" v-model="dataList.addMemberCostume.costume"></b-select>
                                             </div>
                                             <div class="invalid-feedback">
                                                 <span v-for="(msg,index) in validateMsg.warehouse.costume_no" :key="index">{{msg}}</span>
@@ -279,7 +279,7 @@
                                                     <div class="col-12">
                                                         <div class="row">
                                                             <div class="w-50 p-1" v-for="(costume,index) in data.item.costume_no" :key="index">
-                                                                <b-form-select v-model="data.item.costume_no[index]" :options="selectList.costumeList"></b-form-select>
+                                                                <b-form-select v-model="data.item.costume_no[index]" :options="selectList.membercostumeList"></b-form-select>
                                                             </div>
                                                         </div>
                                                     </div>

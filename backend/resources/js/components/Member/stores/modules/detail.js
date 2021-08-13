@@ -30,9 +30,12 @@ const state = {
     },
     selectList:{
         characterList: [],
-        costumeList: [],
+        allcostumeList: [],
         shopspaceList: [],
         furnishingList: [],
+        membercostumeList: [
+            {text: '請選擇',value: ''}
+        ],
         memberfurnishingList: [
             {text: '空',value: null}
         ]
@@ -86,7 +89,7 @@ const state = {
         }
     },
     alert: {
-        variant: 'danger',
+        variant: 'success',
         message: '',
         dismissSecs: 5,
         dismissCountDown: 0,
@@ -257,7 +260,7 @@ const actions = {
         }
     },
     getCostumeList: async (context) => {
-        context.state.selectList.costumeList = [{
+        context.state.selectList.allcostumeList = [{
             text: '請選擇',
             value: ''
         }]
@@ -276,7 +279,7 @@ const actions = {
                             costume_no: response.data.result[key].costume_no
                         }
                     }
-                    context.state.selectList.costumeList.push(option)
+                    context.state.selectList.allcostumeList.push(option)
                 })
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
@@ -313,6 +316,7 @@ const actions = {
                     }
                     resetArr.push(reset)
                 })
+                context.state.dataList.formList.member_character = resetArr
 
                 let resetMemberShopspaceArr = JSON.parse(JSON.stringify(context.state.dataList.formList.member_shopspace))
                 context.state.selectList.shopspaceList.forEach((el) => {
@@ -349,11 +353,24 @@ const actions = {
                         context.state.selectList.memberfurnishingList.push(reset)
                     })
                 }
-                context.state.dataList.formList.member_character = resetArr
+                context.state.selectList.membercostumeList = [
+                    {text: '請選擇',value: ''}
+                ]
+                if(context.state.dataList.formList.member_costume.length > 0){
+                    context.state.dataList.formList.member_costume.forEach((el)=>{
+                        let reset = {
+                            text: el.title,
+                            value: el.costume_no
+                        }
+                        context.state.selectList.membercostumeList.push(reset)
+                    })
+                }
+
                 context.state.dataList.copy_formList = JSON.parse(JSON.stringify(context.state.dataList.formList))
                 context.state.dataList.formList.update_character = false
             }).catch((error) => { 
                 context.state.alert.variant = 'danger'
+                console.log(error)
                 context.state.alert.message = error['result']
                 Object.keys(context.state.validateMsg).map((key) => {
                     if(error['message'][key] != undefined){
@@ -453,6 +470,10 @@ const actions = {
                 context.state.alert.variant = 'success'
                 context.state.alert.message = response.data['result']
                 context.commit('showAlert')
+                context.state.dataList.formList.update_character = false
+                context.state.dataList.formList.update_membercostume = false
+                context.state.dataList.formList.update_memberfurnishing = false
+                context.state.dataList.formList.update_membershopspace = false
                 setTimeout(() => {
                     window.location.reload()
                 },5000)
@@ -466,15 +487,20 @@ const actions = {
                     }
                 })
                 context.commit('showAlert')
+                context.state.dataList.formList.update_character = false
+                context.state.dataList.formList.update_membercostume = false
+                context.state.dataList.formList.update_memberfurnishing = false
+                context.state.dataList.formList.update_membershopspace = false
             })
         }else{
             context.state.alert.variant = 'danger'
             context.state.alert.message = '錯誤的API'
             context.commit('showAlert')
+            context.state.dataList.formList.update_character = false
+            context.state.dataList.formList.update_membercostume = false
+            context.state.dataList.formList.update_memberfurnishing = false
+            context.state.dataList.formList.update_membershopspace = false
         }
-        context.state.dataList.formList.update_character = false
-        context.state.dataList.formList.update_membercostume = false
-        context.state.dataList.formList.update_memberfurnishing = false
     },
     initPage: async (context) => {
         await context.dispatch('getLoginData')

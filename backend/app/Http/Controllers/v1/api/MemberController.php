@@ -109,28 +109,16 @@ class MemberController extends Controller
                         foreach($row->MemberShopspace as $MemberShopspace){
                             $tb_shopspace = Shopspace::where('shopspace_no',$MemberShopspace->shopspace_no);
                             $MemberShopspace->title = $tb_shopspace->first()->title;
-                            if($MemberShopspace->memberfurnishing_id != null){
-                                $furnishing_no = MemberFurnishing::find($MemberShopspace->memberfurnishing_id)->furnishing_no;
-                                $tb_furnishing = Furnishing::where('furnishing_no',$furnishing_no);
-                                $MemberShopspace->furnishing_no = $tb_furnishing->first()->furnishing_no;
-                            }else{
-                                $MemberShopspace->furnishing_no = null;
-                            }
                             $costume_no_arr = [];
-                            if($MemberShopspace->membercostume_id != null && $MemberShopspace->membercostume_id != ''){
-                                $mc_id_arr = explode('|',$MemberShopspace->membercostume_id);
-                                foreach($mc_id_arr as $mc_id){
-                                    $tb_membercostume = MemberCostume::find($mc_id);
-                                    if($tb_membercostume != null){
-                                        $obj = [
-                                            'title' => $tb_membercostume->Costume->title,
-                                            'costume_no' => $tb_membercostume->costume_no
-                                        ];
-                                        array_push($costume_no_arr,$obj);
-                                    }else{
-                                        array_push($costume_no_arr,'');
+                            if($MemberShopspace->costume_no != null && $MemberShopspace->costume_no != ''){
+                                $costume_no_arr = explode('|',$MemberShopspace->costume_no);
+                                foreach($costume_no_arr as $i => $c_no){
+                                    $tb_costume = Costume::where('costume_no',$c_no)->first();
+                                    if($tb_costume == null){
+                                        $costume_no_arr[$i] = '';
                                     }
                                 }
+                                $now = Carbon::now();
                             }
                             $MemberShopspace->costume_no = $costume_no_arr;
                         }
@@ -243,26 +231,29 @@ class MemberController extends Controller
                     $res = [
                         'member_no' => $member_no,
                         'shopspace_no' => $member_shopspace['shopspace_no'],
-                        'memberfurnishing_id' => null,
-                        'membercostume_id' => null
+                        'furnishing_no' => null,
+                        'costume_no' => null,
+                        'amount_updated_at' => null
                     ];
                     $tb_memberfurnishing = MemberFurnishing::where('member_no',$member_no)->where('furnishing_no',$member_shopspace['furnishing_no'])->first();
                     if(!is_null($tb_memberfurnishing)){
-                        $res['memberfurnishing_id'] = $tb_memberfurnishing->id;
+                        $res['furnishing_no'] = $tb_memberfurnishing->furnishing_no;
                     }
-                    $membercostume_id = '';
-                    foreach($member_shopspace['costume_no'] as $i => $costume_no){
-                        if($costume_no != ''){
-                            $tb_membercostume = MemberCostume::where('member_no',$member_no)->where('costume_no',$costume_no['costume_no'])->first();
-                            if(!is_null($tb_membercostume)){
-                                $membercostume_id = $membercostume_id.$tb_membercostume->id;
+                    $membercostume_no = null;
+                    if(count($member_shopspace['costume_no']) > 0){
+                        foreach($member_shopspace['costume_no'] as $i => $costume_no){
+                            if($costume_no != ''){
+                                $tb_membercostume = MemberCostume::where('member_no',$member_no)->where('costume_no',$costume_no)->first();
+                                if(is_null($tb_membercostume)){
+                                    $costume_no = '';
+                                }
                             }
                         }
-                        if($i+1 < count($member_shopspace['costume_no'])){
-                            $membercostume_id = $membercostume_id."|";
-                        }
                     }
-                    $res['membercostume_id'] = $membercostume_id;
+                    $res['costume_no'] = implode("|",$member_shopspace['costume_no']);
+                    if($res['costume_no'] != null || $res['costume_no'] !== ''){
+                        $res['amount_updated_at'] = Carbon::now();
+                    }
                     
                     array_push($resquestArr_member_shopspace_update,$res);
                 }

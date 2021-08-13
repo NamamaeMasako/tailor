@@ -17,8 +17,9 @@ class CreateMemberShopspacesTable extends Migration
             $table->id();
             $table->string('member_no')->comment('會員編號');
             $table->string('shopspace_no')->comment('店內空間編號');
-            $table->string('memberfurnishing_id')->nullable()->comment('會員持有家具id');
-            $table->string('membercostume_id')->nullable()->comment('會員持有服裝id');
+            $table->string('furnishing_no')->nullable()->comment('會員持有家具編號');
+            $table->string('costume_no')->nullable()->comment('會員持有服裝id');
+            $table->string('amount_updated_at')->nullable()->comment('上次庫存更新時間');
             $table->timestamps();
         });
     }
