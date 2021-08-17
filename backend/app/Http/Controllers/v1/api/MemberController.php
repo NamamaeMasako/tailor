@@ -65,7 +65,7 @@ class MemberController extends Controller
                             $tb_character = Character::where('character_no',$MemberCharacter->character_no);
                             if(count($tb_character->get()) > 1 || count($tb_character->get()) <= 0){
                                 $result['message'] = ['資料異常'];
-                                throw new Exception('更新失敗');
+                                throw new Exception('查詢失敗');
                             }
                             $MemberCharacter->name = $tb_character->first()->name;
                         }
@@ -75,7 +75,7 @@ class MemberController extends Controller
                             $tb_costume = Costume::where('costume_no',$MemberCostume->costume_no);
                             if(count($tb_costume->get()) > 1 || count($tb_costume->get()) <= 0){
                                 $result['message'] = ['資料異常'];
-                                throw new Exception('更新失敗');
+                                throw new Exception('查詢失敗');
                             }
                             $MemberCostume->title = $tb_costume->first()->title;
                             $MemberCostume->gender = $tb_costume->first()->gender;

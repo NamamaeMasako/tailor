@@ -222,14 +222,14 @@ const actions = {
     },
     getCharacterList: async (context) => {
         context.state.selectList.characterList = []
-        context.commit('getApiSetting',{which:'getCharacterList',params:{'shelf': 1}})
+        context.commit('getApiSetting',{which:'getCharacterList',params:{'shelf': '1'}})
         if(context.state.api.active != undefined || context.state.api.active != null){
             axios(context.state.api.active).then((response) => {
                 console.log('CharacterList',response.data)
                 if(response.data.status != true){
                     throw response.data
                 }
-                if(response.data.result.length > 0){
+                if(Object.keys(response.data.result).length > 0){
                     Object.keys(response.data.result).map((key) => {
                         let option = {
                             text: response.data.result[key].name,

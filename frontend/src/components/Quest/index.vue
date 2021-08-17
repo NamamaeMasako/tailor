@@ -58,7 +58,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-bug"></i></span>
                                 </div>
-                                <input type="text" class="form-control" v-model="quest.getResource.bug" disabled>
+                                <input type="text" class="form-control" v-model="dataList.selectList.getResourceList[quest.stage_no].bug" disabled>
                             </div>
                         </div>
                         <div class="col-3">
@@ -66,7 +66,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-feather"></i></span>
                                 </div>
-                                <input type="text" class="form-control" v-model="quest.getResource.feather" disabled>
+                                <input type="text" class="form-control" v-model="dataList.selectList.getResourceList[quest.stage_no].feather" disabled>
                             </div>
                         </div>
                         <div class="col-3">
@@ -74,7 +74,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-cannabis"></i></span>
                                 </div>
-                                <input type="text" class="form-control" v-model="quest.getResource.cannabis" disabled>
+                                <input type="text" class="form-control" v-model="dataList.selectList.getResourceList[quest.stage_no].cannabis" disabled>
                             </div>
                         </div>
                         <div class="col-3">
@@ -82,7 +82,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-gem"></i></span>
                                 </div>
-                                <input type="text" class="form-control" v-model="quest.getResource.gem" disabled>
+                                <input type="text" class="form-control" v-model="dataList.selectList.getResourceList[quest.stage_no].gem" disabled>
                             </div>
                         </div>
                         <div class="col-3">
@@ -90,7 +90,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-coins"></i></span>
                                 </div>
-                                <input type="text" class="form-control" v-model="quest.getResource.coins" disabled>
+                                <input type="text" class="form-control" v-model="dataList.selectList.getResourceList[quest.stage_no].coins" disabled>
                             </div>
                         </div>
                     </div>
