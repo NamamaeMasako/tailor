@@ -110,6 +110,10 @@ class MemberController extends Controller
                         foreach($row->MemberShopspace as $MemberShopspace){
                             $tb_shopspace = Shopspace::where('shopspace_no',$MemberShopspace->shopspace_no);
                             $MemberShopspace->title = $tb_shopspace->first()->title;
+                            if($MemberShopspace->furnishing_no != null){
+                                $tb_furnishing = Furnishing::where('furnishing_no',$MemberFurnishing->furnishing_no);
+                                $MemberShopspace->furnishing_title = $tb_furnishing->first()->title;
+                            }
                             $costume_no_arr = [];
                             if($MemberShopspace->costume_no != null && $MemberShopspace->costume_no != ''){
                                 $costume_no_arr = explode('|',$MemberShopspace->costume_no);

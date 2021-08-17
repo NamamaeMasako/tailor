@@ -3,10 +3,33 @@
     <header-nav />
     <b-card no-body>
         <b-tabs card>
-            <b-tab title="店內規劃">
-                <b-card-text>Tab contents 1</b-card-text>
+            <b-tab title="店內規劃" active>
+                <b-card-text>
+                    <div class="row">
+                        <div class="col-3 mb-2" v-for="(shopspace, index) in dataList.memberData.member_shopspace" :key="index">
+                            <div class="card">
+                                <div class="card-header">{{shopspace.title}}</div>
+                                <div class="card-body">
+                                    <div class="w-100 btn-group" v-if="shopspace.furnishing_no != null">
+                                        <b-button variant="info" class="col-10" v-b-toggle="shopspace.shopspace_no">{{shopspace.furnishing_title}}</b-button>
+                                        <b-button variant="outline-info" class="col-2" v-b-toggle="'furnishingList'+index"><i class="fas fa-angle-down"></i></b-button>
+                                    </div>
+                                    <b-button variant="outline-info" v-b-toggle="'furnishingList'+index" class="btn-block" v-else>空</b-button>
+                                    <b-collapse :id="shopspace.shopspace_no">
+                                        <b-card>{{shopspace}}</b-card>
+                                    </b-collapse>
+                                    <b-collapse :id="'furnishingList'+index">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" v-for="(furnishing, index) in dataList.memberData.member_furnishing" :key="index">{{furnishing.title}}</li>
+                                        </ul>
+                                    </b-collapse>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </b-card-text>
             </b-tab>
-            <b-tab title="工作室" active>
+            <b-tab title="工作室">
                 <b-card-text v-if="workStatus == true">
                     <h4>努力工作中...</h4>
                     正在製作{{dataList.memberData.work_count}}次的{{workTitle}}，預計將於 {{workCountDown}} 後完成工作
